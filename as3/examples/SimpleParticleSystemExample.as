@@ -5,12 +5,12 @@ package examples {
 import com.genome2d.Genome2D;
 import com.genome2d.components.renderables.particles.GSimpleParticleSystem;
 import com.genome2d.context.GContextConfig;
-import com.genome2d.geom.GIntRectangle;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.geom.Rectangle;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class SimpleParticleSystemExample extends Sprite {
@@ -31,7 +31,7 @@ public class SimpleParticleSystemExample extends Sprite {
         removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         // Create a context config that will be used to initialize the Genome2D
-        var config:GContextConfig = new GContextConfig(stage, new GIntRectangle(0,0,stage.stageWidth,stage.stageHeight));
+        var config:GContextConfig = new GContextConfig(stage, new Rectangle(0,0,stage.stageWidth,stage.stageHeight));
         config.enableStats = true;
 
         // Get the Genome2D instance

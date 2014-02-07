@@ -5,12 +5,12 @@ package examples {
 import com.genome2d.Genome2D;
 import com.genome2d.components.renderables.GMovieClip;
 import com.genome2d.context.GContextConfig;
-import com.genome2d.geom.GIntRectangle;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.geom.Rectangle;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class MovieClipExample extends Sprite {
@@ -31,7 +31,7 @@ public class MovieClipExample extends Sprite {
         removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         // Create a context config that will be used to initialize the Genome2D
-        var config:GContextConfig = new GContextConfig(stage, new GIntRectangle(0,0,stage.stageWidth,stage.stageHeight));
+        var config:GContextConfig = new GContextConfig(stage, new Rectangle(0,0,stage.stageWidth,stage.stageHeight));
         config.enableStats = true;
 
         // Get the Genome2D instance
@@ -52,38 +52,36 @@ public class MovieClipExample extends Sprite {
         // Create top left movieclip without any transformation
         var clip:GMovieClip;
 
-        clip = createMovieClip(300, 200, "assets", ["g100","g101","g102","g103","g104","g105"]);
+        clip = createMovieClip(300, 200, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
 
         // Create top right movieclip with scale
-        clip = createMovieClip(500, 200, "assets", ["g100","g101","g102","g103","g104","g105"]);
+        clip = createMovieClip(500, 200, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
         clip.node.transform.setScale(2,2);
 
         // Create bottom left movieclip with rotation
-        clip = createMovieClip(300, 400, "assets", ["g100","g101","g102","g103","g104","g105"]);
+        clip = createMovieClip(300, 400, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
         clip.node.transform.rotation = 0.753;
 
         // Create bottom right movieclip with scale and rotation
-        clip = createMovieClip(500, 400, "assets", ["g100","g101","g102","g103","g104","g105"]);
+        clip = createMovieClip(500, 400, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
         clip.node.transform.rotation = 0.754;
         clip.node.transform.setScale(2,2);
 
         // Create middle left movieclip with alpha
-        clip = createMovieClip(300, 300, "assets", ["g100","g101","g102","g103","g104","g105"]);
+        clip = createMovieClip(300, 300, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
         clip.node.transform.alpha = .5;
 
         // Create middle right movieclip with tint
-        clip = createMovieClip(500, 300, "assets", ["g100","g101","g102","g103","g104","g105"]);
+        clip = createMovieClip(500, 300, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
         clip.node.transform.color = 0x00FF00;
     }
 
     // Create a movie clip helper function
-    private function createMovieClip(p_x:int, p_y:int, p_textureAtlasId:String, p_frames:Array):GMovieClip {
+    private function createMovieClip(p_x:int, p_y:int, p_frames:Array):GMovieClip {
         // Create a node with sprite component
         var clip:GMovieClip = GNodeFactory.createNodeWithComponent(GMovieClip) as GMovieClip;
-        // Assign a texture to the sprite based on the texture ID
-        clip.textureAtlasId = p_textureAtlasId;
         // Assign animation frames
-        clip.frames = p_frames;
+        clip.setTextureFrameIds(p_frames);
         clip.frameRate = 10;
         // Set transform position for this node
         clip.node.transform.setPosition(p_x, p_y);

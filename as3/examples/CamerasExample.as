@@ -6,12 +6,12 @@ import com.genome2d.Genome2D;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderables.GSprite;
 import com.genome2d.context.GContextConfig;
-import com.genome2d.geom.GIntRectangle;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.geom.Rectangle;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class CamerasExample extends Sprite {
@@ -32,7 +32,7 @@ public class CamerasExample extends Sprite {
         removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         // Create a context config that will be used to initialize the Genome2D
-        var config:GContextConfig = new GContextConfig(stage, new GIntRectangle(0,0,stage.stageWidth,stage.stageHeight));
+        var config:GContextConfig = new GContextConfig(stage, new Rectangle(0,0,stage.stageWidth,stage.stageHeight));
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();
@@ -81,6 +81,11 @@ public class CamerasExample extends Sprite {
         camera.zoom = .5;
         camera.node.transform.setPosition(400,300);
         genome.root.addChild(camera.node);
+
+        //camera.node.addComponent(Haha);
+
+        GNodeFactory.createNodeWithComponent(Haha);
+/**/
     }
 
     // Create a sprite helper function
