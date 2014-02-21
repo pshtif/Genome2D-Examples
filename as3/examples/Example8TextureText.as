@@ -6,6 +6,7 @@ import com.genome2d.Genome2D;
 import com.genome2d.components.renderables.GTextureText;
 import com.genome2d.components.renderables.GTextureTextAlignType;
 import com.genome2d.context.GContextConfig;
+import com.genome2d.context.stats.GStats;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 
@@ -15,7 +16,7 @@ import flash.geom.Rectangle;
 import flash.text.TextFormat;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
-public class TextureTextExample extends Sprite {
+public class Example8TextureText extends Sprite {
 
     [Embed(source = "../../assets/assets.png")]
     static private const AssetsPNG:Class;
@@ -24,7 +25,7 @@ public class TextureTextExample extends Sprite {
 
     private var genome:Genome2D;
 
-    public function TextureTextExample() {
+    public function Example8TextureText() {
         if (stage != null) addedToStageHandler(null);
         else addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
     }
@@ -33,8 +34,7 @@ public class TextureTextExample extends Sprite {
         removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         // Create a context config that will be used to initialize the Genome2D
-        var config:GContextConfig = new GContextConfig(stage, new Rectangle(0,0,stage.stageWidth,stage.stageHeight));
-        config.enableStats = true;
+        var config:GContextConfig = new GContextConfig(new Rectangle(0,0,stage.stageWidth,stage.stageHeight), stage);
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();

@@ -3,6 +3,7 @@
  */
 package examples {
 import com.genome2d.Genome2D;
+import com.genome2d.context.GContext;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.context.GStage3DContext;
 import com.genome2d.textures.GTexture;
@@ -15,7 +16,7 @@ import flash.events.Event;
 import flash.geom.Rectangle;
 
 [SWF(width="700", height="410", backgroundColor="#000000", frameRate="60")]
-public class ContextDrawExample extends MovieClip {
+public class Example4ContextDraw extends MovieClip {
     [Embed(source = "../../assets/assets.png")]
     static private const AssetsPNG:Class;
     [Embed(source = "../../assets/assets.xml", mimeType = "application/octet-stream")]
@@ -24,7 +25,7 @@ public class ContextDrawExample extends MovieClip {
     private var genome:Genome2D;
     private var texture:GTexture;
 
-    public function ContextDrawExample() {
+    public function Example4ContextDraw() {
         if (stage != null) addedToStageHandler(null);
         else addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
     }
@@ -33,8 +34,7 @@ public class ContextDrawExample extends MovieClip {
         removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         // Create a context config that will be used to initialize the Genome2D
-        var config:GContextConfig = new GContextConfig(stage, new Rectangle(0,0,stage.stageWidth,stage.stageHeight));
-        config.enableStats = true;
+        var config:GContextConfig = new GContextConfig(new Rectangle(0,0,stage.stageWidth,stage.stageHeight), stage);
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();
@@ -54,7 +54,7 @@ public class ContextDrawExample extends MovieClip {
     }
 
     private function preRenderHandler():void {
-        var context:GStage3DContext = Genome2D.getInstance().getContext();
+        var context:GContext = Genome2D.getInstance().getContext();
         // Draw using coordinates
         context.draw(texture, 200, 200);
 

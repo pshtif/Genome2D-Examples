@@ -16,12 +16,12 @@ import flash.events.Event;
 import flash.geom.Rectangle;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
-public class AssetManagerExample extends Sprite {
+public class Example7AssetManager extends Sprite {
 
     private var genome:Genome2D;
     private var assetManager:GAssetManager;
 
-    public function AssetManagerExample() {
+    public function Example7AssetManager() {
         if (stage != null) addedToStageHandler(null);
         else addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
     }
@@ -43,8 +43,7 @@ public class AssetManagerExample extends Sprite {
 
     private function assetsInitializedHandler():void {
         // Create a context config that will be used to initialize the Genome2D
-        var config:GContextConfig = new GContextConfig(stage, new Rectangle(0,0,stage.stageWidth,stage.stageHeight));
-        config.enableStats = true;
+        var config:GContextConfig = new GContextConfig(new Rectangle(0,0,stage.stageWidth,stage.stageHeight), stage);
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();
@@ -56,7 +55,7 @@ public class AssetManagerExample extends Sprite {
 
     private function genomeInitializedHandler():void {
         // Create our assets atlas from assets
-        GTextureAtlasFactory.createFromAssets("assets", assetManager.getAssetImageById("assets_gfx") as GImageAsset, assetManager.getAssetXmlById("assets_xml"));
+        GTextureAtlasFactory.createFromAssets("assets", assetManager.getImageAssetById("assets_gfx") as GImageAsset, assetManager.getXmlAssetById("assets_xml"));
 
         var clip:GMovieClip = createMovieClip(400, 300, ["assets_g100","assets_g101","assets_g102","assets_g103","assets_g104","assets_g105"]);
     }
@@ -66,7 +65,7 @@ public class AssetManagerExample extends Sprite {
         // Create a node with sprite component
         var clip:GMovieClip = GNodeFactory.createNodeWithComponent(GMovieClip) as GMovieClip;
         // Assign animation frames
-        clip.setTextureFrameIds(p_frames);
+        clip.frameTextureIds = p_frames;
         clip.frameRate = 10;
         // Set transform position for this node
         clip.node.transform.setPosition(p_x, p_y);
