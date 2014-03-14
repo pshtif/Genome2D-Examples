@@ -3,23 +3,20 @@
  */
 package examples {
 import com.genome2d.Genome2D;
-import com.genome2d.context.GContext;
 import com.genome2d.context.GContextConfig;
-import com.genome2d.context.GStage3DContext;
+import com.genome2d.context.IContext;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
-import com.genome2d.textures.factories.GTextureFactory;
 
 import flash.display.MovieClip;
-
 import flash.events.Event;
 import flash.geom.Rectangle;
 
 [SWF(width="700", height="410", backgroundColor="#000000", frameRate="60")]
 public class Example4ContextDraw extends MovieClip {
-    [Embed(source = "../../assets/assets.png")]
+    [Embed(source = "../../assets/atlas.png")]
     static private const AssetsPNG:Class;
-    [Embed(source = "../../assets/assets.xml", mimeType = "application/octet-stream")]
+    [Embed(source = "../../assets/atlas.xml", mimeType = "application/octet-stream")]
     static public var AssetsXML:Class;
 
     private var genome:Genome2D;
@@ -54,7 +51,7 @@ public class Example4ContextDraw extends MovieClip {
     }
 
     private function preRenderHandler():void {
-        var context:GContext = Genome2D.getInstance().getContext();
+        var context:IContext = Genome2D.getInstance().getContext();
         // Draw using coordinates
         context.draw(texture, 200, 200);
 

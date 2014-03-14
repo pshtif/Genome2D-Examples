@@ -14,15 +14,18 @@ import flash.display.BitmapData;
 import flash.display.GraphicsBitmapFill;
 
 import flash.display.MovieClip;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.display3D.Context3D;
 import flash.events.Event;
 import flash.geom.Rectangle;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class Example2Sprite extends MovieClip {
 
-    [Embed(source = "../../assets/assets.png")]
+    [Embed(source = "../../assets/atlas.png")]
     static private const AssetsPNG:Class;
-    [Embed(source = "../../assets/assets.xml", mimeType = "application/octet-stream")]
+    [Embed(source = "../../assets/atlas.xml", mimeType = "application/octet-stream")]
     static public var AssetsXML:Class;
 
     private var genome:Genome2D;
@@ -33,10 +36,14 @@ public class Example2Sprite extends MovieClip {
     }
 
     private function addedToStageHandler(event:Event):void {
+        stage.scaleMode = StageScaleMode.NO_SCALE;
+        stage.align = StageAlign.TOP_LEFT;
+
         removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         // Create a context config that will be used to initialize the Genome2D
         var config:GContextConfig = new GContextConfig(new Rectangle(0,0,stage.stageWidth,stage.stageHeight), stage);
+        config.enableDepthAndStencil = false;
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();

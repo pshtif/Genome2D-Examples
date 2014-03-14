@@ -18,11 +18,6 @@ import flash.text.TextFormat;
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class Example8TextureText extends Sprite {
 
-    [Embed(source = "../../assets/assets.png")]
-    static private const AssetsPNG:Class;
-    [Embed(source = "../../assets/assets.xml", mimeType = "application/octet-stream")]
-    static public var AssetsXML:Class;
-
     private var genome:Genome2D;
 
     public function Example8TextureText() {

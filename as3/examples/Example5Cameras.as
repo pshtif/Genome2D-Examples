@@ -16,9 +16,9 @@ import flash.geom.Rectangle;
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class Example5Cameras extends Sprite {
 
-    [Embed(source = "../../assets/assets.png")]
+    [Embed(source = "../../assets/atlas.png")]
     static private const AssetsPNG:Class;
-    [Embed(source = "../../assets/assets.xml", mimeType = "application/octet-stream")]
+    [Embed(source = "../../assets/atlas.xml", mimeType = "application/octet-stream")]
     static public var AssetsXML:Class;
 
     private var genome:Genome2D;

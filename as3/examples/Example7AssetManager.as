@@ -32,9 +32,9 @@ public class Example7AssetManager extends Sprite {
         // Create an asset manager instance
         assetManager = new GAssetManager();
         // Add xml asset with id and url
-        assetManager.add(new GXmlAsset("assets_xml", "assets.xml"));
+        assetManager.add(new GXmlAsset("atlas_xml", "atlas.xml"));
         // Add image asset with id and url
-        assetManager.add(new GImageAsset("assets_gfx", "assets.png"));
+        assetManager.add(new GImageAsset("atlas_gfx", "atlas.png"));
         // Add callback when all assets are loaded and initialized
         assetManager.onLoaded.add(assetsInitializedHandler);
         // Load assets in the queue
@@ -44,6 +44,7 @@ public class Example7AssetManager extends Sprite {
     private function assetsInitializedHandler():void {
         // Create a context config that will be used to initialize the Genome2D
         var config:GContextConfig = new GContextConfig(new Rectangle(0,0,stage.stageWidth,stage.stageHeight), stage);
+        config.enableDepthAndStencil = true;
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();

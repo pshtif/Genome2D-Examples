@@ -5,11 +5,13 @@ package examples {
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 
+import flash.display.MovieClip;
+
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.geom.Rectangle;
 
-public class Example1Initialization extends Sprite {
+public class Example1Initialization extends MovieClip {
     private var genome:Genome2D;
 
     public function Example1Initialization() {
@@ -22,6 +24,7 @@ public class Example1Initialization extends Sprite {
 
         // Create a context config that will be used to initialize the Genome2D
         var config:GContextConfig = new GContextConfig(new Rectangle(0,0,stage.stageWidth,stage.stageHeight), stage);
+        config.enableDepthAndStencil = true;
 
         // Get the Genome2D instance
         genome = Genome2D.getInstance();
@@ -32,7 +35,7 @@ public class Example1Initialization extends Sprite {
     }
 
     private function genomeInitializedHandler():void {
-        // Here we can do any Genome2D related code as its initialized
+        // Here we can do any Genome2D related code as its initialized)
     }
 }
 }
