@@ -45,7 +45,7 @@ class BasicExample5TextureText
         Initialize Genome2D
      **/
     private function initGenome():Void {
-        genome = genome.getInstance();
+        genome = Genome2D.getInstance();
         genome.onInitialized.add(genomeInitializedHandler);
         genome.init(new GContextConfig());
     }

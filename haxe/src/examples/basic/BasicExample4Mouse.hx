@@ -80,8 +80,8 @@ class BasicExample4Mouse
         GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
 
         var sprite:GSprite = cast GNodeFactory.createNodeWithComponent(GSprite);
-        sprite.texture = GTexture.getTextureById(p_textureId);
-        sprite.node.transform.setPosition(p_x, p_y);
+        sprite.texture = GTexture.getTextureById("atlas_0");
+        sprite.node.transform.setPosition(400, 300);
 
         sprite.node.mouseEnabled = true;
         sprite.node.onMouseClick.add(mouseClickHandler);
@@ -91,41 +91,40 @@ class BasicExample4Mouse
         sprite.node.onMouseUp.add(mouseUpHandler);
 
         genome.root.addChild(sprite.node);
-        return sprite;
     }
 
     /**
         Mouse click handler
      **/
-    private function mouseClickHandler(signal:GNodeMouseSignal):void {
+    private function mouseClickHandler(signal:GNodeMouseSignal):Void {
         trace("CLICK", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse over handler
      **/
-    private function mouseOverHandler(signal:GNodeMouseSignal):void {
+    private function mouseOverHandler(signal:GNodeMouseSignal):Void {
         trace("OVER", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse out handler
      **/
-    private function mouseOutHandler(signal:GNodeMouseSignal):void {
+    private function mouseOutHandler(signal:GNodeMouseSignal):Void {
         trace("OUT", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse down handler
      **/
-    private function mouseDownHandler(signal:GNodeMouseSignal):void {
+    private function mouseDownHandler(signal:GNodeMouseSignal):Void {
         trace("DOWN", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse up handler
      **/
-    private function mouseUpHandler(signal:GNodeMouseSignal):void {
+    private function mouseUpHandler(signal:GNodeMouseSignal):Void {
         trace("UP", signal.dispatcher.name, signal.target.name);
     }
 }

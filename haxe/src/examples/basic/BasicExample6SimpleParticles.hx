@@ -21,7 +21,7 @@ class BasicExample6SimpleParticles
 {
 
     static public function main() {
-        var inst = new BasicExample5SimpleParticles();
+        var inst = new BasicExample6SimpleParticles();
     }
 
     /**
