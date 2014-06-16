@@ -1,4 +1,13 @@
+/*
+ * 	Genome2D - 2D GPU Framework
+ * 	http://www.genome2d.com
+ *
+ *	Copyright 2011-2014 Peter Stefcek. All rights reserved.
+ *
+ *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
+ */
 package examples.basic;
+
 import com.genome2d.geom.GRectangle;
 import com.genome2d.components.renderables.particles.GSimpleParticleSystem;
 import com.genome2d.node.factory.GNodeFactory;
