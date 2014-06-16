@@ -1,0 +1,30 @@
+# Include sources
+-cp ../src/context/flash/src
+-cp ../src/context/common/src
+-cp ../src/core/src
+-cp ../src/examples/haxe/src
+
+# Include libraries
+-swf-lib ../src/context/flash/lib/AGAL.swc
+-lib msignal
+-lib actuate
+
+# Flash flags
+-swf-version 12.0
+-swf ../out/Example.swf
+-swf-header 800:600:60:000000
+
+# Debug flags
+-D fdb
+-debug
+-D advanced-telemetry
+
+# Genome2D flags
+-D stage3Donly
+
+# Haxe flags
+--no-inline
+#--no-traces
+
+# Main class
+-main examples.ExampleWrapper

@@ -1,0 +1,18 @@
+# Include sources
+-cp ../src/context/common/src
+-cp ../src/context/html/src
+-cp ../src/core/src
+-cp ../src/examples/haxe/src
+
+# Include libraries
+-lib msignal
+-lib actuate
+
+# Genome2D flags
+-D webGLonly
+
+# JavaScript flags
+-js ../remote/Example.js
+
+# Main class
+-main examples.ExampleWrapper
