@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:7a0e9d0cf12e0dea9da61a80d77db070:1/1$ -->
-<TextureAtlas imagePath="assets.png">
-    <SubTexture name="g100" x="54" y="2" width="48" height="40"/>
-    <SubTexture name="g101" x="2" y="2" width="50" height="58" frameX="0" frameY="-4" frameWidth="50" frameHeight="58"/>
-    <SubTexture name="g102" x="2" y="94" width="48" height="32" frameX="0" frameY="9" frameWidth="48" frameHeight="32"/>
-    <SubTexture name="g103" x="52" y="94" width="48" height="30" frameX="0" frameY="1" frameWidth="48" frameHeight="30"/>
-    <SubTexture name="g104" x="54" y="44" width="48" height="36" frameX="0" frameY="5" frameWidth="48" frameHeight="36"/>
-    <SubTexture name="g105" x="2" y="62" width="50" height="30" frameX="0" frameY="2" frameWidth="50" frameHeight="30"/>
+<!-- $TexturePacker:SmartUpdate:000af5f134d6bc7a0ade6bf8fff552cc:ef53a78ac86afe2da89f7203b592045e:cde709370900f12288f3449eded86f07$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="0" x="70" y="36" width="32" height="32"/>
+    <SubTexture name="1" x="36" y="70" width="32" height="32"/>
+    <SubTexture name="2" x="36" y="36" width="32" height="32"/>
+    <SubTexture name="3" x="70" y="2" width="32" height="32"/>
+    <SubTexture name="4" x="36" y="2" width="32" height="32"/>
+    <SubTexture name="5" x="2" y="70" width="32" height="32"/>
+    <SubTexture name="6" x="2" y="36" width="32" height="32"/>
+    <SubTexture name="7" x="2" y="2" width="32" height="32"/>
+    <SubTexture name="particle" x="2" y="104" width="8" height="8"/>
 </TextureAtlas>
