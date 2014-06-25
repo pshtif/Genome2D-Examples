@@ -83,9 +83,10 @@ class BasicExample5TextureText
 
         var text:GTextureText;
 
-        text = createText(200, 300, "font", "Hello Genome2D world.", GTextureTextAlignType.MIDDLE, 0);
+        //text = createText(200, 300, "font", "Hello Genome2D world.", GTextureTextAlignType.MIDDLE, 0);
+        text = createText(200, 300, "font", "in", GTextureTextAlignType.MIDDLE, 0);
 
-        text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextAlignType.MIDDLE, 0, 10);
+        text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextAlignType.MIDDLE, 0, 0);
         text.node.transform.rotation = 0.753;
     }
 

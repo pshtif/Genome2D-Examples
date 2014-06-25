@@ -15,7 +15,7 @@
 -D advanced-telemetry
 
 # Genome2D flags
--D stage3Donly
+#-D stage3Donly
 
 # Haxe flags
 --no-inline
