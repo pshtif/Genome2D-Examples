@@ -8,12 +8,13 @@
  */
 package examples.basic;
 
+import com.genome2d.components.renderables.text.GTextureTextVAlignType;
+import com.genome2d.signals.GNodeMouseSignal;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.context.GContextConfig;
-import com.genome2d.components.renderables.GTextureText;
-import com.genome2d.components.renderables.GTextureText;
-import com.genome2d.components.renderables.GTextureTextAlignType;
-import com.genome2d.components.renderables.GTextureText;
+import com.genome2d.components.renderables.text.GTextureText;
+import com.genome2d.components.renderables.text.GTextureTextHAlignType;
+import com.genome2d.components.renderables.text.GTextureText;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 import com.genome2d.Genome2D;
@@ -84,21 +85,34 @@ class BasicExample5TextureText
         var text:GTextureText;
 
         //text = createText(200, 300, "font", "Hello Genome2D world.", GTextureTextAlignType.MIDDLE, 0);
-        text = createText(200, 300, "font", "in", GTextureTextAlignType.MIDDLE, 0);
+        text = createText(300, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.TOP, GTextureTextHAlignType.CENTER, 0, 0);
 
-        text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextAlignType.MIDDLE, 0, 0);
-        text.node.transform.rotation = 0.753;
+        //text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.TOP, GTextureTextHAlignType.LEFT, 0, 0);
+        //text.node.transform.rotation = 0.753;
     }
 
-    private function createText(p_x:Float, p_y:Float, p_textureAtlasId:String, p_text:String, p_align:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GTextureText {
+    private function createText(p_x:Float, p_y:Float, p_textureAtlasId:String, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GTextureText {
         var text:GTextureText = cast GNodeFactory.createNodeWithComponent(GTextureText);
         text.textureAtlasId = p_textureAtlasId;
         text.text = p_text;
         text.tracking = p_tracking;
         text.lineSpace = p_lineSpace;
-        text.align = p_align;
+        text.vAlign = p_vAlign;
+        text.hAlign = p_hAlign;
         text.node.transform.setPosition(p_x, p_y);
         genome.root.addChild(text.node);
+
+        text.node.mouseEnabled = true;
+        text.node.onMouseOver.add(mouseOverHandler);
+        text.node.onMouseOut.add(mouseOutHandler);
         return text;
+    }
+
+    private function mouseOverHandler(signal:GNodeMouseSignal):Void {
+        signal.dispatcher.transform.red = 0;
+    }
+
+    private function mouseOutHandler(signal:GNodeMouseSignal):Void {
+        signal.dispatcher.transform.red = 1;
     }
 }
