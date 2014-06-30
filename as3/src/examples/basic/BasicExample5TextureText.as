@@ -9,8 +9,9 @@
 package examples.basic {
 import com.genome2d.Genome2D;
 import com.genome2d.assets.GAssetManager;
-import com.genome2d.components.renderables.GTextureText;
-import com.genome2d.components.renderables.GTextureTextAlignType;
+import com.genome2d.components.renderables.text.GTextureText;
+import com.genome2d.components.renderables.text.GTextureTextHAlignType;
+import com.genome2d.components.renderables.text.GTextureTextVAlignType;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
@@ -93,25 +94,31 @@ public class BasicExample5TextureText extends Sprite
 
         var text:GTextureText;
 
-        text = createText(200, 300, "font", "Hello Genome2D world.", GTextureTextAlignType.MIDDLE, 0);
+        text = createText(150, 200, "font", "Hello Genome2D world.", GTextureTextVAlignType.MIDDLE, GTextureTextHAlignType.LEFT, 0);
 
-        text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextAlignType.MIDDLE, 0, 10);
+        text = createText(550, 200, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.MIDDLE, GTextureTextHAlignType.CENTER, 0, 0);
         text.node.transform.rotation = 0.753;
     }
 
-    private function createText(p_x:Number, p_y:Number, p_textureAtlasId:String, p_text:String, p_align:int, p_tracking:int = 0, p_lineSpace:int = 0):GTextureText {
+    private function createText(p_x:Number, p_y:Number, p_textureAtlasId:String, p_text:String, p_vAlign:int, p_hAlign:int, p_tracking:int = 0, p_lineSpace:int = 0):GTextureText {
         // Create our texture text component
         var text:GTextureText = GNodeFactory.createNodeWithComponent(GTextureText) as GTextureText;
         // Specify the atlas where the font textures are
         text.textureAtlasId = p_textureAtlasId;
+        // Specify the text width
+        text.width = 200;
+        // Specify the text height
+        text.height = 200;
         // Specify the text being rendered
         text.text = p_text;
         // Specify character tracking
         text.tracking = p_tracking;
         // Specify line spacing
         text.lineSpace = p_lineSpace;
-        // Specify the alignment of the text
-        text.align = p_align;
+        // Specify the vertical alignment of the text
+        text.vAlign = p_vAlign;
+        // Specify the horizontal alignment of the text
+        text.hAlign = p_hAlign;
         // Set the position of our component
         text.node.transform.setPosition(p_x, p_y);
         // Add it to the render list
