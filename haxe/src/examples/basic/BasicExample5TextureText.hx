@@ -8,12 +8,12 @@
  */
 package examples.basic;
 
-import com.genome2d.components.renderables.text.GTextureTextVAlignType;
+import com.genome2d.utils.GVAlignType;
 import com.genome2d.signals.GNodeMouseSignal;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.components.renderables.text.GTextureText;
-import com.genome2d.components.renderables.text.GTextureTextHAlignType;
+import com.genome2d.utils.GHAlignType;
 import com.genome2d.components.renderables.text.GTextureText;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
@@ -85,7 +85,7 @@ class BasicExample5TextureText
         var text:GTextureText;
 
         //text = createText(200, 300, "font", "Hello Genome2D world.", GTextureTextAlignType.MIDDLE, 0);
-        text = createText(300, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.TOP, GTextureTextHAlignType.CENTER, 0, 0);
+        text = createText(300, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GVAlignType.TOP, GHAlignType.CENTER, 0, 0);
 
         //text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.TOP, GTextureTextHAlignType.LEFT, 0, 0);
         //text.node.transform.rotation = 0.753;
