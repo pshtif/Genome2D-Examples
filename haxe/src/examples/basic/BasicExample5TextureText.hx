@@ -8,6 +8,9 @@
  */
 package examples.basic;
 
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import com.genome2d.utils.GVAlignType;
 import com.genome2d.utils.GVAlignType;
 import com.genome2d.signals.GNodeMouseSignal;
 import com.genome2d.assets.GAssetManager;
@@ -84,16 +87,17 @@ class BasicExample5TextureText
 
         var text:GTextureText;
 
-        //text = createText(200, 300, "font", "Hello Genome2D world.", GTextureTextAlignType.MIDDLE, 0);
-        text = createText(300, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GVAlignType.TOP, GHAlignType.CENTER, 0, 0);
+        text = createText(150, 200, "font", "Hello Genome2D world.", GVAlignType.MIDDLE, GHAlignType.CENTER, 0);
 
-        //text = createText(600, 300, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.TOP, GTextureTextHAlignType.LEFT, 0, 0);
-        //text.node.transform.rotation = 0.753;
+        text = createText(550, 200, "font", "Hello Genome2D\nin awesome\nmultiline text.", GVAlignType.TOP, GHAlignType.LEFT, 0, 0);
+        text.node.transform.rotation = 0.753;
     }
 
     private function createText(p_x:Float, p_y:Float, p_textureAtlasId:String, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GTextureText {
         var text:GTextureText = cast GNodeFactory.createNodeWithComponent(GTextureText);
         text.textureAtlasId = p_textureAtlasId;
+        text.width = 200;
+        text.height = 200;
         text.text = p_text;
         text.tracking = p_tracking;
         text.lineSpace = p_lineSpace;
@@ -102,17 +106,6 @@ class BasicExample5TextureText
         text.node.transform.setPosition(p_x, p_y);
         genome.root.addChild(text.node);
 
-        text.node.mouseEnabled = true;
-        text.node.onMouseOver.add(mouseOverHandler);
-        text.node.onMouseOut.add(mouseOutHandler);
         return text;
-    }
-
-    private function mouseOverHandler(signal:GNodeMouseSignal):Void {
-        signal.dispatcher.transform.red = 0;
-    }
-
-    private function mouseOutHandler(signal:GNodeMouseSignal):Void {
-        signal.dispatcher.transform.red = 1;
     }
 }
