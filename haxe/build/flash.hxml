@@ -15,14 +15,15 @@
 -D advanced-telemetry
 
 # Genome2D flags
-#-D stage3Donly
+-D stage3Donly
 
 # Haxe flags
---no-inline
+#--no-inline
 #--no-traces
 
 # Main class
--main examples.ExampleWrapper
+#-main examples.ExampleWrapper
+-main benchmark.BunnyMark
 
 # Flash flags
 -swf-version 12.0

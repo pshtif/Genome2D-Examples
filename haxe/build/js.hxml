@@ -12,7 +12,8 @@
 -D webGLonly
 
 # Main class
--main examples.ExampleWrapper
+#-main examples.ExampleWrapper
+-main benchmark.BunnyMark
 
 # JavaScript flags
 -js ../remote/Example.js
