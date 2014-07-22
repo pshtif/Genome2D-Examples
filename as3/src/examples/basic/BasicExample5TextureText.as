@@ -7,14 +7,15 @@
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
 package examples.basic {
+
 import com.genome2d.Genome2D;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderables.text.GTextureText;
-import com.genome2d.components.renderables.text.GTextureTextHAlignType;
-import com.genome2d.components.renderables.text.GTextureTextVAlignType;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
+import com.genome2d.utils.GHAlignType;
+import com.genome2d.utils.GVAlignType;
 
 import flash.display.Sprite;
 import flash.display.StageAlign;
@@ -94,9 +95,9 @@ public class BasicExample5TextureText extends Sprite
 
         var text:GTextureText;
 
-        text = createText(150, 200, "font", "Hello Genome2D world.", GTextureTextVAlignType.MIDDLE, GTextureTextHAlignType.LEFT, 0);
+        text = createText(150, 200, "font", "Hello Genome2D world.", GVAlignType.MIDDLE, GHAlignType.LEFT, 0);
 
-        text = createText(550, 200, "font", "Hello Genome2D\nin awesome\nmultiline text.", GTextureTextVAlignType.MIDDLE, GTextureTextHAlignType.CENTER, 0, 0);
+        text = createText(550, 200, "font", "Hello Genome2D\nin awesome\nmultiline text.", GVAlignType.MIDDLE, GHAlignType.CENTER, 0, 0);
         text.node.transform.rotation = 0.753;
     }
 
