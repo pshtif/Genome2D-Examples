@@ -22,8 +22,8 @@
 #--no-traces
 
 # Main class
-#-main examples.ExampleWrapper
--main benchmark.BunnyMark
+-main examples.ExampleWrapper
+#-main benchmark.BunnyMark
 
 # Flash flags
 -swf-version 12.0

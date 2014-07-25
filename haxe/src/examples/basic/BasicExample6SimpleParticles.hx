@@ -8,7 +8,7 @@
  */
 package examples.basic;
 
-import com.genome2d.geom.GRectangle;
+import com.genome2d.node.GNode;
 import com.genome2d.components.renderables.particles.GSimpleParticleSystem;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
@@ -91,6 +91,7 @@ class BasicExample6SimpleParticles
         emitter.initialScale = 2;
         emitter.endScale = .2;
         emitter.node.transform.setPosition(400,300);
+
         Genome2D.getInstance().root.addChild(emitter.node);
     }
 }
