@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:000af5f134d6bc7a0ade6bf8fff552cc:ef53a78ac86afe2da89f7203b592045e:cde709370900f12288f3449eded86f07$ -->
+<!-- $TexturePacker:SmartUpdate:01ca6847b2b0553c3773fa19d0e24e4d:0a5902f81bfef8c23a2cf109d338f4c3:cde709370900f12288f3449eded86f07$ -->
 <TextureAtlas imagePath="atlas.png">
-    <SubTexture name="0" x="70" y="36" width="32" height="32"/>
-    <SubTexture name="1" x="36" y="70" width="32" height="32"/>
-    <SubTexture name="2" x="36" y="36" width="32" height="32"/>
-    <SubTexture name="3" x="70" y="2" width="32" height="32"/>
-    <SubTexture name="4" x="36" y="2" width="32" height="32"/>
-    <SubTexture name="5" x="2" y="70" width="32" height="32"/>
-    <SubTexture name="6" x="2" y="36" width="32" height="32"/>
-    <SubTexture name="7" x="2" y="2" width="32" height="32"/>
-    <SubTexture name="particle" x="2" y="104" width="8" height="8"/>
+    <SubTexture name="0" x="166" y="218" width="32" height="32"/>
+    <SubTexture name="1" x="166" y="184" width="32" height="32"/>
+    <SubTexture name="2" x="132" y="218" width="32" height="32"/>
+    <SubTexture name="3" x="132" y="184" width="32" height="32"/>
+    <SubTexture name="4" x="98" y="218" width="32" height="32"/>
+    <SubTexture name="5" x="98" y="184" width="32" height="32"/>
+    <SubTexture name="6" x="64" y="218" width="32" height="32"/>
+    <SubTexture name="7" x="64" y="184" width="32" height="32"/>
+    <SubTexture name="particle" x="2" y="246" width="8" height="8"/>
+    <SubTexture name="tile1x1" x="2" y="184" width="60" height="60"/>
+    <SubTexture name="tile3x3" x="2" y="2" width="180" height="180"/>
 </TextureAtlas>
