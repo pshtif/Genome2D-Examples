@@ -15,7 +15,7 @@
 -D advanced-telemetry
 
 # Genome2D flags
--D stage3Donly
+#-D stage3Donly
 
 # Haxe flags
 #--no-inline
@@ -28,4 +28,4 @@
 # Flash flags
 -swf-version 12.0
 -swf ../out/Example.swf
--swf-header 800:600:60:000000
+-swf-header 960:600:60:000000
