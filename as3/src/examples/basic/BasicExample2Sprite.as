@@ -18,6 +18,7 @@ import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
+import flash.geom.Rectangle;
 
 [SWF(width="800", height="600", backgroundColor="#000000", frameRate="60")]
 public class BasicExample2Sprite extends Sprite
@@ -115,6 +116,14 @@ public class BasicExample2Sprite extends Sprite
         // Create middle right sprite with color tint
         sprite = createSprite(500, 300, "atlas_0");
         sprite.node.transform.color = 0x00FF00;
+
+        stage.scaleMode = StageScaleMode.NO_SCALE;
+        stage.addEventListener(Event.RESIZE, stageResizeHandler);
+    }
+
+    private function stageResizeHandler(event:Event):void {
+        trace("resize");
+        genome.getContext().resize(new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight));
     }
 
     /**
