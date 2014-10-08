@@ -8,6 +8,8 @@
  */
 package examples.ui;
 
+import com.genome2d.utils.GVAlignType;
+import com.genome2d.utils.GHAlignType;
 import com.genome2d.assets.GAssetManager;
 import flash.events.Event;
 import flash.display.StageScaleMode;
@@ -111,10 +113,12 @@ class UIExample1Showcase
         Lib.current.stage.addEventListener(Event.RESIZE, resizeHandler);
 
         screenManager = cast GNodeFactory.createNodeWithComponent(GScreenManager);
+        screenManager.vAlign = GVAlignType.TOP;
         genome.root.addChild(screenManager.node);
         screenManager.setup(800,600,true);
 
         var sd:GTexture = GTextureFactory.createFromAsset("logo",assetManager.getImageAssetById("sd_gfx"),2);
+        GTextureFactory.createFromBitmapData("stage", new BitmapData(32,32,false,0x00FF00));
 
         screen1 = cast GNodeFactory.createNodeWithComponent(GSprite);
         screen1.textureId = "logo";
@@ -130,16 +134,16 @@ class UIExample1Showcase
         genome.root.addChild(screen4.node);
 
         stage1 = cast GNodeFactory.createNodeWithComponent(GSprite);
-        stage1.textureId = "logo";
+        stage1.textureId = "stage";
         genome.root.addChild(stage1.node);
         stage2 = cast GNodeFactory.createNodeWithComponent(GSprite);
-        stage2.textureId = "logo";
+        stage2.textureId = "stage";
         genome.root.addChild(stage2.node);
         stage3 = cast GNodeFactory.createNodeWithComponent(GSprite);
-        stage3.textureId = "logo";
+        stage3.textureId = "stage";
         genome.root.addChild(stage3.node);
         stage4 = cast GNodeFactory.createNodeWithComponent(GSprite);
-        stage4.textureId = "logo";
+        stage4.textureId = "stage";
         genome.root.addChild(stage4.node);
     }
 }
