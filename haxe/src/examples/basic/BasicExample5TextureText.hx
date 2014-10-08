@@ -8,14 +8,15 @@
  */
 package examples.basic;
 
+import com.genome2d.text.GTextureTextRenderer;
 import com.genome2d.node.GNode;
 import com.genome2d.utils.GVAlignType;
 import com.genome2d.utils.GVAlignType;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.context.GContextConfig;
-import com.genome2d.components.renderables.text.GTextureText;
+import com.genome2d.components.renderables.text.GText;
 import com.genome2d.utils.GHAlignType;
-import com.genome2d.components.renderables.text.GTextureText;
+import com.genome2d.components.renderables.text.GText;
 import com.genome2d.node.factory.GNodeFactory;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 import com.genome2d.Genome2D;
@@ -82,7 +83,7 @@ class BasicExample5TextureText
     private function initExample():Void {
         GTextureAtlasFactory.createFontFromAssets("font", assetManager.getImageAssetById("font_gfx"), assetManager.getXmlAssetById("font_xml"));
 
-        var text:GTextureText;
+        var text:GText;
 
         text = createText(150, 300, "font", "Hello Genome2D world.", GVAlignType.MIDDLE, GHAlignType.CENTER, 0);
 
@@ -90,9 +91,10 @@ class BasicExample5TextureText
         text.node.transform.rotation = 0.753;
     }
 
-    private function createText(p_x:Float, p_y:Float, p_textureAtlasId:String, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GTextureText {
-        var text:GTextureText = cast GNodeFactory.createNodeWithComponent(GTextureText);
-        text.textureAtlasId = p_textureAtlasId;
+    private function createText(p_x:Float, p_y:Float, p_textureAtlasId:String, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
+        var text:GText = cast GNodeFactory.createNodeWithComponent(GText);
+        text.renderer = new GTextureTextRenderer();
+        cast (text.renderer,GTextureTextRenderer).textureAtlasId = p_textureAtlasId;
         text.autoSize = true;
         text.text = p_text;
         text.tracking = p_tracking;

@@ -79,6 +79,8 @@ class BasicExample2Sprite
 
         sprite = createSprite(300, 200, "atlas_0");
 
+        trace(sprite.node.getBounds(genome.root));
+        return;
         sprite = createSprite(500, 200, "atlas_0");
         sprite.node.transform.setScale(2,2);
 
@@ -102,7 +104,7 @@ class BasicExample2Sprite
     private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
         var sprite:GSprite = cast GNodeFactory.createNodeWithComponent(GSprite);
         sprite.textureId = p_textureId;
-        sprite.node.transform.setPosition(p_x, p_y);
+        //sprite.node.transform.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 
         return sprite;
