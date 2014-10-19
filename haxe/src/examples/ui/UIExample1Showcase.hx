@@ -68,7 +68,6 @@ class UIExample1Showcase
         Initialize assets
      **/
     private function initAssets():Void {
-        trace("her");
         assetManager = new GAssetManager();
         assetManager.addUrl("sd_gfx", "x1\\Logo.png");
         assetManager.addUrl("hd_gfx", "x2\\Logo.png");
