@@ -8,6 +8,7 @@
  */
 package examples.advanced;
 
+import com.genome2d.signals.GNodeMouseSignal;
 import flash.display.BitmapData;
 import com.genome2d.textures.factories.GTextureFactory;
 import com.genome2d.signals.GMouseSignal;
@@ -81,40 +82,37 @@ class AdvancedExample2TileMap
      **/
     private function initExample():Void {
         GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
-        GTextureFactory.createFromBitmapData("rect", new BitmapData(60,60,false,0xFF0000));
+        GTextureFactory.createFromBitmapData("rect", new BitmapData(118,118,false,0xFF0000));
 
-        var mapWidth:Int = 60;
-        var mapHeight:Int = 41;
+        var mapWidth:Int = 10;
+        var mapHeight:Int = 10;
         var tiles:Array<GTile> = new Array<GTile>();
-        for(i in 0...mapWidth*mapHeight) tiles.push(null);
-        for (j in 0...mapHeight) {
-            for (i in 0...mapWidth) {
-                if (i%4==0 && j%4==0) {
-                    var tile:GTile = new GTile(4,4,i,j);
-                    tile.frameTextures = [GTexture.getTextureById("atlas_1"),GTexture.getTextureById("atlas_2"),GTexture.getTextureById("atlas_3"),GTexture.getTextureById("atlas_4"),GTexture.getTextureById("atlas_5"),GTexture.getTextureById("atlas_6"),GTexture.getTextureById("atlas_7")];
-                    tile.reversed = true;
-                    tile.repeatable = false;
-                    tile.gotoAndPlayFrame(6);
-                    for (b in 0...4) {
-                        for (a in 0...4) {
-                            if (i+a+(j+b)*mapWidth < tiles.length) {
-                                tiles[i+a+(j+b)*mapWidth] = tile;
-                            }
-                        }
-                    }
-                }
+        for(i in 0...Std.int(mapWidth*mapHeight)) tiles.push(null);
+        for (j in 0...mapHeight>>1) {
+            for (i in 0...mapWidth>>1) {
+                var tile:GTile = new GTile(2,2,i*2,j*2);
+                tile.textureId = "rect";// [GTexture.getTextureById("atlas_1"),GTexture.getTextureById("atlas_2"),GTexture.getTextureById("atlas_3"),GTexture.getTextureById("atlas_4"),GTexture.getTextureById("atlas_5"),GTexture.getTextureById("atlas_6"),GTexture.getTextureById("atlas_7")];
+                tile.reversed = true;
+                tile.repeatable = true;
+                tile.gotoAndPlayFrame(6);
+                tiles[i*2+j*2*mapWidth] = tile;
             }
         }
 
         var tileMap:GTileMap = cast GNodeFactory.createNodeWithComponent(GTileMap);
-        trace(tiles.length);
         tileMap.setTiles(tiles,mapWidth,mapHeight,60,60);
+        tileMap.node.mouseEnabled = true;
+        tileMap.node.onMouseMove.add(mouseMoveHandler);
         genome.root.addChild(tileMap.node);
 
         camera = cast GNodeFactory.createNodeWithComponent(GCameraController);
         genome.root.addChild(camera.node);
 
         genome.getContext().onMouseSignal.add(mouseHandler);
+    }
+
+    private function mouseMoveHandler(signal:GNodeMouseSignal):Void {
+
     }
 
     private var omx:Float = -1;

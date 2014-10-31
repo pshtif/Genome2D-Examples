@@ -8,6 +8,10 @@
  */
 package examples.basic;
 
+import com.genome2d.components.renderables.GSprite;
+import flash.display.BitmapData;
+import com.genome2d.textures.factories.GTextureFactory;
+import com.genome2d.textures.GTextureAtlas;
 import com.genome2d.text.GTextureTextRenderer;
 import com.genome2d.node.GNode;
 import com.genome2d.utils.GVAlignType;
@@ -83,19 +87,28 @@ class BasicExample5TextureText
     private function initExample():Void {
         GTextureAtlasFactory.createFontFromAssets("font", assetManager.getImageAssetById("font_gfx"), assetManager.getXmlAssetById("font_xml"));
 
+        GTextureFactory.createFromBitmapData("red", new BitmapData(64,16,false,0xFF0000));
+
+        var sprite:GSprite = cast GNodeFactory.createNodeWithComponent(GSprite);
+        sprite.textureId = "red";
+        sprite.node.transform.setPosition(150+32,300+8);
+        genome.root.addChild(sprite.node);
+
         var text:GText;
+        text = createText(150, 300, "font", "23", GVAlignType.MIDDLE, GHAlignType.CENTER, 0);
+        //text = createText(150, 300, "font", "Hello Genome2D world.", GVAlignType.MIDDLE, GHAlignType.CENTER, 0);
 
-        text = createText(150, 300, "font", "Hello Genome2D world.", GVAlignType.MIDDLE, GHAlignType.CENTER, 0);
-
-        text = createText(550, 200, "font", "Hello Genome2D\nin awesome\nmultiline text.", GVAlignType.TOP, GHAlignType.LEFT, 0, 0);
-        text.node.transform.rotation = 0.753;
+        //text = createText(550, 200, "font", "Hello Genome2D\nin awesome\nmultiline text.", GVAlignType.TOP, GHAlignType.LEFT, 0, 0);
+        //text.node.transform.rotation = 0.753;
     }
 
     private function createText(p_x:Float, p_y:Float, p_textureAtlasId:String, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
         var text:GText = cast GNodeFactory.createNodeWithComponent(GText);
         text.renderer = new GTextureTextRenderer();
         cast (text.renderer,GTextureTextRenderer).textureAtlasId = p_textureAtlasId;
-        text.autoSize = true;
+        //text.autoSize = true;
+        text.width = 64;
+        text.height = 16;
         text.text = p_text;
         text.tracking = p_tracking;
         text.lineSpace = p_lineSpace;

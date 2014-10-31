@@ -19,15 +19,14 @@ class ExampleWrapper {
 
     public function new() {
         //GStats.visible = true;
-
         //BasicExample1Initialization.main();
         //BasicExample2Sprite.main();
         //BasicExample3MovieClip.main();
         //BasicExample4Mouse.main();
         //BasicExample5TextureText.main();
         //BasicExample6SimpleParticles.main();
-        //AdvancedExample2TileMap.main();
-        UIExample1Showcase.main();
+        AdvancedExample2TileMap.main();
+        //UIExample1Showcase.main();
 
         //Test.main();
     }
