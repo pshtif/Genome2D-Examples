@@ -100,7 +100,7 @@ class AdvancedExample2TileMap
         }
 
         var tileMap:GTileMap = cast GNodeFactory.createNodeWithComponent(GTileMap);
-        tileMap.setTiles(tiles,mapWidth,mapHeight,60,60);
+        tileMap.setTiles(mapWidth,mapHeight,60,60,tiles);
         tileMap.node.mouseEnabled = true;
         tileMap.node.onMouseMove.add(mouseMoveHandler);
         genome.root.addChild(tileMap.node);

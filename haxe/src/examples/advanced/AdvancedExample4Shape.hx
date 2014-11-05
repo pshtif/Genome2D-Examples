@@ -1,4 +1,6 @@
 package examples.advanced;
+import com.genome2d.context.IContext;
+import com.genome2d.context.stage3d.GStage3DContext;
 import com.genome2d.geom.GRectangle;
 import flash.Vector;
 import com.genome2d.textures.GTexture;
@@ -17,15 +19,13 @@ import com.genome2d.textures.GTextureAtlas;
 import com.genome2d.textures.GTexture;
 import com.genome2d.assets.GAssetManager;
 
-class Example9Shape {
+class AdvancedExample4Shape {
 
-    static function main() {
-        var inst = new Example9Shape();
+    static public function main() {
+        var inst = new AdvancedExample4Shape();
     }
 
     private var assetManager:GAssetManager;
-    private var texture:GTexture;
-    private var atlas:GTextureAtlas;
 
     public function new() {
         initAssets();
@@ -34,38 +34,47 @@ class Example9Shape {
     private function initAssets():Void {
         trace("initAssets");
         assetManager = new GAssetManager();
-        assetManager.add(new GImageAsset("texture_gfx", "texture.jpg"));
-        assetManager.add(new GImageAsset("atlas_gfx", "atlas.png"));
-        assetManager.add(new GXmlAsset("atlas_xml", "atlas.xml"));
-        assetManager.onLoaded.add(assetsInitializedHandler);
+        assetManager.addUrl("texture_gfx", "texture.jpg");
+        assetManager.onAllLoaded.add(assetsInitializedHandler);
         assetManager.load();
     }
 
     private function assetsInitializedHandler():Void {
         trace("assetsInitializedHandler");
-        var contextConfig:GContextConfig = new GContextConfig(new GRectangle(0,0,800,600));
+        var contextConfig:GContextConfig = new GContextConfig();
 
         Genome2D.getInstance().onInitialized.add(genomeInitializedHandler);
         Genome2D.getInstance().init(contextConfig);
     }
 
+    private var v:Array<Float>;
+    private var u:Array<Float>;
+    private var texture:GTexture;
+
     private function genomeInitializedHandler():Void {
         trace("genomeInitializedHandler");
 
-        GTextureFactory.createFromAsset("texture", cast assetManager.getAssetById("texture_gfx"));
-        GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
+        texture = GTextureFactory.createFromAsset("texture", cast assetManager.getAssetById("texture_gfx"));
 
         var w:Int = 100 ;
         var h:Int = 100 ;
-        var v:Array<Float> = [0,0, w,0, 0,h, w,0, w,h, 0,h];
-        var u:Array<Float> = [0,0, 1,0, 0,1, 1,0, 1,1, 0,1];
+        v = [0,0, w,0, 0,h, w,0, w,h, 0,h];
+        u = [0,0.0, 1,0, 0,1, 1,0, 1,1, 0,1];
 
         var shape:GShape = cast GNodeFactory.createNodeWithComponent(GShape);
         shape.texture = GTexture.getTextureById("texture");
-        shape.init(v,u);
+        shape.setup(v,u);
         //shape.init([-20,20, -20,-20, 20,-20],[0,1, 0,0, 1,0]);
         shape.node.transform.setPosition(300,300);
         shape.node.transform.blue = 0;
         Genome2D.getInstance().root.addChild(shape.node);
+
+        Genome2D.getInstance().onPostRender.add(postRenderHandler);
+    }
+
+    private function postRenderHandler():Void {
+        var context:IContext = Genome2D.getInstance().getContext();
+        //context.draw(texture, 100, 100);
+        //context.drawPoly(GTexture.getTextureById("texture"), )
     }
 }

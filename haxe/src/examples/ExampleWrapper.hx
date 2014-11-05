@@ -9,6 +9,7 @@ import examples.basic.BasicExample5TextureText;
 import examples.basic.BasicExample6SimpleParticles;
 
 import examples.advanced.AdvancedExample2TileMap;
+import examples.advanced.AdvancedExample4Shape;
 
 import examples.ui.UIExample1Showcase;
 
@@ -25,7 +26,8 @@ class ExampleWrapper {
         //BasicExample4Mouse.main();
         //BasicExample5TextureText.main();
         //BasicExample6SimpleParticles.main();
-        AdvancedExample2TileMap.main();
+        //AdvancedExample2TileMap.main();
+        AdvancedExample4Shape.main();
         //UIExample1Showcase.main();
 
         //Test.main();
