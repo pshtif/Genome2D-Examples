@@ -130,9 +130,9 @@ public class BasicExample2Sprite extends Sprite
         Create a sprite helper function
      **/
     private function createSprite(p_x:int, p_y:int, p_textureId:String):GSprite {
-        // Create a node with sprite component
+        // Create a node with sprite components
         var sprite:GSprite = GNodeFactory.createNodeWithComponent(GSprite) as GSprite;
-        // Assign a texture to the sprite based on the texture ID
+        // Assign a textures to the sprite based on the textures ID
         sprite.textureId = p_textureId;
         // Set transform position for this node
         sprite.node.transform.setPosition(p_x, p_y);

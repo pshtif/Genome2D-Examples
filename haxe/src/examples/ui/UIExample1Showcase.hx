@@ -14,7 +14,6 @@ import com.genome2d.assets.GAssetManager;
 import flash.events.Event;
 import flash.display.StageScaleMode;
 import flash.Lib;
-import com.genome2d.components.GScreenManager;
 import com.genome2d.textures.GTexture;
 import com.genome2d.components.ui.GUI;
 import com.genome2d.textures.GTexture;
@@ -79,21 +78,6 @@ class UIExample1Showcase
         initExample();
     }
 
-    private function resizeHandler(event:Event):Void {
-        genome.getContext().resize(new GRectangle(0,0,Lib.current.stage.stageWidth,Lib.current.stage.stageHeight));
-
-        screen1.node.transform.setPosition(screenManager.screenLeft, screenManager.screenTop);
-        screen2.node.transform.setPosition(screenManager.screenRight, screenManager.screenTop);
-        screen3.node.transform.setPosition(screenManager.screenRight, screenManager.screenBottom);
-        screen4.node.transform.setPosition(screenManager.screenLeft, screenManager.screenBottom);
-
-        stage1.node.transform.setPosition(screenManager.stageLeft, screenManager.stageTop);
-        stage2.node.transform.setPosition(screenManager.stageRight, screenManager.stageTop);
-        stage3.node.transform.setPosition(screenManager.stageRight, screenManager.stageBottom);
-        stage4.node.transform.setPosition(screenManager.stageLeft, screenManager.stageBottom);
-    }
-
-    private var screenManager:GScreenManager;
     private var screen1:GSprite;
     private var screen2:GSprite;
     private var screen3:GSprite;
@@ -109,12 +93,6 @@ class UIExample1Showcase
     private function initExample():Void {
         trace("here");
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-        Lib.current.stage.addEventListener(Event.RESIZE, resizeHandler);
-
-        screenManager = cast GNodeFactory.createNodeWithComponent(GScreenManager);
-        screenManager.vAlign = GVAlignType.TOP;
-        genome.root.addChild(screenManager.node);
-        screenManager.setup(800,600,true);
 
         var sd:GTexture = GTextureFactory.createFromAsset("logo",assetManager.getImageAssetById("sd_gfx"),2);
         GTextureFactory.createFromBitmapData("stage", new BitmapData(32,32,false,0x00FF00));

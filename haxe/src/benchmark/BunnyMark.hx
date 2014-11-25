@@ -1,7 +1,7 @@
 package benchmark;
 
 import com.genome2d.node.factory.GNodeFactory;
-import com.genome2d.context.GContextCamera;
+import com.genome2d.context.GCamera;
 import com.genome2d.components.renderables.GSprite;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.assets.GAssetManager;
@@ -141,7 +141,7 @@ class BunnySprite extends GSprite {
         textureId = "bunny";
     }
 
-    override public function render(p_camera:GContextCamera, p_useMatrix:Bool):Void {
+    override public function render(p_camera:GCamera, p_useMatrix:Bool):Void {
         node.transform.x += speedX;
         node.transform.y += speedY;
         speedY += 0.75;

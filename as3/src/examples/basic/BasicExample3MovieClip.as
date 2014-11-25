@@ -121,7 +121,7 @@ public class BasicExample3MovieClip extends Sprite
         Create a movie clip helper function
     **/
     private function createMovieClip(p_x:int, p_y:int, p_frames:Array):GMovieClip {
-        // Create a node with sprite component
+        // Create a node with sprite components
         var clip:GMovieClip = GNodeFactory.createNodeWithComponent(GMovieClip) as GMovieClip;
         // Assign animation frames
         clip.frameTextureIds = p_frames;

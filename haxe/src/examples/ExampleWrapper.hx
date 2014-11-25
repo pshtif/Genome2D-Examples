@@ -27,9 +27,9 @@ class ExampleWrapper {
         //BasicExample5TextureText.main();
         //BasicExample6SimpleParticles.main();
         //AdvancedExample2TileMap.main();
-        AdvancedExample4Shape.main();
+        //AdvancedExample4Shape.main();
         //UIExample1Showcase.main();
 
-        //Test.main();
+        Test.main();
     }
 }

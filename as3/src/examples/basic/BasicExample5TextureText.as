@@ -102,7 +102,7 @@ public class BasicExample5TextureText extends Sprite
     }
 
     private function createText(p_x:Number, p_y:Number, p_textureAtlasId:String, p_text:String, p_vAlign:int, p_hAlign:int, p_tracking:int = 0, p_lineSpace:int = 0):GTextureText {
-        // Create our texture text component
+        // Create our textures text components
         var text:GTextureText = GNodeFactory.createNodeWithComponent(GTextureText) as GTextureText;
         // Specify the atlas where the font textures are
         text.textureAtlasId = p_textureAtlasId;
@@ -120,7 +120,7 @@ public class BasicExample5TextureText extends Sprite
         text.vAlign = p_vAlign;
         // Specify the horizontal alignment of the text
         text.hAlign = p_hAlign;
-        // Set the position of our component
+        // Set the position of our components
         text.node.transform.setPosition(p_x, p_y);
         // Add it to the render list
         Genome2D.getInstance().root.addChild(text.node);

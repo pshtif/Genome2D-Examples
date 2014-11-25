@@ -30,7 +30,7 @@ class Example5Cameras {
     private function initAssets():Void {
         trace("initAssets");
         assetManager = new GAssetManager();
-        assetManager.add(new GImageAsset("texture_gfx", "texture.jpg"));
+        assetManager.add(new GImageAsset("texture_gfx", "textures.jpg"));
         assetManager.add(new GXmlAsset("atlas_xml", "atlas.xml"));
         assetManager.add(new GImageAsset("atlas_gfx", "atlas.png"));
         assetManager.onLoaded.add(assetsInitializedHandler);
@@ -49,7 +49,7 @@ class Example5Cameras {
     private function genomeInitializedHandler():Void {
         trace("genomeInitializedHandler");
 
-        GTextureFactory.createFromAsset("texture", cast assetManager.getAssetById("texture_gfx"));
+        GTextureFactory.createFromAsset("textures", cast assetManager.getAssetById("texture_gfx"));
         GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
 
         for (i in 0...50) {

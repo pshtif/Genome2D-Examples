@@ -38,7 +38,7 @@ class Example7ParticleSystem {
     private function initAssets():Void {
         trace("initAssets");
         assetManager = new GAssetManager();
-        assetManager.add(new GImageAsset("texture_gfx", "texture.jpg"));
+        assetManager.add(new GImageAsset("texture_gfx", "textures.jpg"));
         assetManager.add(new GImageAsset("atlas_gfx", "atlas.png"));
         assetManager.add(new GXmlAsset("atlas_xml", "atlas.xml"));
         assetManager.onLoaded.add(assetsInitializedHandler);

@@ -34,7 +34,7 @@ class Example9Shape {
     private function initAssets():Void {
         trace("initAssets");
         assetManager = new GAssetManager();
-        assetManager.add(new GImageAsset("texture_gfx", "texture.jpg"));
+        assetManager.add(new GImageAsset("texture_gfx", "textures.jpg"));
         assetManager.add(new GImageAsset("atlas_gfx", "atlas.png"));
         assetManager.add(new GXmlAsset("atlas_xml", "atlas.xml"));
         assetManager.onLoaded.add(assetsInitializedHandler);
@@ -52,7 +52,7 @@ class Example9Shape {
     private function genomeInitializedHandler():Void {
         trace("genomeInitializedHandler");
 
-        GTextureFactory.createFromAsset("texture", cast assetManager.getAssetById("texture_gfx"));
+        GTextureFactory.createFromAsset("textures", cast assetManager.getAssetById("texture_gfx"));
         GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
 
         var w:Int = 100 ;
@@ -61,7 +61,7 @@ class Example9Shape {
         var u:Array<Float> = [0,0, 1,0, 0,1, 1,0, 1,1, 0,1];
 
         var shape:GShape = cast GNodeFactory.createNodeWithComponent(GShape);
-        shape.texture = GTexture.getTextureById("texture");
+        shape.texture = GTexture.getTextureById("textures");
         shape.init(v,u);
         //shape.init([-20,20, -20,-20, 20,-20],[0,1, 0,0, 1,0]);
         shape.node.transform.setPosition(300,300);

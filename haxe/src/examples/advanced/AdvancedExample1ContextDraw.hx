@@ -32,7 +32,7 @@ class AdvancedExample1ContextDraw {
     private function initAssets():Void {
         trace("initAssets");
         assetManager = new GAssetManager();
-        assetManager.add(new GImageAsset("texture_gfx", "texture.jpg"));
+        assetManager.add(new GImageAsset("texture_gfx", "textures.jpg"));
         assetManager.add(new GXmlAsset("atlas_xml", "atlas.xml"));
         assetManager.add(new GImageAsset("atlas_gfx", "atlas.png"));
         assetManager.onLoaded.add(assetsInitializedHandler);
@@ -62,7 +62,7 @@ class AdvancedExample1ContextDraw {
         var context:IContext = Genome2D.getInstance().getContext();
         var skewX:Float = 0;
         var skewY:Float = 1;
-        //context.drawMatrix(texture,2*(.5-Math.abs(skewX)), skewX, skewY, 1, 200, 200-100*Math.abs(skewX));
+        //context.drawMatrix(textures,2*(.5-Math.abs(skewX)), skewX, skewY, 1, 200, 200-100*Math.abs(skewX));
         context.drawSource(atlas.getSubTexture("g100"), 0, 0, 128, 128, 100, 100);
     }
 }

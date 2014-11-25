@@ -91,9 +91,9 @@ public class BasicExample6SimpleParticles extends Sprite
         // Create our assets atlas
         GTextureAtlasFactory.createFromAssets("atlas", assetManager.getImageAssetById("atlas_gfx"), assetManager.getXmlAssetById("atlas_xml"));
 
-        // Create our simple particle system
+        // Create our simple particles system
         var simpleParticleSystem:GSimpleParticleSystem = GNodeFactory.createNodeWithComponent(GSimpleParticleSystem) as GSimpleParticleSystem;
-        // Specify texture id used for the particles
+        // Specify textures id used for the particles
         simpleParticleSystem.textureId = "atlas_particle";
         // Specify emission of particles per seconds
         simpleParticleSystem.emission = 128;
@@ -107,15 +107,15 @@ public class BasicExample6SimpleParticles extends Sprite
         simpleParticleSystem.initialVelocity = 50;
         // Specify random variance of initial velocity
         simpleParticleSystem.initialVelocityVariance = 100;
-        // Specify random variance of particle angle
+        // Specify random variance of particles angle
         simpleParticleSystem.initialAngleVariance = 5;
         // Specify end alpha
         simpleParticleSystem.endAlpha = 0;
         // Specify end scale
         simpleParticleSystem.endScale = .2;
-        // Set the position of the particle system
+        // Set the position of the particles system
         simpleParticleSystem.node.transform.setPosition(400,300);
-        // Add the particle system to our display graph
+        // Add the particles system to our display graph
         Genome2D.getInstance().root.addChild(simpleParticleSystem.node);
     }
 }

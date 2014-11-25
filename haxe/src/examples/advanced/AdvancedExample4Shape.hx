@@ -34,7 +34,7 @@ class AdvancedExample4Shape {
     private function initAssets():Void {
         trace("initAssets");
         assetManager = new GAssetManager();
-        assetManager.addUrl("texture_gfx", "texture.jpg");
+        assetManager.addUrl("texture_gfx", "textures.jpg");
         assetManager.onAllLoaded.add(assetsInitializedHandler);
         assetManager.load();
     }
@@ -54,7 +54,7 @@ class AdvancedExample4Shape {
     private function genomeInitializedHandler():Void {
         trace("genomeInitializedHandler");
 
-        texture = GTextureFactory.createFromAsset("texture", cast assetManager.getAssetById("texture_gfx"));
+        texture = GTextureFactory.createFromAsset("textures", cast assetManager.getAssetById("texture_gfx"));
 
         var w:Int = 100 ;
         var h:Int = 100 ;
@@ -62,7 +62,7 @@ class AdvancedExample4Shape {
         u = [0,0.0, 1,0, 0,1, 1,0, 1,1, 0,1];
 
         var shape:GShape = cast GNodeFactory.createNodeWithComponent(GShape);
-        shape.texture = GTexture.getTextureById("texture");
+        shape.texture = GTexture.getTextureById("textures");
         shape.setup(v,u);
         //shape.init([-20,20, -20,-20, 20,-20],[0,1, 0,0, 1,0]);
         shape.node.transform.setPosition(300,300);
@@ -74,7 +74,7 @@ class AdvancedExample4Shape {
 
     private function postRenderHandler():Void {
         var context:IContext = Genome2D.getInstance().getContext();
-        //context.draw(texture, 100, 100);
-        //context.drawPoly(GTexture.getTextureById("texture"), )
+        //context.draw(textures, 100, 100);
+        //context.drawPoly(GTexture.getTextureById("textures"), )
     }
 }
