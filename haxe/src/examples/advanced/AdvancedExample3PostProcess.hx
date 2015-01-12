@@ -34,7 +34,7 @@ import com.genome2d.components.renderables.GSprite;
 import com.genome2d.signals.GMouseSignal;
 import com.genome2d.components.GCameraController;
 import com.genome2d.textures.GTexture;
-import com.genome2d.components.renderables.tilemap.GTile;
+import com.genome2d.tilemap.GTile;
 import com.genome2d.components.renderables.tilemap.GTileMap;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 import com.genome2d.node.factory.GNodeFactory;

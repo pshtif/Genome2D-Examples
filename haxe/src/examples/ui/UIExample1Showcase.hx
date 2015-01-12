@@ -27,7 +27,7 @@ import flash.display.BitmapData;
 import com.genome2d.textures.factories.GTextureFactory;
 import com.genome2d.components.GComponent;
 import com.genome2d.node.factory.GNodeFactory;
-import com.genome2d.ui.GUIContainer;
+import com.genome2d.ui.controls.GUIContainer;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 
