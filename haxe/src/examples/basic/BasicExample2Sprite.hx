@@ -8,9 +8,11 @@
  */
 package examples.basic;
 
-import com.genome2d.textures.factories.GTextureAtlasFactory;
-import com.genome2d.components.renderables.GSprite;
-import com.genome2d.node.factory.GNodeFactory;
+import com.genome2d.context.stats.GStats;
+import com.genome2d.node.GNode;
+import com.genome2d.textures.GTextureManager;
+import com.genome2d.components.renderable.GSprite;
+import com.genome2d.assets.GAssetManager;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.assets.GAssetManager;
@@ -39,6 +41,8 @@ class BasicExample2Sprite
         Initialize Genome2D
      **/
     private function initGenome():Void {
+        GStats.visible = true;
+
         genome = Genome2D.getInstance();
         genome.onInitialized.add(genomeInitializedHandler);
         genome.init(new GContextConfig());
@@ -55,17 +59,15 @@ class BasicExample2Sprite
         Initialize assets
      **/
     private function initAssets():Void {
-        assetManager = new GAssetManager();
-        assetManager.addUrl("atlas_gfx", "atlas.png");
-        assetManager.addUrl("atlas_xml", "atlas.xml");
-        assetManager.onAllLoaded.add(assetsInitializedHandler);
-        assetManager.load();
+        GAssetManager.addFromUrl("atlas.png");
+        GAssetManager.addFromUrl("atlas.xml");
+        GAssetManager.loadQueue(assetsLoadedHandler);
     }
 
     /**
         Assets initialization handler dispatched after all assets were initialized
      **/
-    private function assetsInitializedHandler():Void {
+    private function assetsLoadedHandler():Void {
         initExample();
     }
 
@@ -73,14 +75,12 @@ class BasicExample2Sprite
         Initialize Example code
      **/
     private function initExample():Void {
-        GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
+        GTextureManager.createAtlasFromAssetIds("atlas", "atlas.png", "atlas.xml");
 
         var sprite:GSprite;
 
         sprite = createSprite(300, 200, "atlas_0");
 
-        trace(sprite.node.getBounds(genome.root));
-        return;
         sprite = createSprite(500, 200, "atlas_0");
         sprite.node.transform.setScale(2,2);
 
@@ -102,9 +102,9 @@ class BasicExample2Sprite
         Create a sprite helper function
      **/
     private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
-        var sprite:GSprite = cast GNodeFactory.createNodeWithComponent(GSprite);
+        var sprite:GSprite = cast GNode.createWithComponent(GSprite);
         sprite.textureId = p_textureId;
-        //sprite.node.transform.setPosition(p_x, p_y);
+        sprite.node.transform.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 
         return sprite;

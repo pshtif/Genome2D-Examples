@@ -8,9 +8,9 @@
  */
 package examples.basic;
 
-import com.genome2d.components.renderables.GMovieClip;
-import com.genome2d.node.factory.GNodeFactory;
-import com.genome2d.textures.factories.GTextureAtlasFactory;
+import com.genome2d.node.GNode;
+import com.genome2d.textures.GTextureManager;
+import com.genome2d.components.renderable.GMovieClip;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.textures.GTextureAtlas;
@@ -56,17 +56,15 @@ class BasicExample3MovieClip
          Initialize assets
      **/
     private function initAssets():Void {
-        assetManager = new GAssetManager();
-        assetManager.addUrl("atlas_gfx", "atlas.png");
-        assetManager.addUrl("atlas_xml", "atlas.xml");
-        assetManager.onAllLoaded.add(assetsInitializedHandler);
-        assetManager.load();
+        GAssetManager.addFromUrl("atlas.png");
+        GAssetManager.addFromUrl("atlas.xml");
+        GAssetManager.loadQueue(assetsLoadedHandler);
     }
 
     /**
          Assets initialization handler dispatched after all assets were initialized
      **/
-    private function assetsInitializedHandler():Void {
+    private function assetsLoadedHandler():Void {
         initExample();
     }
 
@@ -74,7 +72,7 @@ class BasicExample3MovieClip
          Initialize Example code
      **/
     private function initExample():Void {
-        GTextureAtlasFactory.createFromAssets("atlas", cast assetManager.getAssetById("atlas_gfx"), cast assetManager.getAssetById("atlas_xml"));
+        GTextureManager.createAtlasFromAssetIds("atlas", "atlas.png", "atlas.xml");
 
         var clip:GMovieClip;
 
@@ -98,7 +96,7 @@ class BasicExample3MovieClip
     }
 
     private function createMovieClip(p_x:Float, p_y:Float, p_frames:Array<String>):GMovieClip {
-        var clip:GMovieClip = cast GNodeFactory.createNodeWithComponent(GMovieClip);
+        var clip:GMovieClip = cast GNode.createNodeWithComponent(GMovieClip);
         clip.frameRate = 10;
         clip.frameTextureIds = p_frames;
         clip.node.transform.setPosition(p_x, p_y);
