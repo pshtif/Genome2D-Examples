@@ -1,13 +1,12 @@
 # Include sources
--cp context/flash/src
--cp context/common/src
--cp core/src
--cp examples/haxe/src
+-cp Genome2D-ContextFlash/src
+-cp Genome2D-ContextCommon/src
+-cp Genome2D-Core/src
+-cp Genome2D-Examples/haxe/src
 
 # Include libraries
 -lib msignal
--lib actuate
--swf-lib context/flash/lib/AGAL.swc
+-swf-lib Genome2D-ContextFlash/lib/AGAL.swc
 
 # Debug flags
 -D fdb
@@ -15,7 +14,7 @@
 -D advanced-telemetry
 
 # Genome2D flags
-#-D stage3Donly
+-D stage3Donly
 
 # Haxe flags
 #--no-inline
@@ -27,5 +26,5 @@
 
 # Flash flags
 -swf-version 12.0
--swf ../out/Example.swf
+-swf Genome2D-Examples/bin/Example.swf
 -swf-header 1024:768:60:000000
