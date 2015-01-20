@@ -43,7 +43,7 @@ class BasicExample6SimpleParticles
      **/
     private function initGenome():Void {
         genome = Genome2D.getInstance();
-        genome.onInitialized.add(genomeInitializedHandler);
+        genome.onInitialized.addOnce(genomeInitializedHandler);
         genome.init(new GContextConfig());
     }
 
@@ -58,11 +58,10 @@ class BasicExample6SimpleParticles
         Initialize assets
      **/
     private function initAssets():Void {
-        assetManager = new GAssetManager();
-        assetManager.addUrl("atlas_gfx", "atlas.png");
-        assetManager.addUrl("atlas_xml", "atlas.xml");
-        assetManager.onAllLoaded.add(assetsInitializedHandler);
-        assetManager.load();
+        GAssetManager.addFromUrl("atlas_gfx", "atlas.png");
+        GAssetManager.addFromUrl("atlas_xml", "atlas.xml");
+        GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
+        GAssetManager.loadQueue();
     }
 
     /**

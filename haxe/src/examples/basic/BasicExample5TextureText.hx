@@ -67,11 +67,10 @@ class BasicExample5TextureText
         Initialize assets
      **/
     private function initAssets():Void {
-        assetManager = new GAssetManager();
-        assetManager.addUrl("font_gfx", "font.png");
-        assetManager.addUrl("font_xml", "font.fnt");
-        assetManager.onAllLoaded.add(assetsInitializedHandler);
-        assetManager.load();
+        GAssetManager.addFromUrl("font.png");
+        GAssetManager.addFromUrl("font.fnt");
+        GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
+        GAssetManager.loadQueue();
     }
 
     /**

@@ -31,7 +31,7 @@ class BasicExample1Initialization
      **/
     private function initGenome():Void {
         genome = Genome2D.getInstance();
-        genome.onInitialized.add(genomeInitializedHandler);
+        genome.onInitialized.addOnce(genomeInitializedHandler);
         genome.init(new GContextConfig());
     }
 

@@ -44,7 +44,7 @@ class BasicExample2Sprite
         GStats.visible = true;
 
         genome = Genome2D.getInstance();
-        genome.onInitialized.add(genomeInitializedHandler);
+        genome.onInitialized.addOnce(genomeInitializedHandler);
         genome.init(new GContextConfig());
     }
 
@@ -61,7 +61,8 @@ class BasicExample2Sprite
     private function initAssets():Void {
         GAssetManager.addFromUrl("atlas.png");
         GAssetManager.addFromUrl("atlas.xml");
-        GAssetManager.loadQueue(assetsLoadedHandler);
+        GAssetManager.onQueueLoaded.addOnce(assetsLoadedHandler);
+        GAssetManager.loadQueue();
     }
 
     /**

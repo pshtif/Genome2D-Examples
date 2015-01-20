@@ -41,7 +41,7 @@ class BasicExample3MovieClip
      **/
     private function initGenome():Void {
         genome = Genome2D.getInstance();
-        genome.onInitialized.add(genomeInitializedHandler);
+        genome.onInitialized.addOnce(genomeInitializedHandler);
         genome.init(new GContextConfig());
     }
 
@@ -58,6 +58,7 @@ class BasicExample3MovieClip
     private function initAssets():Void {
         GAssetManager.addFromUrl("atlas.png");
         GAssetManager.addFromUrl("atlas.xml");
+        GAssetManager.onQueueLoaded.addOnce(assetsLoadedHandler);
         GAssetManager.loadQueue(assetsLoadedHandler);
     }
 
