@@ -21,10 +21,10 @@
 #--no-traces
 
 # Main class
--main examples.ExampleWrapper
-#-main examples.Test
+#-main examples.ExampleWrapper
+-main test.Test
 
 # Flash flags
 -swf-version 12.0
 -swf Genome2D-Examples/bin/Example.swf
--swf-header 1024:768:60:000000
+-swf-header 800:600:60:000000

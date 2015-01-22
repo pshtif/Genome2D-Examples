@@ -2,43 +2,28 @@ package examples;
 
 import com.genome2d.components.GCameraController;
 import com.genome2d.signals.GUIMouseSignal;
-import com.genome2d.text.GTextureTextRenderer;
-import com.genome2d.components.renderable.text.GText;
 import com.genome2d.assets.GAsset;
 import com.genome2d.ui.GUIElement;
-import com.genome2d.geom.GRectangle;
-import flash.events.MouseEvent;
 import flash.Lib;
-import flash.display.Sprite;
 import com.genome2d.ui.skin.GUISkin;
-import com.genome2d.ui.skin.GUIFontSkin;
-import com.genome2d.ui.GUILayout;
-import com.genome2d.ui.GUISkinManager;
 import com.genome2d.ui.GUIElement;
-import com.genome2d.ui.skin.GUITextureSkin;
 import Xml;
-import com.genome2d.textures.GTextureAtlas;
-import flash.display.Bitmap;
-import com.genome2d.textures.GTextureManager;
 import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.proto.IGPrototypable;
-import com.genome2d.macros.MGPrototypeProcessor;
-import haxe.rtti.Meta;
 import com.genome2d.components.ui.GUI;
 import com.genome2d.textures.GTexture;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
 import com.genome2d.Genome2D;
-import com.genome2d.components.renderable.GSprite;
 import com.genome2d.node.GNode;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.assets.GAssetManager;
 
-class Test {
+class UIEdit {
 
     static public function main() {
-        var inst = new Test();
+        var inst = new UIEdit();
     }
 
     private var genome:Genome2D;
