@@ -1,5 +1,8 @@
 package examples;
 
+import com.genome2d.ui.GUILayout;
+import com.genome2d.ui.skin.GUIFontSkin;
+import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.components.GCameraController;
 import com.genome2d.signals.GUIMouseSignal;
 import com.genome2d.assets.GAsset;
@@ -56,11 +59,11 @@ class UIEdit {
         trace("initAssets");
 
         GAssetManager.init();
+        GAssetManager.addFromUrl("Untitled.png");
         GAssetManager.addFromUrl("ui.png");
         GAssetManager.addFromUrl("ui.xml");
-        GAssetManager.addFromUrl("font_ui.png");
-        GAssetManager.addFromUrl("font_ui.fnt");
-        GAssetManager.loadQueue(assetsInitializedHandler);
+        GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
+        GAssetManager.loadQueue();
     }
 
     private function assetsInitializedHandler():Void {
@@ -70,11 +73,7 @@ class UIEdit {
     }
 
     private var xmlDef:String = "<def>"+
-                                    "<textureSkin id='xpSkin' textureId='ui.png_btn_xp' />"+
-                                    "<textureSkin id='energySkin' textureId='ui.png_btn_energy' />"+
-                                    "<textureSkin id='goldSkin' textureId='ui.png_btn_gold' />"+
-                                    "<textureSkin id='gemSkin' textureId='ui.png_btn_gem' />"+
-                                    "<fontSkin id='xpLabelSkin' fontAtlasId='font_ui.png' text='Hello world' />"+
+                                    "<textureSkin id='xpSkin' textureId='buttont01.png' />"+
 
                                     "<element anchorX='0' anchorY='0' anchorLeft='0' anchorTop='0' anchorRight='0' anchorBottom='0' pivotX='0' pivotY='0'>"+
                                         "<layout><GUILayout gap='10'/></layout>"+
@@ -86,10 +85,11 @@ class UIEdit {
                                     /**/
                                 "</def>";
 
-    @:access(com.genome2d.textures.GTexture)
     private function initExample():Void {
-        GAssetManager.generateTextures(.5);
-
+        trace("initExample");
+        GAssetManager.generateTextures();
+    var a:GUITextureSkin;
+        var f:GUIFontSkin;
         var camera:GCameraController = cast GNode.createWithComponent(GCameraController);
         camera.setViewport(2048,1536,true);
         genome.root.addChild(camera.node);
@@ -100,7 +100,7 @@ class UIEdit {
         ui.node.mouseEnabled = true;
         genome.root.addChild(ui.node);
 
-
+        /*
         var xml:Xml = Xml.parse(xmlDef).firstChild();
         for (i in xml.elements()) {
             var p:IGPrototypable = GPrototypeFactory.createPrototype(i);
@@ -114,7 +114,7 @@ class UIEdit {
                 ui.root.addChild(element);
             }
         }
-        /*
+        /**/
         ui = cast GNode.createWithComponent(GUI);
         ui.root.setRect(0,0,2038,1536);
         ui.node.mouseEnabled = true;
@@ -122,28 +122,29 @@ class UIEdit {
 
         var scrollContainer:GUIElement = new GUIElement();
         scrollContainer.id = "container";
-        scrollContainer.anchorLeft = scrollContainer.anchorRight = 0;
-        scrollContainer.pivotX = 0;
         scrollContainer.mouseEnabled = true;
         scrollContainer.onMouseDown.add(mouseDownHandler);
-        scrollContainer.layout = new GUILayout();
         ui.root.addChild(scrollContainer);
 
-        for (i in 0...5) {
             var skin:GUITextureSkin = new GUITextureSkin();
+            skin.sliceLeft = 43;
+            skin.sliceRight = 86;
+            skin.sliceTop = 43;
+            skin.sliceBottom = 86;
             //skin.textureId = "ui.png_img_shop_card_cleen";
+            skin.textureId = "Untitled.png";
 
             var card:GUIElement = new GUIElement();
-            card.value = {value:"ui.png_img_shop_card_cleen"};
             card.normalSkin = skin;
+        card.preferredWidth = 300;
+        card.preferredHeight = 300;
             scrollContainer.addChild(card);
 
             var image:GUIElement = new GUIElement();
             image.normalSkin = new GUITextureSkin();
             image.anchorTop = image.anchorBottom = .3;
             card.addChild(image);
-        }
-        /**/
+        /*
         rectGizmo = new RectGizmo();
         Lib.current.addChild(rectGizmo);
 

@@ -4,7 +4,7 @@ import com.genome2d.context.stats.GStats;
 import examples.basic.BasicExample1Initialization;
 import examples.basic.BasicExample2Sprite;
 //import examples.basic.BasicExample3MovieClip;
-//import examples.basic.BasicExample4Mouse;
+import examples.basic.BasicExample4Mouse;
 //import examples.basic.BasicExample5TextureText;
 //import examples.basic.BasicExample6SimpleParticles;
 
@@ -21,9 +21,9 @@ class ExampleWrapper {
     public function new() {
         //GStats.visible = true;
         //BasicExample1Initialization.main();
-        BasicExample2Sprite.main();
+        //BasicExample2Sprite.main();
         //BasicExample3MovieClip.main();
-        //BasicExample4Mouse.main();
+        BasicExample4Mouse.main();
         //BasicExample5TextureText.main();
         //BasicExample6SimpleParticles.main();
         //AdvancedExample2TileMap.main();

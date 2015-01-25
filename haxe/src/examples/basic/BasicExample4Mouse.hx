@@ -13,9 +13,7 @@ import com.genome2d.textures.GTextureManager;
 import com.genome2d.Genome2D;
 import com.genome2d.signals.GNodeMouseSignal;
 import com.genome2d.node.GNode;
-import com.genome2d.node.factory.GNodeFactory;
-import com.genome2d.textures.factories.GTextureAtlasFactory;
-import com.genome2d.components.renderables.GSprite;
+import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.textures.GTexture;
 import com.genome2d.assets.GAssetManager;
@@ -63,7 +61,7 @@ class BasicExample4Mouse
     private function initAssets():Void {
         GAssetManager.addFromUrl("atlas.png");
         GAssetManager.addFromUrl("atlas.xml");
-        GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
+        GAssetManager.onQueueLoaded.addOnce(assetsLoadedHandler);
         GAssetManager.loadQueue();
     }
 
@@ -78,20 +76,21 @@ class BasicExample4Mouse
         Initialize Example code
      **/
     private function initExample():Void {
+        trace("initExample");
         GAssetManager.generateTextures();
 
-        var sprite:GSprite = cast GNode.createWithComponent(GSprite);
-        sprite.textureId = "atlas_0";
-        sprite.node.transform.setPosition(400, 300);
+        var node:GNode = GNode.create();
+        node.texture = GTextureManager.getTextureById("atlas.png_0");
+        node.setPosition(400, 300);
 
-        sprite.node.mouseEnabled = true;
-        sprite.node.onMouseClick.add(mouseClickHandler);
-        sprite.node.onMouseOver.add(mouseOverHandler);
-        sprite.node.onMouseOut.add(mouseOutHandler);
-        sprite.node.onMouseDown.add(mouseDownHandler);
-        sprite.node.onMouseUp.add(mouseUpHandler);
+        node.mouseEnabled = true;
+        node.onMouseClick.add(mouseClickHandler);
+        node.onMouseOver.add(mouseOverHandler);
+        node.onMouseOut.add(mouseOutHandler);
+        node.onMouseDown.add(mouseDownHandler);
+        node.onMouseUp.add(mouseUpHandler);
 
-        genome.root.addChild(sprite.node);
+        genome.root.addChild(node);
     }
 
     /**

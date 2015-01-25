@@ -83,20 +83,20 @@ class BasicExample2Sprite
         sprite = createSprite(300, 200, "atlas_0");
 
         sprite = createSprite(500, 200, "atlas_0");
-        sprite.node.transform.setScale(2,2);
+        sprite.node.setScale(2,2);
 
         sprite = createSprite(300, 400, "atlas_0");
-        sprite.node.transform.rotation = 0.753;
+        sprite.node.rotation = 0.753;
 
         sprite = createSprite(500, 400, "atlas_0");
-        sprite.node.transform.rotation = 0.753;
-        sprite.node.transform.setScale(2,2);
+        sprite.node.rotation = 0.753;
+        sprite.node.setScale(2,2);
 
         sprite = createSprite(300, 300, "atlas_0");
-        sprite.node.transform.alpha = .5;
+        sprite.node.alpha = .5;
 
         sprite = createSprite(500, 300, "atlas_0");
-        sprite.node.transform.color = 0x00FF00;
+        sprite.node.color = 0x00FF00;
     }
 
     /**
@@ -105,7 +105,7 @@ class BasicExample2Sprite
     private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
         var sprite:GSprite = cast GNode.createWithComponent(GSprite);
         sprite.textureId = p_textureId;
-        sprite.node.transform.setPosition(p_x, p_y);
+        sprite.node.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 
         return sprite;
