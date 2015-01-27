@@ -1,11 +1,10 @@
 package examples;
 
 import msignal.Signal.Signal1;
-import com.genome2d.ui.GUIElement;
 import flash.display.MovieClip;
 import flash.text.TextFormat;
 import flash.text.TextField;
-import com.genome2d.ui.GUIElement;
+import com.genome2d.ui.element.GUIElement;
 import flash.events.MouseEvent;
 import flash.display.Sprite;
 

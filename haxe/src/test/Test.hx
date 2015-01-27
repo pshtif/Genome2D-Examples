@@ -1,4 +1,5 @@
 package test;
+
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.node.GNode;
 import com.genome2d.components.renderable.GSprite;
@@ -6,6 +7,7 @@ import com.genome2d.assets.GAssetManager;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.context.stats.GStats;
+
 class Test {
     static function main() {
         new Test();

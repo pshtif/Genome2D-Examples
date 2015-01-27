@@ -1,19 +1,21 @@
 package examples;
 
-import com.genome2d.ui.GUILayout;
+import com.genome2d.ui.layout.GUIHorizontalLayout;
+import com.genome2d.ui.layout.GUIVerticalLayout;
+import com.genome2d.ui.layout.GUILayoutType;
+import com.genome2d.components.renderable.ui.GUI;
+import com.genome2d.ui.layout.GUILayout;
 import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.components.GCameraController;
 import com.genome2d.signals.GUIMouseSignal;
 import com.genome2d.assets.GAsset;
-import com.genome2d.ui.GUIElement;
 import flash.Lib;
 import com.genome2d.ui.skin.GUISkin;
-import com.genome2d.ui.GUIElement;
+import com.genome2d.ui.element.GUIElement;
 import Xml;
 import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.proto.IGPrototypable;
-import com.genome2d.components.ui.GUI;
 import com.genome2d.textures.GTexture;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
@@ -62,6 +64,8 @@ class UIEdit {
         GAssetManager.addFromUrl("Untitled.png");
         GAssetManager.addFromUrl("ui.png");
         GAssetManager.addFromUrl("ui.xml");
+        GAssetManager.addFromUrl("font_ui.png");
+        GAssetManager.addFromUrl("font_ui.fnt");
         GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
         GAssetManager.loadQueue();
     }
@@ -73,14 +77,15 @@ class UIEdit {
     }
 
     private var xmlDef:String = "<def>"+
-                                    "<textureSkin id='xpSkin' textureId='buttont01.png' />"+
+                                    "<textureSkin id='xpSkin' textureId='Untitled.png' />"+
+                                    "<fontSkin id='font' fontAtlasId='font_ui.png' text='aaaa'/>"+
 
                                     "<element anchorX='0' anchorY='0' anchorLeft='0' anchorTop='0' anchorRight='0' anchorBottom='0' pivotX='0' pivotY='0'>"+
-                                        "<layout><GUILayout gap='10'/></layout>"+
+                                        "<horizontal gap='100'/>"+
                                         "<element normalSkinId='xpSkin'/>"+
-                                        "<element normalSkinId='energySkin'/>"+
-                                        "<element normalSkinId='goldSkin'/>"+
-                                        "<element normalSkinId='xpLabelSkin'/>"+
+                                        "<element normalSkinId='font'>test</element>"+
+                                        "<element normalSkinId='xpSkin'/>"+
+                                        "<element normalSkinId='xpSkin'/>"+
                                     "</element>"+
                                     /**/
                                 "</def>";
@@ -88,33 +93,37 @@ class UIEdit {
     private function initExample():Void {
         trace("initExample");
         GAssetManager.generateTextures();
-    var a:GUITextureSkin;
+        var a:GUITextureSkin;
         var f:GUIFontSkin;
+        var a:GUIVerticalLayout;
+        var b:GUIHorizontalLayout;
+
         var camera:GCameraController = cast GNode.createWithComponent(GCameraController);
         camera.setViewport(2048,1536,true);
         genome.root.addChild(camera.node);
 
 
         ui = cast GNode.createWithComponent(GUI);
-        ui.node.transform.setPosition(0,0);
+        ui.node.setPosition(0,0);
         ui.node.mouseEnabled = true;
         genome.root.addChild(ui.node);
 
-        /*
+        /**/
         var xml:Xml = Xml.parse(xmlDef).firstChild();
         for (i in xml.elements()) {
             var p:IGPrototypable = GPrototypeFactory.createPrototype(i);
             trace(p.getPrototype());
             if (Std.is(p,GUIElement)) {
                 var element:GUIElement = cast p;
-                element.id = "container";
+                element.layout.type = GUILayoutType.VERTICAL;
+                element.name = "container";
                 element.mouseEnabled = true;
                 element.anchorX = 300;
                 element.anchorY = 300;
                 ui.root.addChild(element);
             }
         }
-        /**/
+        /*
         ui = cast GNode.createWithComponent(GUI);
         ui.root.setRect(0,0,2038,1536);
         ui.node.mouseEnabled = true;

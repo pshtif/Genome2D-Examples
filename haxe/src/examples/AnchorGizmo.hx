@@ -1,6 +1,6 @@
 package examples;
 
-import com.genome2d.ui.GUIElement;
+import com.genome2d.ui.element.GUIElement;
 import flash.geom.Rectangle;
 import flash.events.MouseEvent;
 import flash.display.Sprite;
