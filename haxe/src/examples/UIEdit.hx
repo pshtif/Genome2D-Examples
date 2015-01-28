@@ -76,19 +76,25 @@ class UIEdit {
         initExample();
     }
 
-    private var xmlDef:String = "<def>"+
-                                    "<textureSkin id='xpSkin' textureId='Untitled.png' />"+
-                                    "<fontSkin id='font' fontAtlasId='font_ui.png' text='aaaa'/>"+
+    private var xmlDef:String = '<def>'+
+                                    '<textureSkin id="xpSkin" textureId="Untitled.png" />'+
+                                    '<fontSkin id="font" fontAtlasId="font_ui.png" autoSize="0" fontScale=".5"/>'+
 
-                                    "<element anchorX='0' anchorY='0' anchorLeft='0' anchorTop='0' anchorRight='0' anchorBottom='0' pivotX='0' pivotY='0'>"+
-                                        "<horizontal gap='100'/>"+
-                                        "<element normalSkinId='xpSkin'/>"+
-                                        "<element normalSkinId='font'>test</element>"+
-                                        "<element normalSkinId='xpSkin'/>"+
-                                        "<element normalSkinId='xpSkin'/>"+
-                                    "</element>"+
-                                    /**/
-                                "</def>";
+                                    '<element>'+
+                                        //"<vertical gap='100'/>"+
+                                        '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
+    '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
+    '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
+    '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
+                                    '</element>'+
+                                '</def>';
+
+    private var elementDef:String = '<element mouseDown="test" skinId="xpSkin"/>';
+    private var skinDef:String = '<fontSkin id="font" fontAtlasId="font_ui.png" autoSize="0"/>';
+
+    public function test(signal:GUIMouseSignal):Void {
+        trace("here");
+    }
 
     private function initExample():Void {
         trace("initExample");
@@ -109,20 +115,25 @@ class UIEdit {
         genome.root.addChild(ui.node);
 
         /**/
+        var element:GUIElement = null;
         var xml:Xml = Xml.parse(xmlDef).firstChild();
         for (i in xml.elements()) {
             var p:IGPrototypable = GPrototypeFactory.createPrototype(i);
             trace(p.getPrototype());
             if (Std.is(p,GUIElement)) {
-                var element:GUIElement = cast p;
-                element.layout.type = GUILayoutType.VERTICAL;
+                element = cast p;
                 element.name = "container";
                 element.mouseEnabled = true;
                 element.anchorX = 300;
                 element.anchorY = 300;
                 ui.root.addChild(element);
+
+                element.setClient(this);
             }
         }
+
+        element.disposeChildren();
+        //if (element != null) element.addChild(cast GPrototypeFactory.createPrototype(Xml.parse(elementDef).firstElement()));
         /*
         ui = cast GNode.createWithComponent(GUI);
         ui.root.setRect(0,0,2038,1536);
@@ -170,7 +181,7 @@ class UIEdit {
     }
 
     private function mouseDownHandler(signal:GUIMouseSignal):Void {
-        trace(signal.target, signal.target.normalSkin!=null?signal.target.normalSkinId:"");
+        trace(signal.target, signal.target.skin!=null?signal.target.skinId:"");
     }
 
     private function selectHandler(p_element:GUIElement):Void {
