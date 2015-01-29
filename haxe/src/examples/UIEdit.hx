@@ -78,14 +78,17 @@ class UIEdit {
 
     private var xmlDef:String = '<def>'+
                                     '<textureSkin id="xpSkin" textureId="Untitled.png" />'+
-                                    '<fontSkin id="font" fontAtlasId="font_ui.png" autoSize="0" fontScale=".5"/>'+
+                                    '<fontSkin id="font" fontAtlasId="font_ui.png" autoSize="true" fontScale=".5"/>'+
 
                                     '<element>'+
-                                        //"<vertical gap='100'/>"+
-                                        '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
-    '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
-    '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
-    '<element name="test" preferredWidth="500" preferredHeight="100" skinId="font">Lorem ipsum dolor sit amet and something completely different without lorem ipsum dolor sit amet and other latino mumbo jumbo stupid stuff that you dont see anywhere else than here in this small example or maybe you did but you forgot about it because its so awkward to write this long text and it seems like it doesnt want to end</element>'+
+                                        "<vertical gap='100'/>"+
+                                        '<element skinId="xpSkin"></element>'+
+                                        '<element skinId="font">Lorem</element>'+
+                                        '<element skinId="xpSkin"></element>'+
+                                        '<element skinId="font">Lorem</element>'+
+                                        '<element skinId="xpSkin"></element>'+
+                                        '<element skinId="font">Lorem</element>'+
+                                        '<element skinId="xpSkin"></element>'+
                                     '</element>'+
                                 '</def>';
 
@@ -132,7 +135,6 @@ class UIEdit {
             }
         }
 
-        element.disposeChildren();
         //if (element != null) element.addChild(cast GPrototypeFactory.createPrototype(Xml.parse(elementDef).firstElement()));
         /*
         ui = cast GNode.createWithComponent(GUI);
