@@ -1,5 +1,6 @@
 package examples;
 
+import Xml;
 import com.genome2d.ui.layout.GUIHorizontalLayout;
 import com.genome2d.ui.layout.GUIVerticalLayout;
 import com.genome2d.ui.layout.GUILayoutType;
@@ -92,6 +93,15 @@ class UIEdit {
                                     '</element>'+
                                 '</def>';
 
+    private var _bottomMenuPrototype:String = '<element>'+
+                                                '<horizontal/>'+
+                                                '<element skinId="ui_btn_bottom"><element skinId="uiFont">Back</element></element>'+
+                                                '<element skinId="ui_btn_bottom_map"></element>'+
+                                                '<element skinId="ui_btn_bottom_map"></element>'+
+                                                '<element skinId="ui_btn_bottom_map"></element>'+
+                                                //'<element name="Quest" mouseDown="questDownHandler" skinId="ui_btn_bottom"><element skinId="uiFont">Quests</element></element>'+
+                                              '</element>';
+
     private var elementDef:String = '<element mouseDown="test" skinId="xpSkin"/>';
     private var skinDef:String = '<fontSkin id="font" fontAtlasId="font_ui.png" autoSize="0"/>';
 
@@ -117,7 +127,14 @@ class UIEdit {
         ui.node.mouseEnabled = true;
         genome.root.addChild(ui.node);
 
-        /**/
+        new GUITextureSkin("ui_btn_bottom", "ui.png_btn_bottom");
+        new GUITextureSkin("ui_btn_bottom_map", "ui.png_btn_bottom_map");
+        new GUIFontSkin("uiFont", "font_ui.png");
+
+        var element:GUIElement = cast GPrototypeFactory.createPrototype(Xml.parse(_bottomMenuPrototype).firstElement());
+        ui.root.addChild(element);
+
+        /*
         var element:GUIElement = null;
         var xml:Xml = Xml.parse(xmlDef).firstChild();
         for (i in xml.elements()) {

@@ -9,7 +9,7 @@ import examples.basic.BasicExample4Mouse;
 //import examples.basic.BasicExample6SimpleParticles;
 
 //import examples.advanced.AdvancedExample2TileMap;
-//import examples.advanced.AdvancedExample4Shape;
+import examples.advanced.AdvancedExample4Shape;
 
 //import examples.ui.UIExample1Showcase;
 
@@ -23,11 +23,11 @@ class ExampleWrapper {
         //BasicExample1Initialization.main();
         //BasicExample2Sprite.main();
         //BasicExample3MovieClip.main();
-        BasicExample4Mouse.main();
+        //BasicExample4Mouse.main();
         //BasicExample5TextureText.main();
         //BasicExample6SimpleParticles.main();
         //AdvancedExample2TileMap.main();
-        //AdvancedExample4Shape.main();
+        AdvancedExample4Shape.main();
         //UIExample1Showcase.main();
 
         //Test.main();
