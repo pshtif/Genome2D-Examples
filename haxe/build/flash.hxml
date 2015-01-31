@@ -21,8 +21,8 @@
 #--no-traces
 
 # Main class
--main examples.ExampleWrapper
-#-main examples.UIEdit
+#-main examples.ExampleWrapper
+-main examples.UIEdit
 #-main test.Test
 
 # Flash flags
