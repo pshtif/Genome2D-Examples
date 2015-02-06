@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:d0bdb8fce86873aa26ea2845e2f9b7ac:54bfcb00f0d16847bfd800a659dc5bb7:d30878cc6ce8abeb134657d91db1e500$ -->
+<TextureAtlas imagePath="ships.png">
+    <SubTexture name="0" x="210" y="182" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="01" x="210" y="217" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="02" x="276" y="146" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="03" x="276" y="181" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="04" x="210" y="182" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="10" x="276" y="216" width="64" height="33" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="1b" x="144" y="209" width="64" height="34" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="1l" x="342" y="146" width="64" height="33" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="1r" x="342" y="181" width="64" height="33" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="1t" x="381" y="107" width="64" height="32" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="2b" x="408" y="141" width="64" height="32" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="2l" x="342" y="216" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="2r" x="381" y="2" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="2t" x="68" y="211" width="64" height="34" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="31" x="408" y="175" width="64" height="32" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="32" x="408" y="209" width="64" height="32" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="33" x="2" y="218" width="64" height="34" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="34" x="210" y="146" width="64" height="34" frameX="0" frameY="-30" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="cloud1" x="2" y="127" width="74" height="50" frameX="0" frameY="0" frameWidth="76" frameHeight="51"/>
+    <SubTexture name="cloud2" x="226" y="2" width="153" height="142" frameX="-9" frameY="-6" frameWidth="174" frameHeight="157"/>
+    <SubTexture name="cloud3" x="2" y="2" width="222" height="123" frameX="-4" frameY="-2" frameWidth="234" frameHeight="128"/>
+    <SubTexture name="deep" x="381" y="37" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="g1" x="144" y="127" width="64" height="40" frameX="0" frameY="-19" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="g2" x="144" y="169" width="64" height="38" frameX="0" frameY="-21" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="g3" x="2" y="179" width="64" height="37" frameX="0" frameY="-22" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="g4" x="78" y="171" width="64" height="38" frameX="0" frameY="-21" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="gb" x="78" y="127" width="64" height="42" frameX="0" frameY="-21" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="sd" x="381" y="72" width="64" height="33" frameX="0" frameY="-31" frameWidth="64" frameHeight="64"/>
+</TextureAtlas>

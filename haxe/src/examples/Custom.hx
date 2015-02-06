@@ -66,7 +66,7 @@ class Custom {
     private function genomeInitializedHandler():Void {
         trace("genomeInitializedHandler");
 
-        GStats.visible = true;
+        //GStats.visible = true;
 
         initAssets();
     }
@@ -75,28 +75,10 @@ class Custom {
         trace("initAssets");
 
         GAssetManager.init();
-        GAssetManager.addFromUrl("terrain\\0.png");
-        GAssetManager.addFromUrl("terrain\\01.png");
-        GAssetManager.addFromUrl("terrain\\02.png");
-        GAssetManager.addFromUrl("terrain\\03.png");
-        GAssetManager.addFromUrl("terrain\\04.png");
-        GAssetManager.addFromUrl("terrain\\10.png");
-        GAssetManager.addFromUrl("terrain\\1t.png");
-        GAssetManager.addFromUrl("terrain\\1l.png");
-        GAssetManager.addFromUrl("terrain\\1b.png");
-        GAssetManager.addFromUrl("terrain\\1r.png");
-        GAssetManager.addFromUrl("terrain\\2t.png");
-        GAssetManager.addFromUrl("terrain\\2l.png");
-        GAssetManager.addFromUrl("terrain\\2b.png");
-        GAssetManager.addFromUrl("terrain\\2r.png");
-        GAssetManager.addFromUrl("terrain\\31.png");
-        GAssetManager.addFromUrl("terrain\\32.png");
-        GAssetManager.addFromUrl("terrain\\33.png");
-        GAssetManager.addFromUrl("terrain\\34.png");
-        GAssetManager.addFromUrl("uniformclouds.jpg");
         GAssetManager.addFromUrl("Untitled.png");
-        GAssetManager.addFromUrl("ui.png");
-        GAssetManager.addFromUrl("ui.xml");
+        GAssetManager.addFromUrl("logo.png");
+        GAssetManager.addFromUrl("ships.png");
+        GAssetManager.addFromUrl("ships.xml");
         GAssetManager.addFromUrl("font_ui.png");
         GAssetManager.addFromUrl("font_ui.fnt");
         GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
@@ -115,13 +97,13 @@ class Custom {
 
     private var renderer:GCustomRenderer;
     private var texture:GTexture;
-    private var buildings:Array<Float>;
+    private var buildings:Array<Float> = [699,106,447.73588325083256,515,302,473.9247104097158,655,468,377.34177895076573,228,381,160.4119959603995];
     private var map:GTileMap;
-    private var mapIds:Array<Int> = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,0,1,1,1,1,1,1,1,1,1,1,1,1,13,0,0,1,1,1,1,1,1,1,1,1,1,1,1,13,0,0,1,1,1,1,1,1,1,1,1,1,1,13,0,0,0,1,1,1,1,1,1,1,1,1,1,1,13,0,0,0,1,1,1,1,1,1,1,1,1,1,13,0,0,0,0,1,1,1,1,1,1,1,1,1,1,13,0,0,0,0,1,1,1,1,1,1,1,1,1,13,0,0,0,0,0,1,1,1,1,1,1,1,1,1,13,0,0,0,0,0,1,1,1,1,1,1,1,1,13,0,0,0,0,0,0,1,1,1,1,1,1,1,1,13,0,0,0,0,0,0,1,1,1,1,1,1,1,13,0,0,0,0,0,0,0,1,1,1,1,1,1,1,13,0,0,0,0,0,0,0,1,1,1,1,1,1,13,0,0,0,0,0,0,0,0,1,1,1,1,1,1,13,0,0,0,0,0,0,0,0,0,1,1,1,1,13,0,0,0,0,0,0,0,0,0,0,1,1,1,1,13,0,0,0,0,0,0,0,0,0,0,1,1,1,13,0,0,0,0,0,0,0,0,0,0,0,1,1,1,13,0,0,0,0,0,0,0,0,0,0,0,1,1,13,0,0,0,0,0,0,0,0,0,0,0,0,1,1,13,0,0,0,0,0,0,0,0,0,0,0,0,1,13,0,0,0,0,0,0,0,0,0,0,0,0,1,1,13,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    private var textureId:String = "terrain\\0.png";
+    private var mapIds:Array<Int> = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,15,15,1,15,15,15,14,1,0,1,1,15,15,15,15,15,15,15,15,15,15,14,1,13,0,1,15,15,15,15,15,15,15,15,15,14,1,13,0,0,1,1,15,15,15,15,15,15,15,15,14,1,13,0,0,1,15,15,15,15,15,15,15,15,14,1,13,0,0,17,1,1,15,15,15,15,15,15,15,14,1,13,0,0,17,1,15,15,15,15,15,15,15,14,1,13,0,0,17,16,1,15,15,15,15,15,15,15,14,1,13,0,0,17,16,1,15,15,15,15,15,15,14,1,13,0,0,17,16,16,1,15,15,15,15,15,15,14,1,13,0,0,17,16,16,1,15,15,15,15,15,14,1,13,0,0,17,16,16,16,1,1,15,15,15,15,14,1,13,0,0,17,16,16,16,1,15,15,15,15,14,1,13,0,0,17,16,16,16,16,1,1,15,15,15,14,1,13,0,0,17,16,16,16,16,1,15,15,15,14,1,13,0,0,17,16,16,16,16,16,1,1,15,15,14,1,13,0,0,17,16,16,16,16,16,0,15,15,14,1,13,0,0,17,16,16,16,16,16,16,0,1,15,14,1,13,0,0,17,16,16,16,16,16,16,0,15,14,1,13,0,0,17,16,16,16,16,16,16,16,0,1,14,1,13,0,0,17,16,16,16,16,16,16,16,0,14,1,13,0,0,17,16,16,16,16,16,16,16,16,0,1,1,13,0,0,17,16,16,16,16,16,16,16,16,0,1,13,0,0,17,16,16,16,16,16,16,16,16,16,1,1,13,0,0,17,16,16,16,16,16,16,16,16,16,16,13,0,0,17,16,16,16,16,16,16,16,16,16,16,16,0,0,0,17,16,16,16,16,16,16,16,16,16,16,16,0,0,17,16,16,16,16,16,16,16,16,16,16,16,16,0,0,17,16,16,16,16,16,16,16,16,16,16,16,16,0,17,16,16,16,16,16,16,16,16,16,16,16,16,16,0,17,16,16,16,16,16,16,16,16,16,16,16,16,16,17,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16];
+    private var textureId:String = "ships.png_0";
+    private var clouds:Array<Float>;
 
     private function initExample():Void {
-    trace(mapIds.length);
         trace("initExample");
         GAssetManager.generateTextures();
 
@@ -130,7 +112,7 @@ class Custom {
         var tiles:Array<GTile> = new Array<GTile>();
         for (i in 0...w*h) {
             var tile:GTile = new GTile();
-            setTile(tile, mapIds[i]);//"terrain\\10.png";
+            setTile(tile, mapIds[i]);//"ships.png_10.png";
             tiles.push(tile);
         }
 
@@ -141,13 +123,19 @@ class Custom {
         map.verticalMargin = 6;
         genome.root.addChild(map.node);
 
+        clouds = new Array<Float>();
+        for (i in 0...40) {
+            clouds.push(Math.random()*940-120);
+            clouds.push(Math.random()*1240-620);
+            clouds.push(Std.int(Math.random()*3)+1);
+            clouds.push(Math.random()+.5);
+        }
+
         texture = GTextureManager.getTextureById("Untitled.png");
 
         var w:Float = 40;
         var h:Float = 20;
         var d:Float = 20;
-
-        buildings = new Array<Float>();
 
         //renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, -w, h, -d, w, -h, -d, w,h,-d],[0,0,1,0,0,1,1,0,0,1,1,1]);//,[0,1,2,2,1,3]);
         renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, w,h,-d,-w,-h,d,w,-h,d,-w,h,d,w,h,d], [0,0,1,0,0,1,1,1,1,0,0,0,1,1,0,1], [0,1,2,2,1,3,5,4,7,7,4,6,3,1,7,7,1,5,2,3,6,6,3,7,0,2,4,4,2,6,1,0,5,5,0,4], false);
@@ -163,18 +151,19 @@ class Custom {
         switch (signal.keyCode) {
             case 84:
                 traceMap();
+                //traceBuildings();
             case 48:
-                textureId = "terrain\\10.png";
+                textureId = "ships.png_10";
             case 49:
-                textureId = "terrain\\0.png";
+                textureId = "ships.png_0";
             case 50:
-                textureId = "terrain\\31.png";
+                textureId = "ships.png_gb";
             case 51:
-                textureId = "terrain\\32.png";
+                textureId = "ships.png_deep";
             case 52:
-                textureId = "terrain\\33.png";
+                textureId = "ships.png_33";
             case 53:
-                textureId = "terrain\\34.png";
+                textureId = "ships.png_34";
         }
     }
 
@@ -184,6 +173,7 @@ class Custom {
     private function mouseSignalHandler(signal:GMouseSignal):Void {
         switch (signal.type) {
             case GMouseSignalType.MOUSE_DOWN:
+            /*
                 buildings.push(signal.x);
                 buildings.push(signal.y);
                 buildings.push(Math.random()*180);
@@ -193,7 +183,7 @@ class Custom {
                 if (tile != null) tile.textureId = textureId;
                 /**/
             case GMouseSignalType.MOUSE_MOVE:
-                /*
+            /*
                 if (overTile != null) overTile.blue = 1;
                 overTile = map.getTileAt(signal.x, signal.y);
                 overTile.blue = 0;
@@ -229,7 +219,19 @@ class Custom {
             renderer.draw(texture,2);
         }
 
-        //context.draw(GTextureManager.getTextureById("uniformclouds.jpg"),400,300,1,1,0,1,1,1,.7,GBlendMode.SCREEN);
+        for (i in 0...Std.int(clouds.length/4)) {
+            clouds[i*4]-=.3*clouds[i*4+3];
+            clouds[i*4+1]+=.2*clouds[i*4+3];
+            if (clouds[i*4]<-120) clouds[i*4]=940;
+            if (clouds[i*4+1]>1240) clouds[i*4+1]=-620;
+            context.draw(GTextureManager.getTextureById("ships.png_cloud"+clouds[i*4+2]),clouds[i*4],clouds[i*4+1]+500,1,-1,0,1,1,1,.05,GBlendMode.NORMAL);
+        }
+
+        for (i in 0...Std.int(clouds.length/4)) {
+            context.draw(GTextureManager.getTextureById("ships.png_cloud"+clouds[i*4+2]),clouds[i*4],clouds[i*4+1],1,1,0,1,1,1,.8,GBlendMode.NORMAL);
+        }
+
+        context.draw(GTextureManager.getTextureById("logo.png"),695,565,1,1,0,1,1,1,1,GBlendMode.NORMAL);
     }
 
     private function traceMap():Void {
@@ -241,37 +243,53 @@ class Custom {
         trace(s);
     }
 
+    private function traceBuildings():Void {
+        var s:String = "";
+        for (i in 0...buildings.length) {
+            s+=buildings[i]+",";
+        }
+        trace(s);
+    }
+
     private function getTile(p_tile:GTile):Int {
         var id:String = p_tile.textureId;
         switch (id) {
-            case "terrain\\0.png":
+            case "ships.png_0":
                 return 0;
-            case "terrain\\10.png":
+            case "ships.png_10":
                 return 1;
-            case "terrain\\1t.png":
+            case "ships.png_1t":
                 return 2;
-            case "terrain\\1b.png":
+            case "ships.png_1b":
                 return 3;
-            case "terrain\\1l.png":
+            case "ships.png_1l":
                 return 4;
-            case "terrain\\1r.png":
+            case "ships.png_1r":
                 return 5;
-            case "terrain\\2t.png":
+            case "ships.png_2t":
                 return 6;
-            case "terrain\\2b.png":
+            case "ships.png_2b":
                 return 7;
-            case "terrain\\2l.png":
+            case "ships.png_2l":
                 return 8;
-            case "terrain\\2r.png":
+            case "ships.png_2r":
                 return 9;
-            case "terrain\\31.png":
+            case "ships.png_31":
                 return 10;
-            case "terrain\\32.png":
+            case "ships.png_32":
                 return 11;
-            case "terrain\\33.png":
+            case "ships.png_33":
                 return 12;
-            case "terrain\\34.png":
+            case "ships.png_34":
                 return 13;
+            case "ships.png_gb":
+                return 14;
+            case "ships.png_g1":
+                return 15;
+            case "ships.png_deep":
+                return 16;
+            case "ships.png_sd":
+                return 17;
         }
 
         return -1;
@@ -280,34 +298,42 @@ class Custom {
     private function setTile(p_tile:GTile, p_value:Int):Void {
         switch (p_value) {
             case 0:
-                p_tile.textureId = "terrain\\0.png";
-                //p_tile.frameTextureIds = ["terrain\\01.png","terrain\\02.png","terrain\\03.png","terrain\\04.png"];
+                p_tile.textureId = "ships.png_0";
+                //p_tile.frameTextureIds = ["ships.png_01","ships.png_02","ships.png_03","ships.png_04"];
             case 1:
-                p_tile.textureId = "terrain\\10.png";
+                p_tile.textureId = "ships.png_10";
             case 2:
-                p_tile.textureId = "terrain\\1t.png";
+                p_tile.textureId = "ships.png_1t";
             case 3:
-                p_tile.textureId = "terrain\\1b.png";
+                p_tile.textureId = "ships.png_1b";
             case 4:
-                p_tile.textureId = "terrain\\1l.png";
+                p_tile.textureId = "ships.png_1l";
             case 5:
-                p_tile.textureId = "terrain\\1r.png";
+                p_tile.textureId = "ships.png_1r";
             case 6:
-                p_tile.textureId = "terrain\\2t.png";
+                p_tile.textureId = "ships.png_2t";
             case 7:
-                p_tile.textureId = "terrain\\2b.png";
+                p_tile.textureId = "ships.png_2b";
             case 8:
-                p_tile.textureId = "terrain\\2l.png";
+                p_tile.textureId = "ships.png_2l";
             case 9:
-                p_tile.textureId = "terrain\\2r.png";
+                p_tile.textureId = "ships.png_2r";
             case 10:
-                p_tile.textureId = "terrain\\31.png";
+                p_tile.textureId = "ships.png_31";
             case 11:
-                p_tile.textureId = "terrain\\32.png";
+                p_tile.textureId = "ships.png_32";
             case 12:
-                p_tile.textureId = "terrain\\33.png";
+                p_tile.textureId = "ships.png_33";
             case 13:
-                p_tile.textureId = "terrain\\34.png";
+                p_tile.textureId = "ships.png_34";
+            case 14:
+                p_tile.textureId = "ships.png_gb";
+            case 15:
+                p_tile.textureId = "ships.png_g1";//+(Std.int(Math.random()*4)+1)+"";
+            case 16:
+                p_tile.textureId = "ships.png_deep";
+            case 17:
+                p_tile.textureId = "ships.png_sd";
         }
     }
 }
