@@ -1,5 +1,13 @@
-package examples;
+package test;
 
+import hxd.fmt.fbx.FbxNode;
+import hxd.fmt.fbx.FbxNode;
+import hxd.fmt.fbx.FbxTools;
+import hxd.fmt.fbx.FbxNode;
+import flash.events.Event;
+import flash.net.URLRequest;
+import flash.net.URLLoader;
+import hxd.fmt.fbx.Parser;
 import com.genome2d.tilemap.GTile;
 import com.genome2d.signals.GKeyboardSignal;
 import com.genome2d.signals.GKeyboardSignalType;
@@ -47,9 +55,12 @@ class Custom {
     }
 
     private var genome:Genome2D;
+    private var object:FbxNode;
 
     public function new() {
         initGenome();
+
+        var a:Parser;
     }
 
     private function initGenome():Void {
@@ -87,6 +98,22 @@ class Custom {
 
     private function assetsInitializedHandler():Void {
         trace("assetsInitializedHandler");
+
+        //loadFBX("test_box_resetUVs.fbx");
+        //loadFBX("test_plachtyResetXform.FBX");
+        loadFBX("test_lod.FBX");
+        //initExample();
+    }
+
+    private function loadFBX(p_url:String):Void {
+        var loader:URLLoader = new URLLoader();
+        loader.addEventListener(Event.COMPLETE, fbxLoadCompleteHandler);
+        loader.load(new URLRequest(p_url));
+    }
+
+    private function fbxLoadCompleteHandler(event:Event):Void {
+        //trace(event.target.data);
+        object = Parser.parse(event.target.data);
 
         initExample();
     }
@@ -133,16 +160,70 @@ class Custom {
 
         texture = GTextureManager.getTextureById("Untitled.png");
 
+        /*
         var w:Float = 40;
         var h:Float = 20;
         var d:Float = 20;
 
         //renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, -w, h, -d, w, -h, -d, w,h,-d],[0,0,1,0,0,1,1,0,0,1,1,1]);//,[0,1,2,2,1,3]);
         renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, w,h,-d,-w,-h,d,w,-h,d,-w,h,d,w,h,d], [0,0,1,0,0,1,1,1,1,0,0,0,1,1,0,1], [0,1,2,2,1,3,5,4,7,7,4,6,3,1,7,7,1,5,2,3,6,6,3,7,0,2,4,4,2,6,1,0,5,5,0,4], false);
+        /**/
+
+        initFBX();
 
         genome.onPostRender.add(postRenderHandler);
         genome.getContext().onMouseSignal.add(mouseSignalHandler);
         genome.getContext().onKeyboardSignal.add(keyboardSignalHandler);
+    }
+
+    private function initFBX():Void {
+        var vertexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.Vertices");
+        var vertexIndexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.PolygonVertexIndex");
+
+        var uvNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.LayerElementUV.UV");
+        var uvIndexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.LayerElementUV.UVIndex");
+
+        if (vertexNodes.length != uvNodes.length) throw "Invalid number of UV sets and polygons";
+
+        var vertices:Array<Float> = new Array<Float>();
+        var vertexIndices:Array<UInt> = new Array<UInt>();
+        var uvs:Array<Float> = new Array<Float>();
+        var indexOffset:Int = 0;
+        for (i in 0...vertexNodes.length) {
+            var currentVertices:Array<Float> = FbxTools.getFloats(vertexNodes[i]);
+            var currentVertexIndices:Array<Int> = FbxTools.getInts(vertexIndexNodes[i]);
+            var currentUVs:Array<Float> = FbxTools.getFloats(uvNodes[i]);
+            var currentUVIndices:Array<Int> = FbxTools.getInts(uvIndexNodes[i]);
+            if (currentUVIndices.length != currentVertexIndices.length) throw "Not same number of vertex and UV indices!";
+            // Store vertices
+            vertices = vertices.concat(currentVertices);
+            // Create array for our reindexed UVs
+            var reindexedUVs:Array<Float> = new Array<Float>();
+            for (j in 0...currentUVs.length) {
+                reindexedUVs.push(0);
+            }
+
+            // Reindex UV coordinates to correspond to vertex indices
+            for (j in 0...currentUVIndices.length) {
+                var vertexIndex:Int = currentVertexIndices[j];
+                if (vertexIndex < 0) vertexIndex = -vertexIndex-1;
+                vertexIndices.push(vertexIndex+indexOffset);
+                var uvIndex:Int = currentUVIndices[j];
+
+                reindexedUVs[vertexIndex*2] = currentUVs[uvIndex*2]<.01 ? 0 : currentUVs[uvIndex*2];
+                reindexedUVs[vertexIndex*2+1] = currentUVs[uvIndex*2+1]<.01 ? 0 : currentUVs[uvIndex*2+1];
+            }
+            uvs = uvs.concat(reindexedUVs);
+
+            indexOffset+=Std.int(currentVertices.length/3);
+        }
+
+        trace("Vertices", vertices.length, vertices);
+        trace("UVs", uvs.length, uvs);
+        trace("Indices", vertexIndices.length, vertexIndices);
+
+        renderer = new GCustomRenderer(vertices, uvs, vertexIndices, false);
+        /**/
     }
 
     private function keyboardSignalHandler(signal:GKeyboardSignal):Void {
@@ -200,23 +281,29 @@ class Custom {
     private function postRenderHandler():Void {
         var context:IContext = genome.getContext();
 
-        context.bindRenderer(renderer);
-        for (i in 0...Std.int(buildings.length/3)) {
-            buildings[i*3+2]+=1;
-            renderer.transformMatrix.identity();
-            renderer.transformMatrix.prependTranslation(0,0,50);
-            renderer.transformMatrix.prependRotation(32,Vector3D.X_AXIS);
-            renderer.transformMatrix.prependRotation(45+buildings[i*3+2],Vector3D.Y_AXIS);
-            renderer.transformMatrix.appendTranslation(buildings[i*3],buildings[i*3+1]+Math.sin(buildings[i*3+2]/20)*10,0);
-            renderer.draw(texture,1);
-
-            renderer.transformMatrix.identity();
-            renderer.transformMatrix.prependTranslation(0,0,50);
-            renderer.transformMatrix.prependRotation(32,Vector3D.X_AXIS);
-            renderer.transformMatrix.prependRotation(45+buildings[i*3+2],Vector3D.Y_AXIS);
-            renderer.transformMatrix.prependScale(1,-1,1);
-            renderer.transformMatrix.appendTranslation(buildings[i*3],buildings[i*3+1]+60-Math.sin(buildings[i*3+2]/20)*10,0);
-            renderer.draw(texture,2);
+        if (renderer != null) {
+            context.bindRenderer(renderer);
+            for (i in 0...Std.int(buildings.length/3)) {
+                buildings[i*3+2]+=1;
+                renderer.transformMatrix.identity();
+                renderer.transformMatrix.prependTranslation(0,0,200);
+                renderer.transformMatrix.prependRotation(32,Vector3D.X_AXIS);
+                renderer.transformMatrix.prependRotation(0,Vector3D.Z_AXIS);
+                renderer.transformMatrix.prependRotation(45+buildings[i*3+2],Vector3D.X_AXIS);
+                renderer.transformMatrix.prependScale(.1,.1,.1);
+                renderer.transformMatrix.appendTranslation(buildings[i*3],buildings[i*3+1]+Math.sin(buildings[i*3+2]/20)*10,0);
+                renderer.draw(texture,2);
+                /*
+                renderer.transformMatrix.identity();
+                renderer.transformMatrix.prependTranslation(0,0,250);
+                renderer.transformMatrix.prependRotation(32,Vector3D.X_AXIS);
+                renderer.transformMatrix.prependRotation(180,Vector3D.Z_AXIS);
+                renderer.transformMatrix.prependRotation(45+buildings[i*3+2],Vector3D.Y_AXIS);
+                renderer.transformMatrix.prependScale(.1,-.1,.1);
+                renderer.transformMatrix.appendTranslation(buildings[i*3],buildings[i*3+1]+60-Math.sin(buildings[i*3+2]/20)*10,0);
+                renderer.draw(texture,2);
+                /**/
+            }
         }
 
         for (i in 0...Std.int(clouds.length/4)) {

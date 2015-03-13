@@ -3,6 +3,7 @@
 -cp Genome2D-ContextCommon/src
 -cp Genome2D-Core/src
 -cp Genome2D-Examples/haxe/src
+-cp ../external
 
 # Include libraries
 -lib msignal
@@ -23,7 +24,7 @@
 # Main class
 #-main examples.ExampleWrapper
 #-main examples.UIEdit
--main examples.Custom
+-main test.Custom
 #-main test.Test
 
 # Flash flags
