@@ -1,5 +1,6 @@
 package test;
 
+import test.fbx.GFBXImporter;
 import hxd.fmt.fbx.FbxTools;
 import flash.events.MouseEvent;
 import com.genome2d.signals.GMouseSignal;
@@ -62,6 +63,9 @@ class Custom {
     private var rotationX:Float = 0;
     private var rotationY:Float = 0;
     private var scale:Float = .1;
+    private var cameraMatrix:GMatrix3D;
+    private var fbxImporter:GFBXImporter;
+    //private var
 
     public function new() {
         initGenome();
@@ -71,6 +75,8 @@ class Custom {
 
     private function initGenome():Void {
         trace("initGenome");
+
+        cameraMatrix = new GMatrix3D();
 
         var config:GContextConfig = new GContextConfig();
         config.enableDepthAndStencil = true;
@@ -106,6 +112,7 @@ class Custom {
 
     private function assetsInitializedHandler():Void {
         trace("assetsInitializedHandler");
+        GAssetManager.generateTextures();
 
         //loadFBX("test_box_resetUVs.fbx");
         //loadFBX("test_plachtyResetXform.FBX");
@@ -123,6 +130,9 @@ class Custom {
         //trace(event.target.data);
         object = Parser.parse(event.target.data);
 
+        fbxImporter = new GFBXImporter();
+        fbxImporter.init(object);
+
         initExample();
     }
 
@@ -135,11 +145,6 @@ class Custom {
 
     private function initExample():Void {
         trace("initExample");
-        GAssetManager.generateTextures();
-
-        texture = GTextureManager.getTextureById("pokus_plachty01.png");
-        //texture = GTextureManager.getTextureById("pokus_trup01.png");
-        renderers = new Array<GCustomRenderer>();
 
         /*
         var w:Float = 40;
@@ -150,12 +155,10 @@ class Custom {
         renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, w,h,-d,-w,-h,d,w,-h,d,-w,h,d,w,h,d], [0,0,1,0,0,1,1,1,1,0,0,0,1,1,0,1], [0,1,2,2,1,3,5,4,7,7,4,6,3,1,7,7,1,5,2,3,6,6,3,7,0,2,4,4,2,6,1,0,5,5,0,4], false);
         /**/
 
-        initFBX();
-
-        genome.onPostRender.add(postRenderHandler);
         genome.getContext().setBackgroundColor(0x888888,1);
         genome.getContext().onKeyboardSignal.add(keyHandler);
         genome.getContext().onMouseSignal.add(mouseHandler);
+        genome.onPostRender.add(postRenderHandler);
     }
 
     private var omx:Float = 0;
@@ -163,7 +166,7 @@ class Custom {
 
     private function mouseHandler(signal:GMouseSignal):Void {
         if (signal.buttonDown && signal.type == GMouseSignalType.MOUSE_MOVE) {
-            rotationY += signal.x-omx;
+            rotationY -= signal.x-omx;
             rotationX += signal.y-omy;
             omx = signal.x;
             omy = signal.y;
@@ -171,7 +174,7 @@ class Custom {
             omx = signal.x;
             omy = signal.y;
         } else if (signal.type == GMouseSignalType.MOUSE_WHEEL) {
-            scale+=signal.delta/100;
+            fbxImporter.scale+=signal.delta/100;
         }
     }
 
@@ -205,7 +208,7 @@ class Custom {
 
         var modelNodes:Array<FbxNode> = FbxTools.getAll(object, "Objects.Model");
         trace(FbxTools.toFloat(modelNodes[0].props[0]));
-        return;
+//        return;
 
         // Geometry
         var vertexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.Vertices");
@@ -274,16 +277,21 @@ class Custom {
     private function postRenderHandler():Void {
         var context:IContext = genome.getContext();
 
+        cameraMatrix.appendRotation(rotationX, Vector3D.X_AXIS);
+        cameraMatrix.appendRotation(rotationY, Vector3D.Y_AXIS);
+        rotationX = rotationY = 0;
+
+        fbxImporter.render(cameraMatrix);
+        /*
         for (i in 0...renderers.length) {
             if (meshIndex>=0 && i!=meshIndex) continue;
             var renderer:GCustomRenderer = renderers[i];
             context.bindRenderer(renderer);
 
             renderer.transformMatrix.identity();
-            //renderer.transformMatrix.prependTranslation(0,0,200);
-            renderer.transformMatrix.prependRotation(rotationX,Vector3D.X_AXIS);
-            renderer.transformMatrix.prependRotation(rotationY,Vector3D.Y_AXIS);
-            renderer.transformMatrix.prependRotation(0,Vector3D.Z_AXIS);
+            renderer.transformMatrix.prepend(cameraMatrix);
+            //renderer.transformMatrix.prependRotation(rotationX,Vector3D.X_AXIS);
+            //renderer.transformMatrix.prependRotation(rotationY,Vector3D.Y_AXIS);
             renderer.transformMatrix.prependScale(scale,scale,scale);
             renderer.transformMatrix.appendTranslation(400,300,300);
             renderer.draw(texture,2);
@@ -296,9 +304,10 @@ class Custom {
             renderer.transformMatrix.prependScale(.1,-.1,.1);
             renderer.transformMatrix.appendTranslation(buildings[0],buildings[1]+60-Math.sin(buildings[2]/20)*10,0);
             renderer.draw(texture,2);
-            /**/
+            /**
         }
+        /**/
 
-        context.draw(GTextureManager.getTextureById("logo.png"),695,565,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+        //context.draw(GTextureManager.getTextureById("pokus_trup01.png"),695,565,1,1,0,1,1,1,1,GBlendMode.NORMAL);
     }
 }
