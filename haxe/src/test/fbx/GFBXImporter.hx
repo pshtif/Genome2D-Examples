@@ -1,4 +1,7 @@
 package test.fbx;
+import com.genome2d.Genome2D;
+import com.genome2d.context.IContext;
+import com.genome2d.textures.GTextureManager;
 import com.genome2d.geom.GMatrix3D;
 import hxd.fmt.fbx.FbxTools;
 import hxd.fmt.fbx.FbxTools;
@@ -8,11 +11,10 @@ class GFBXImporter {
     private var g2d_renderers:Array<GFBXRenderer>;
     private var g2d_fbxData:FbxNode;
     private var g2d_nodes:Map<String,GFBXNode>;
-
-    public var scale:Float = .1;
-    public var x:Float = 400;
-    public var y:Float = 300;
-    public var z:Float = 300;
+    private var g2d_modelMatrix:GMatrix3D;
+    public function getModelMatrix():GMatrix3D {
+        return g2d_modelMatrix;
+    }
 
     public function new() {
         g2d_nodes = new Map<String,GFBXNode>();
@@ -29,71 +31,6 @@ class GFBXImporter {
         initConnections();
 
         create();
-
-        return;
-
-        // Geometry
-        var vertexNodes:Array<FbxNode> = FbxTools.getAll(g2d_fbxData,"Objects.Geometry.Vertices");
-        var vertexIndexNodes:Array<FbxNode> = FbxTools.getAll(g2d_fbxData,"Objects.Geometry.PolygonVertexIndex");
-
-        var uvNodes:Array<FbxNode> = FbxTools.getAll(g2d_fbxData,"Objects.Geometry.LayerElementUV.UV");
-        var uvIndexNodes:Array<FbxNode> = FbxTools.getAll(g2d_fbxData,"Objects.Geometry.LayerElementUV.UVIndex");
-
-        if (vertexNodes.length != uvNodes.length) throw "Invalid number of UV sets and polygons";
-
-        var mergedVertices:Array<Float> = new Array<Float>();
-        var mergedVertexIndices:Array<UInt> = new Array<UInt>();
-        var mergedUvs:Array<Float> = new Array<Float>();
-        var indexOffset:Int = 0;
-        for (i in 0...vertexNodes.length) {
-            var currentVertices:Array<Float> = FbxTools.getFloats(vertexNodes[i]);
-            var currentVertexIndices:Array<Int> = cast FbxTools.getInts(vertexIndexNodes[i]);
-            var currentUVs:Array<Float> = FbxTools.getFloats(uvNodes[i]);
-            var currentUVIndices:Array<Int> = FbxTools.getInts(uvIndexNodes[i]);
-            if (currentUVIndices.length != currentVertexIndices.length) throw "Not same number of vertex and UV indices!";
-            // Create array for our reindexed UVs
-            var reindexedUvs:Array<Float> = new Array<Float>();
-            for (j in 0...currentUVs.length) {
-                reindexedUvs.push(0);
-            }
-
-            // Reindex UV coordinates to correspond to vertex indices
-            var correctedIndices:Array<UInt> = new Array<UInt>();
-            for (j in 0...currentUVIndices.length) {
-//                if (currentVertexIndices[j]<0) currentVertexIndices[j] = -currentVertexIndices[j]-1;
-                var vertexIndex:Int = currentVertexIndices[j];
-                if (vertexIndex < 0) vertexIndex = -vertexIndex-1;
-                correctedIndices.push(vertexIndex);
-                mergedVertexIndices.push(vertexIndex+indexOffset);
-
-                var uvIndex:Int = currentUVIndices[j];
-                reindexedUvs[vertexIndex*2] = currentUVs[uvIndex*2];
-                reindexedUvs[vertexIndex*2+1] = 1-currentUVs[uvIndex*2+1];
-            }
-
-            trace("Vertices", currentVertices.length/3, currentVertices);
-            trace("UVs", reindexedUvs.length/2, reindexedUvs);
-            trace("Indices", correctedIndices.length, correctedIndices);
-            trace("UVIndices", currentUVIndices);
-            trace("Triangles", correctedIndices.length/3);
-            //var renderer:GCustomRenderer = new GCustomRenderer(currentVertices, reindexedUvs, correctedIndices, false);
-            //g2d_renderers.push(renderer);
-
-            // Merge vertices
-            //mergedVertices = mergedVertices.concat(currentVertices);
-            //mergedUvs = mergedUvs.concat(reindexedUvs);
-            //indexOffset+=Std.int(currentVertices.length/3);
-        }
-
-        trace("# Renderers",g2d_renderers.length);
-
-        /*
-        trace("Vertices", mergedVertices.length, mergedVertices);
-        trace("UVs", mergedUvs.length, mergedUvs);
-        trace("Indices", mergedVertexIndices.length, mergedVertexIndices);
-
-        //renderer = new GCustomRenderer(vertices, uvs, vertexIndices, false);
-        /**/
     }
 
     private function initTextures():Void {
@@ -148,6 +85,7 @@ class GFBXImporter {
     }
 
     private function create():Void {
+        g2d_modelMatrix = new GMatrix3D();
         g2d_renderers = new Array<GFBXRenderer>();
 
         for (node in g2d_nodes) {
@@ -159,9 +97,31 @@ class GFBXImporter {
         }
     }
 
-    public function render(p_matrix:GMatrix3D):Void {
-        for (renderer in g2d_renderers) {
-            renderer.render(x, y, z, scale, p_matrix);
+    public function render(p_cameraMatrix:GMatrix3D, p_type:Int = 1):Void {
+        switch (p_type) {
+            // Normal
+            case 1:
+                for (renderer in g2d_renderers) {
+                    renderer.render(p_cameraMatrix, g2d_modelMatrix, 2, 1);
+                }
+            // Reflection
+            case 2:
+                for (renderer in g2d_renderers) {
+                    renderer.render(p_cameraMatrix, g2d_modelMatrix, 1, 1);
+                }
+            // Shadow
+            case 3:
+                for (renderer in g2d_renderers) {
+                    renderer.render(p_cameraMatrix, g2d_modelMatrix, 1, 2);
+                }
+            // Invisible
+            case 4:
+                for (renderer in g2d_renderers) {
+                    renderer.renderer.tintAlpha = 0;
+                    renderer.render(p_cameraMatrix, g2d_modelMatrix, 2, 1);
+                    renderer.renderer.tintAlpha = 1;
+                }
+
         }
     }
 }

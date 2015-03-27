@@ -1,13 +1,21 @@
 package test;
 
+import com.genome2d.context.filters.GPixelateFilter;
+import com.genome2d.geom.GRectangle;
+import com.genome2d.context.filters.GBloomPassFilter;
+import com.genome2d.postprocess.GHDRPP;
+import haxe.ds.HashMap;
+import flash.utils.Dictionary;
+import flash.Vector;
+import com.genome2d.context.filters.GDesaturateFilter;
+import com.genome2d.components.renderable.GSprite;
+import com.genome2d.geom.GVector2;
 import test.fbx.GFBXImporter;
 import hxd.fmt.fbx.FbxTools;
 import flash.events.MouseEvent;
 import com.genome2d.signals.GMouseSignal;
 import hxd.fmt.fbx.FbxNode;
-import hxd.fmt.fbx.FbxNode;
 import hxd.fmt.fbx.FbxTools;
-import hxd.fmt.fbx.FbxNode;
 import flash.events.Event;
 import flash.net.URLRequest;
 import flash.net.URLLoader;
@@ -59,27 +67,44 @@ class Custom {
     }
 
     private var genome:Genome2D;
-    private var object:FbxNode;
-    private var rotationX:Float = 0;
-    private var rotationY:Float = 0;
-    private var scale:Float = .1;
-    private var cameraMatrix:GMatrix3D;
-    private var fbxImporter:GFBXImporter;
-    //private var
+    private var cameraRotationX:Float = 0;
+    private var cameraRotationY:Float = 0;
+    private var lightRotationX:Float = 0;
+    private var lightRotationY:Float = 0;
+    private var lightMatrix:GMatrix3D;
+    private var displacement:GDisplacementFilter;
+    static public var lightVector:Vector3D;
+    private var _modelId:Int = 0;
+    private var _hdrPostProcess:GHDRPP;
+
+    private var _cameraMatrix:GMatrix3D;
+    private var _reflectionMatrix:GMatrix3D;
+
+    private var _shipModelIds:Array<String> = ["Steamer_test_01.FBX", "test_lod_snury01.FBX"];
+
+    private var _fbxModels:Map<String,GFBXImporter>;
+    private var _fbxLoading:String;
+    private var _fbxQueue:Array<String>;
 
     public function new() {
         initGenome();
-
-        var a:Parser;
     }
 
     private function initGenome():Void {
         trace("initGenome");
 
-        cameraMatrix = new GMatrix3D();
+        _cameraMatrix = new GMatrix3D();
+        _cameraMatrix.appendRotation(135,Vector3D.X_AXIS);
+        _cameraMatrix.appendTranslation(400,300,400);
+
+        _reflectionMatrix = _cameraMatrix.clone();
+        _reflectionMatrix.prependScale(1,1,-1);
+        //cameraMatrix.rawData = Vector.ofArray([-0.6418397426605225,-0.5560987591743469,0.5280225276947021,0,-0.7578688859939575,0.5650461316108704,-0.32614144682884216,0,-0.11698978394269943,-0.6094995141029358,-0.7841157913208008,0,0,0,0,1]);
+        lightMatrix = new GMatrix3D();
 
         var config:GContextConfig = new GContextConfig();
         config.enableDepthAndStencil = true;
+        config.antiAliasing = 16;
 
         genome = Genome2D.getInstance();
         genome.onInitialized.add(genomeInitializedHandler);
@@ -90,6 +115,9 @@ class Custom {
         trace("genomeInitializedHandler");
 
         //GStats.visible = true;
+        _fbxModels = new Map<String, GFBXImporter>();
+        _hdrPostProcess = new GHDRPP();
+        _hdrPostProcess.setBounds(new GRectangle(0,0,800,600));
 
         initAssets();
     }
@@ -101,11 +129,16 @@ class Custom {
         GAssetManager.addFromUrl("Untitled.png");
         GAssetManager.addFromUrl("pokus_plachty01.png");
         GAssetManager.addFromUrl("pokus_trup01.png");
+        GAssetManager.addFromUrl("voda_test.png");
+        GAssetManager.addFromUrl("test_box_dif.png");
         GAssetManager.addFromUrl("logo.png");
+        GAssetManager.addFromUrl("voda_test_fixed6.png");
+        GAssetManager.addFromUrl("pevnina_test_fixed.png");
         GAssetManager.addFromUrl("ships.png");
         GAssetManager.addFromUrl("ships.xml");
         GAssetManager.addFromUrl("font_ui.png");
         GAssetManager.addFromUrl("font_ui.fnt");
+        GAssetManager.addFromUrl("Steamer_diff_01.png");
         GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
         GAssetManager.loadQueue();
     }
@@ -113,14 +146,30 @@ class Custom {
     private function assetsInitializedHandler():Void {
         trace("assetsInitializedHandler");
         GAssetManager.generateTextures();
+        GTextureManager.getTextureById("voda_test.png").repeatable = true;
+        GTextureManager.getTextureById("voda_test.png").invalidateNativeTexture(true);
 
-        //loadFBX("test_box_resetUVs.fbx");
-        //loadFBX("test_plachtyResetXform.FBX");
-        loadFBX("test_lod_ResetXform3.FBX");
-        //initExample();
+        GTextureManager.createRenderTexture("reflectionTarget", 1024, 1024);
+        GTextureManager.createRenderTexture("shadowTarget", 1024, 1024);
+        GTextureManager.createRenderTexture("waterTarget", 1024, 1024);
+        GTextureManager.createRenderTexture("finalTarget", 1024, 1024);
+
+        var scale:Int = 1;
+        var width:Int = 256;
+        var height:Int = 256;
+        var perlinData:BitmapData = new BitmapData(width * scale, height * scale, false);
+        perlinData.perlinNoise(10*scale, 2*scale, 2, 5, true, true, 0, true);
+        GTextureManager.createTextureFromBitmapData("map",perlinData,1,true);
+
+        displacement = new GDisplacementFilter();
+        displacement.displacementMap = GTextureManager.getTextureById("map");
+
+        _fbxQueue = ["voda_test.FBX", "Steamer_test_01.FBX", "test_lod_snury01.FBX"];
+        loadFBX(_fbxQueue.shift());
     }
 
     private function loadFBX(p_url:String):Void {
+        _fbxLoading = p_url;
         var loader:URLLoader = new URLLoader();
         loader.addEventListener(Event.COMPLETE, fbxLoadCompleteHandler);
         loader.load(new URLRequest(p_url));
@@ -128,12 +177,15 @@ class Custom {
 
     private function fbxLoadCompleteHandler(event:Event):Void {
         //trace(event.target.data);
-        object = Parser.parse(event.target.data);
-
-        fbxImporter = new GFBXImporter();
-        fbxImporter.init(object);
-
-        initExample();
+        var fbxNode:FbxNode = Parser.parse(event.target.data);
+        var fbxImporter:GFBXImporter = new GFBXImporter();
+        fbxImporter.init(fbxNode);
+        _fbxModels.set(_fbxLoading,fbxImporter);
+        if (_fbxQueue.length>0) {
+            loadFBX(_fbxQueue.shift());
+        } else {
+            initExample();
+        }
     }
 
     public function test(signal:GUIMouseSignal):Void {
@@ -146,15 +198,6 @@ class Custom {
     private function initExample():Void {
         trace("initExample");
 
-        /*
-        var w:Float = 40;
-        var h:Float = 20;
-        var d:Float = 20;
-
-        //renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, -w, h, -d, w, -h, -d, w,h,-d],[0,0,1,0,0,1,1,0,0,1,1,1]);//,[0,1,2,2,1,3]);
-        renderer = new GCustomRenderer([-w,-h,-d,w,-h,-d,-w,h,-d, w,h,-d,-w,-h,d,w,-h,d,-w,h,d,w,h,d], [0,0,1,0,0,1,1,1,1,0,0,0,1,1,0,1], [0,1,2,2,1,3,5,4,7,7,4,6,3,1,7,7,1,5,2,3,6,6,3,7,0,2,4,4,2,6,1,0,5,5,0,4], false);
-        /**/
-
         genome.getContext().setBackgroundColor(0x888888,1);
         genome.getContext().onKeyboardSignal.add(keyHandler);
         genome.getContext().onMouseSignal.add(mouseHandler);
@@ -163,151 +206,148 @@ class Custom {
 
     private var omx:Float = 0;
     private var omy:Float = 0;
+    private var shipX:Float = 0;
+    private var shipY:Float = 0;
 
     private function mouseHandler(signal:GMouseSignal):Void {
         if (signal.buttonDown && signal.type == GMouseSignalType.MOUSE_MOVE) {
-            rotationY -= signal.x-omx;
-            rotationX += signal.y-omy;
+            if (signal.ctrlKey) {
+                lightRotationY -= signal.x-omx;
+                //lightRotationX += signal.y-omy;
+            } else if (signal.shiftKey) {
+                shipX = signal.x-400;
+                shipY = signal.y-300;
+            } else {
+                cameraRotationY -= signal.x-omx;
+                cameraRotationX += signal.y-omy;
+            }
             omx = signal.x;
             omy = signal.y;
         } else if (signal.type == GMouseSignalType.MOUSE_DOWN) {
             omx = signal.x;
             omy = signal.y;
         } else if (signal.type == GMouseSignalType.MOUSE_WHEEL) {
-            fbxImporter.scale+=signal.delta/100;
+            //fbxLod.scale+=signal.delta/100;
         }
     }
 
-    private var meshIndex:Int = -1;
+    private var renderPass:Int = 0;
 
     private function keyHandler(signal:GKeyboardSignal):Void {
         if (signal.type != GKeyboardSignalType.KEY_DOWN) return;
 
         switch (signal.keyCode) {
             case 48:
-                meshIndex = -1;
+                renderPass = 0;
             case 49:
-                meshIndex = 0;
+                renderPass = 1;
             case 50:
-                meshIndex = 1;
+                renderPass = 2;
             case 51:
-                meshIndex = 2;
+                renderPass = 3;
             case 52:
-                meshIndex = 3;
+                renderPass = 4;
             case 53:
-                meshIndex = 4;
+                renderPass = 5;
+            case 67:
+                _modelId++;
+            case 65: // A
+                shipRotationZ-=1;
+            case 68: // D
+                shipRotationZ+=1;
+            case 87: // W
+                var nx:Float = 1*Math.cos(shipRotationZ*Math.PI/360) - 1*Math.sin(shipRotationZ*Math.PI/360);
+                var ny:Float = 1*Math.sin(shipRotationZ*Math.PI/360) + 1*Math.cos(shipRotationZ*Math.PI/360);
+            case 83: // S
+            case 32:
+                trace(_cameraMatrix.rawData);
             case _:
-                trace(signal.keyCode);
+                //trace(signal.keyCode);
         }
     }
+    private var shipRotationZ:Float = -45;
 
-    private function initFBX():Void {
-        // Textures
-        var textureNodes:Array<FbxNode> = FbxTools.getAll(object, "Objects.Texture");
-        //trace(FbxTools.get(textureNodes[0], "RelativeFilename", true));
-
-        var modelNodes:Array<FbxNode> = FbxTools.getAll(object, "Objects.Model");
-        trace(FbxTools.toFloat(modelNodes[0].props[0]));
-//        return;
-
-        // Geometry
-        var vertexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.Vertices");
-        var vertexIndexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.PolygonVertexIndex");
-
-        var uvNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.LayerElementUV.UV");
-        var uvIndexNodes:Array<FbxNode> = FbxTools.getAll(object,"Objects.Geometry.LayerElementUV.UVIndex");
-
-        if (vertexNodes.length != uvNodes.length) throw "Invalid number of UV sets and polygons";
-
-        var mergedVertices:Array<Float> = new Array<Float>();
-        var mergedVertexIndices:Array<UInt> = new Array<UInt>();
-        var mergedUvs:Array<Float> = new Array<Float>();
-        var indexOffset:Int = 0;
-        for (i in 0...vertexNodes.length) {
-            var currentVertices:Array<Float> = FbxTools.getFloats(vertexNodes[i]);
-            var currentVertexIndices:Array<Int> = cast FbxTools.getInts(vertexIndexNodes[i]);
-            var currentUVs:Array<Float> = FbxTools.getFloats(uvNodes[i]);
-            var currentUVIndices:Array<Int> = FbxTools.getInts(uvIndexNodes[i]);
-            if (currentUVIndices.length != currentVertexIndices.length) throw "Not same number of vertex and UV indices!";
-            // Create array for our reindexed UVs
-            var reindexedUvs:Array<Float> = new Array<Float>();
-            for (j in 0...currentUVs.length) {
-                reindexedUvs.push(0);
-            }
-
-            // Reindex UV coordinates to correspond to vertex indices
-            var correctedIndices:Array<UInt> = new Array<UInt>();
-            for (j in 0...currentUVIndices.length) {
-//                if (currentVertexIndices[j]<0) currentVertexIndices[j] = -currentVertexIndices[j]-1;
-                var vertexIndex:Int = currentVertexIndices[j];
-                if (vertexIndex < 0) vertexIndex = -vertexIndex-1;
-                correctedIndices.push(vertexIndex);
-                mergedVertexIndices.push(vertexIndex+indexOffset);
-
-                var uvIndex:Int = currentUVIndices[j];
-                reindexedUvs[vertexIndex*2] = currentUVs[uvIndex*2];
-                reindexedUvs[vertexIndex*2+1] = 1-currentUVs[uvIndex*2+1];
-            }
-
-            trace("Vertices", currentVertices.length/3, currentVertices);
-            trace("UVs", reindexedUvs.length/2, reindexedUvs);
-            trace("Indices", correctedIndices.length, correctedIndices);
-            trace("UVIndices", currentUVIndices);
-            trace("Triangles", correctedIndices.length/3);
-            var renderer:GCustomRenderer = new GCustomRenderer(currentVertices, reindexedUvs, correctedIndices, false);
-            renderers.push(renderer);
-
-            // Merge vertices
-            //mergedVertices = mergedVertices.concat(currentVertices);
-            //mergedUvs = mergedUvs.concat(reindexedUvs);
-            //indexOffset+=Std.int(currentVertices.length/3);
-        }
-
-        trace("# Meshes",renderers.length);
-
-        /*
-        trace("Vertices", mergedVertices.length, mergedVertices);
-        trace("UVs", mergedUvs.length, mergedUvs);
-        trace("Indices", mergedVertexIndices.length, mergedVertexIndices);
-
-        //renderer = new GCustomRenderer(vertices, uvs, vertexIndices, false);
-        /**/
-    }
+    static public var updatedLight:Vector3D;
+    static public var ambientLightRed:Float = .1;
+    static public var ambientLightGreen:Float = .1;
+    static public var ambientLightBlue:Float = .1;
+    private var g2d_waveX:Float = 1.01;
+    private var g2d_waveY:Float = .01;
 
     private function postRenderHandler():Void {
         var context:IContext = genome.getContext();
 
-        cameraMatrix.appendRotation(rotationX, Vector3D.X_AXIS);
-        cameraMatrix.appendRotation(rotationY, Vector3D.Y_AXIS);
-        rotationX = rotationY = 0;
+        _cameraMatrix.appendRotation(cameraRotationX, Vector3D.X_AXIS);
+        _cameraMatrix.appendRotation(cameraRotationY, Vector3D.Y_AXIS);
+        cameraRotationX = cameraRotationY = 0;
 
-        fbxImporter.render(cameraMatrix);
-        /*
-        for (i in 0...renderers.length) {
-            if (meshIndex>=0 && i!=meshIndex) continue;
-            var renderer:GCustomRenderer = renderers[i];
-            context.bindRenderer(renderer);
+        lightMatrix.appendRotation(lightRotationX, Vector3D.X_AXIS);
+        lightMatrix.appendRotation(lightRotationY, Vector3D.Z_AXIS);
+        //lightMatrix.appendTranslation(200,0,0);
+        lightRotationX = lightRotationY = 0;
 
-            renderer.transformMatrix.identity();
-            renderer.transformMatrix.prepend(cameraMatrix);
-            //renderer.transformMatrix.prependRotation(rotationX,Vector3D.X_AXIS);
-            //renderer.transformMatrix.prependRotation(rotationY,Vector3D.Y_AXIS);
-            renderer.transformMatrix.prependScale(scale,scale,scale);
-            renderer.transformMatrix.appendTranslation(400,300,300);
-            renderer.draw(texture,2);
-            /*
-            renderer.transformMatrix.identity();
-            renderer.transformMatrix.prependTranslation(0,0,250);
-            renderer.transformMatrix.prependRotation(32,Vector3D.X_AXIS);
-            renderer.transformMatrix.prependRotation(180,Vector3D.Z_AXIS);
-            renderer.transformMatrix.prependRotation(45+buildings[2],Vector3D.Y_AXIS);
-            renderer.transformMatrix.prependScale(.1,-.1,.1);
-            renderer.transformMatrix.appendTranslation(buildings[0],buildings[1]+60-Math.sin(buildings[2]/20)*10,0);
-            renderer.draw(texture,2);
-            /**
+        if (lightVector == null) lightVector = new Vector3D(0.3746070861816406, -0.9271845817565918, 1);//-1,1,1);
+        //if (lightVector == null) lightVector = new Vector3D(-1,1,1);
+        updatedLight = lightMatrix.transformVector(lightVector);
+
+        g2d_waveX+=.01;
+        g2d_waveY+=.02;
+        ambientLightRed = ambientLightGreen = ambientLightBlue = .35;
+
+        /**/
+        var shipData:Array<Float> = [0,0,0,-45,
+                                     1,200,100,-45];
+        // Render reflections
+        if (renderPass==0 || renderPass == 2) {
+            context.setRenderTarget(GTextureManager.getTextureById("reflectionTarget"));
+            for (i in 0...Std.int(shipData.length/4)) {
+                renderLod(shipData[i*4], shipData[i*4+1], shipData[i*4+2], shipData[i*4+3], 2);
+            }
+        }
+        // Render shadows
+        if (renderPass==0 || renderPass == 3) {
+            context.setRenderTarget(GTextureManager.getTextureById("shadowTarget"));
+            for (i in 0...Std.int(shipData.length/4)) {
+                renderLod(shipData[i*4], shipData[i*4+1], shipData[i*4+2], shipData[i*4+3], 3);
+            }
+        }
+        context.setRenderTarget(GTextureManager.getTextureById("waterTarget"));
+        context.draw(GTextureManager.getTextureById("voda_test_fixed6.png"),400,300,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+        if (renderPass==0 || renderPass == 2) context.draw(GTextureManager.getTextureById("reflectionTarget"),512,512,1,1,0,1,1,1,.2,GBlendMode.NORMAL);
+        if (renderPass==0 || renderPass == 3) context.draw(GTextureManager.getTextureById("shadowTarget"),512,512,1,1,0,1,1,1,.15,GBlendMode.MULTIPLY);
+        context.setRenderTarget(GTextureManager.getTextureById("finalTarget"));
+
+        context.draw(GTextureManager.getTextureById("waterTarget"),512,512,1,1,0,1,1,1,1,GBlendMode.NORMAL,displacement);
+        context.draw(GTextureManager.getTextureById("pevnina_test_fixed.png"),400,300,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+        /**/
+        _fbxModels.get("voda_test.FBX").render(_cameraMatrix, 4);
+        for (i in 0...Std.int(shipData.length/4)) {
+            if (renderPass==0 || renderPass == 1) renderLod(shipData[i*4], shipData[i*4+1], shipData[i*4+2], shipData[i*4+3], 1);
         }
         /**/
+        context.setRenderTarget(null);
 
-        //context.draw(GTextureManager.getTextureById("pokus_trup01.png"),695,565,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+        //_hdrPostProcess.render(GTextureManager.getTextureById("finalTarget"),512,512);
+        context.draw(GTextureManager.getTextureById("finalTarget"),512,512,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+
+        //context.draw(GTextureManager.getTextureById("logo.png"),700,560,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+    }
+
+    private function renderLod(p_modelIndex:Float, p_x:Float, p_y:Float, p_rotation:Float, p_renderType:Int):Void {
+        var modelId:String = _shipModelIds[Std.int(p_modelIndex)];
+
+        var lod:GFBXImporter = _fbxModels.get(modelId);
+        lod.getModelMatrix().identity();
+        lod.getModelMatrix().appendScale(.1,.1,.1);
+        var scaleWave:Float = 1;
+        if (p_modelIndex == 0) {
+            scaleWave = .2;
+        }
+        lod.getModelMatrix().appendRotation(scaleWave*5*Math.sin(g2d_waveX), Vector3D.X_AXIS);
+        lod.getModelMatrix().appendRotation(3*Math.sin(g2d_waveY), Vector3D.Y_AXIS);
+        lod.getModelMatrix().appendRotation(p_rotation, Vector3D.Z_AXIS);
+        lod.getModelMatrix().appendTranslation(p_x,-p_y,0);
+
+        lod.render((p_renderType==2)?_reflectionMatrix:_cameraMatrix, p_renderType);
     }
 }

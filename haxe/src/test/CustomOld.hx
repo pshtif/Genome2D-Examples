@@ -285,13 +285,13 @@ class Custom {
             context.bindRenderer(renderer);
             for (i in 0...Std.int(buildings.length/3)) {
                 buildings[i*3+2]+=1;
-                renderer.transformMatrix.identity();
-                renderer.transformMatrix.prependTranslation(0,0,200);
-                renderer.transformMatrix.prependRotation(32,Vector3D.X_AXIS);
-                renderer.transformMatrix.prependRotation(0,Vector3D.Z_AXIS);
-                renderer.transformMatrix.prependRotation(45+buildings[i*3+2],Vector3D.X_AXIS);
-                renderer.transformMatrix.prependScale(.1,.1,.1);
-                renderer.transformMatrix.appendTranslation(buildings[i*3],buildings[i*3+1]+Math.sin(buildings[i*3+2]/20)*10,0);
+                renderer.modelMatrix.identity();
+                renderer.modelMatrix.prependTranslation(0,0,200);
+                renderer.modelMatrix.prependRotation(32,Vector3D.X_AXIS);
+                renderer.modelMatrix.prependRotation(0,Vector3D.Z_AXIS);
+                renderer.modelMatrix.prependRotation(45+buildings[i*3+2],Vector3D.X_AXIS);
+                renderer.modelMatrix.prependScale(.1,.1,.1);
+                renderer.modelMatrix.appendTranslation(buildings[i*3],buildings[i*3+1]+Math.sin(buildings[i*3+2]/20)*10,0);
                 renderer.draw(texture,2);
                 /*
                 renderer.transformMatrix.identity();

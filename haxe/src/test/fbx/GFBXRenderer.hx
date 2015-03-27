@@ -1,4 +1,5 @@
 package test.fbx;
+import com.genome2d.context.stage3d.GStage3DContext;
 import com.genome2d.context.GBlendMode;
 import com.genome2d.Genome2D;
 import com.genome2d.geom.GMatrix3D;
@@ -12,21 +13,21 @@ class GFBXRenderer {
     public function new(p_model:GFBXModel):Void {
         var fbxGeometry:GFBXGeometry = p_model.getGeometry();
         if (fbxGeometry == null) throw "Invalid model.";
-        renderer = new GCustomRenderer(fbxGeometry.vertices, fbxGeometry.uvs, fbxGeometry.indices, false);
+        renderer = new GCustomRenderer(fbxGeometry.vertices, fbxGeometry.uvs, fbxGeometry.indices, fbxGeometry.vertexNormals, false);
         var fbxTexture:GFBXTexture = p_model.getMaterial().getTexture();
         if (fbxTexture == null) throw "Invalid texture.";
         texture = GTextureManager.getTextureById(fbxTexture.relativePath);
         trace(fbxTexture.relativePath, texture);
     }
 
-    public function render(p_x:Float, p_y:Float, p_z:Float, p_scale:Float, p_matrix:GMatrix3D):Void {
-        Genome2D.getInstance().getContext().setBlendMode(GBlendMode.NORMAL, true);
-        Genome2D.getInstance().getContext().bindRenderer(renderer);
+    public function render(p_cameraMatrix:GMatrix3D, p_modelMatrix:GMatrix3D, p_cull:Int, p_renderType:Int):Void {
+        var context:GStage3DContext = cast Genome2D.getInstance().getContext();
+        context.setBlendMode(GBlendMode.NORMAL, true);
+        context.bindRenderer(renderer);
 
-        renderer.transformMatrix.identity();
-        renderer.transformMatrix.prepend(p_matrix);
-        renderer.transformMatrix.prependScale(p_scale,p_scale,p_scale);
-        renderer.transformMatrix.appendTranslation(p_x,p_y,p_z);
-        renderer.draw(texture,2);
+        renderer.modelMatrix = p_modelMatrix;
+        renderer.cameraMatrix = p_cameraMatrix;
+
+        renderer.draw(texture, p_cull, p_renderType);
     }
 }
