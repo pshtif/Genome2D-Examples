@@ -64,6 +64,7 @@ class GFBXImporter {
 
         for (node in geometryNodes) {
             var geometry:GFBXGeometry = new GFBXGeometry(node);
+
             g2d_nodes.set(geometry.id, geometry);
         }
     }

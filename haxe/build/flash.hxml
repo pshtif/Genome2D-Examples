@@ -24,10 +24,10 @@
 # Main class
 #-main examples.ExampleWrapper
 #-main examples.UIEdit
--main test.Custom
-#-main test.Test
+-main test.Showcase
+#-main test.TestTexture
 
 # Flash flags
 -swf-version 12.0
--swf Genome2D-Examples/bin/Example.swf
+-swf ../Ships/Example.swf
 -swf-header 800:600:60:000000

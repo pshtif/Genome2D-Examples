@@ -5,6 +5,7 @@ class GFBXModel extends GFBXNode {
     public function getGeometry():GFBXGeometry {
         for (connection in connections) {
             if (Std.is(connection, GFBXGeometry)) return cast connection;
+            if (Std.is(connection, GFBXModel)) return cast(connection,GFBXModel).getGeometry();
         }
         return null;
     }
@@ -12,6 +13,7 @@ class GFBXModel extends GFBXNode {
     public function getMaterial():GFBXMaterial {
         for (connection in connections) {
             if (Std.is(connection, GFBXMaterial)) return cast connection;
+            if (Std.is(connection, GFBXModel)) return cast(connection,GFBXModel).getMaterial();
         }
         return null;
     }

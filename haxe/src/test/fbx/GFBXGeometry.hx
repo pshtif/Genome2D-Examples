@@ -19,6 +19,7 @@ class GFBXGeometry extends GFBXNode {
         var normalsNode:FbxNode = FbxTools.getAll(p_fbxNode, "LayerElementNormal.Normals")[0];
 
         var uvNode:FbxNode = FbxTools.getAll(p_fbxNode,"LayerElementUV.UV")[0];
+        trace("FUCK", FbxTools.getAll(p_fbxNode,"LayerElementUV.UV").length);
         var uvIndexNode:FbxNode = FbxTools.getAll(p_fbxNode,"LayerElementUV.UVIndex")[0];
 
         vertices = FbxTools.getFloats(vertexNode);
