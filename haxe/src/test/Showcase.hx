@@ -13,15 +13,14 @@ import com.genome2d.context.filters.GDesaturateFilter;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.geom.GVector2;
 import test.fbx.GFBXImporter;
-import hxd.fmt.fbx.FbxTools;
 import flash.events.MouseEvent;
 import com.genome2d.signals.GMouseSignal;
-import hxd.fmt.fbx.FbxNode;
-import hxd.fmt.fbx.FbxTools;
+import FbxNode;
+import FbxTools;
 import flash.events.Event;
 import flash.net.URLRequest;
 import flash.net.URLLoader;
-import hxd.fmt.fbx.Parser;
+import FbxParser;
 import com.genome2d.tilemap.GTile;
 import com.genome2d.signals.GKeyboardSignal;
 import com.genome2d.signals.GKeyboardSignalType;
@@ -178,7 +177,7 @@ class Showcase {
 
     private function fbxLoadCompleteHandler(event:Event):Void {
         //trace(event.target.data);
-        var fbxNode:FbxNode = Parser.parse(event.target.data);
+        var fbxNode:FbxNode = FbxParser.parse(event.target.data);
         var fbxImporter:GFBXImporter = new GFBXImporter();
         fbxImporter.init(fbxNode);
         _fbxModels.set(_fbxLoading,fbxImporter);
