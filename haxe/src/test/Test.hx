@@ -1,5 +1,11 @@
 package test;
 
+import com.genome2d.context.GBlendMode;
+import com.genome2d.signals.GKeyboardSignalType;
+import com.genome2d.signals.GKeyboardSignal;
+import com.genome2d.particles.GParticlePool;
+import com.genome2d.geom.GCurve;
+import com.genome2d.components.renderable.particles.GParticleSystem;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.node.GNode;
 import com.genome2d.components.renderable.GSprite;
@@ -14,15 +20,14 @@ class Test {
     }
 
     private var genome:Genome2D;
+    private var particleSystem:GParticleSystem;
+    private var particleAffector:ParticleAffector;
 
     public function new() {
         initGenome();
     }
 
     private function initGenome():Void {
-        GStats.visible = true;
-        trace("here");
-
         genome = Genome2D.getInstance();
         genome.onInitialized.addOnce(genomeInitializedHandler);
         genome.init(new GContextConfig());
@@ -33,80 +38,52 @@ class Test {
     }
 
     private function initAssets():Void {
-        GAssetManager.addFromUrl("atlas.png");
-        GAssetManager.addFromUrl("atlas.xml");
-        GAssetManager.onQueueLoaded.addOnce(assetsLoadedHandler);
+        GAssetManager.addFromUrl("particle.png");
+        GAssetManager.addFromUrl("fire.png");
+        GAssetManager.addFromUrl("fire.xml");
+        GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
     }
 
     private var type:Int = 3;
     private var count:Int = 400000;
 
-    private function assetsLoadedHandler():Void {
+    private function assetsLoaded_handler():Void {
         GAssetManager.generateTextures();
 
-        GNode.context = Genome2D.getInstance().getContext();
-        GNode.texture = GTextureManager.getTextureById("atlas.png_0");
+        ParticleIso.mirror = true;
 
-        for (i in 0...count) createSprite();
-
-        if (type != 3) genome.onPostRender.add(postRenderHandler);
+        genome.onPostRender.add(postRender_handler);
+        genome.getContext().onKeyboardSignal.add(key_handler);
     }
 
-    private function createSprite():Void {
-        switch (type) {
-            case 1:
-                createTestSprite();
-            case 2:
-                createLinkedTestSprite();
-            case 3:
-                createNodeSprite();
-        }
+    private function createParticleSystem():Void {
+        particleSystem = cast GNode.createWithComponent(GParticleSystem);
+        particleSystem.particlePool = new GParticlePool(ParticleIso);
+        particleSystem.texture = GTextureManager.getTextureById("fire.png_slice01_01");
+        particleSystem.emission = new GCurve(100);
+        particleSystem.blendMode = GBlendMode.SCREEN;
+        particleSystem.emit = true;
+        particleSystem.node.setPosition(400,300);
+        particleSystem.addInitializer(new ParticleInitializer());
+        particleAffector = new ParticleAffector();
+        particleAffector.textures = [GTextureManager.getTextureById("fire.png_1"),GTextureManager.getTextureById("fire.png_2"),GTextureManager.getTextureById("fire.png_3"),GTextureManager.getTextureById("fire.png_4"),GTextureManager.getTextureById("fire.png_5"),GTextureManager.getTextureById("fire.png_6"),GTextureManager.getTextureById("fire.png_7"),GTextureManager.getTextureById("fire.png_8"),GTextureManager.getTextureById("fire.png_9"),GTextureManager.getTextureById("fire.png_10"),GTextureManager.getTextureById("fire.png_11")];
+        particleSystem.addAffector(particleAffector);
+        particleSystem.node.visible = false;
+        genome.root.addChild(particleSystem.node);
     }
 
-    private var _testSprites:Array<TestSprite>;
-    private function createTestSprite():Void {
-        if (_testSprites == null) _testSprites = new Array<TestSprite>();
-        var testSprite:TestSprite = new TestSprite();
-        testSprite.x = 100;//Math.random()*800;
-        testSprite.y = 100;//Math.random()*600;
-
-        _testSprites.push(testSprite);
+    private function postRender_handler():Void {
+        particleAffector.rotation += .01;
+        particleSystem.render(Genome2D.getInstance().getContext().getActiveCamera(),false);
     }
 
-    private var _firstSprite:TestSprite;
-    private var _lastSprite:TestSprite;
-    private function createLinkedTestSprite():Void {
-        var testSprite:TestSprite = new TestSprite();
-        testSprite.x = Math.random()*784+16;
-        testSprite.y = Math.random()*584+16;
-
-        if (_firstSprite == null) {
-            _lastSprite = _firstSprite = testSprite;
-        } else {
-            _lastSprite.next = testSprite;
-            _lastSprite = testSprite;
-        }
-    }
-
-    private function createNodeSprite():Void {
-        var nodeSprite:GSprite = cast GNode.createWithComponent(GSprite);
-        nodeSprite.textureId = "atlas.png_0";
-        nodeSprite.node.transform.x = Math.random()*784+16;
-        nodeSprite.node.transform.y = Math.random()*584+16;
-        genome.root.addChild(nodeSprite.node);
-    }
-
-    private function postRenderHandler():Void {
-        if (type == 1) {
-            for (i in 0...count) _testSprites[i].render();
-        }
-        if (type == 2) {
-            var sprite:TestSprite = _firstSprite;
-            while (sprite != null) {
-                sprite.render();
-                sprite = sprite.next;
-            }
+    private function key_handler(signal:GKeyboardSignal):Void {
+        if (signal.type != GKeyboardSignalType.KEY_DOWN) return;
+        switch (signal.keyCode) {
+            case 32:
+                particleSystem.emit = !particleSystem.emit;
+                particleAffector.pause = !particleAffector.pause;
         }
     }
 }

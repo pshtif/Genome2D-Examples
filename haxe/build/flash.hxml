@@ -16,18 +16,21 @@
 
 # Genome2D flags
 -D genome_stage3donly
+-D genome_debug
+-D genome_debug_autodump
+#-D genome_no_profiles
 
 # Haxe flags
 #--no-inline
 #--no-traces
 
 # Main class
-#-main examples.ExampleWrapper
-#-main examples.UIEdit
--main test.Showcase
-#-main test.TestTexture
+#-main test.ShowcaseFbx
+-main test.ShowcaseParticles
+#-main test.ShowcaseDebug
+#-main test.Test
 
 # Flash flags
 -swf-version 12.0
--swf ../Ships/Example.swf
+-swf ../Test/Example.swf
 -swf-header 800:600:60:000000
