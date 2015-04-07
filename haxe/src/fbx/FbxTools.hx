@@ -11,9 +11,9 @@ enum FbxProp {
 
 class FbxTools {
 
-	static public function get(p_node:FbxNode, p_path:String, opt = false):FbxNode {
+	static public function get(p_node:GFbxParserNode, p_path:String, opt = false):GFbxParserNode {
 		var parts:Array<String> = p_path.split(".");
-		var cur:FbxNode = p_node;
+		var cur:GFbxParserNode = p_node;
 		for(p in parts) {
 			var found:Bool = false;
 			for(c in cur.childs) {
@@ -33,7 +33,7 @@ class FbxTools {
 		return cur;
 	}
 
-	static public function getAll(p_node:FbxNode, p_path:String):Array<FbxNode> {
+	static public function getAll(p_node:GFbxParserNode, p_path:String):Array<GFbxParserNode> {
 		var parts = p_path.split(".");
 		var cur = [p_node];
 		for( p in parts ) {
@@ -53,7 +53,7 @@ class FbxTools {
 		return cur;
 	}
 
-	static public function getInts(p_node:FbxNode):Array<Int> {
+	static public function getInts(p_node:GFbxParserNode):Array<Int> {
 		if( p_node.props.length != 1 ) throw p_node.name + " has " + p_node.props + " props";
 
 		switch(p_node.props[0]) {
@@ -64,7 +64,7 @@ class FbxTools {
 		}
 	}
 
-	static public function getFloats(p_node:FbxNode):Array<Float> {
+	static public function getFloats(p_node:GFbxParserNode):Array<Float> {
 		if(p_node.props.length != 1) throw p_node.name + " has " + p_node.props + " props";
 
 		switch(p_node.props[0]) {
@@ -83,7 +83,7 @@ class FbxTools {
 		}
 	}
 
-	static public function hasProp(p_node:FbxNode, p_prop:FbxProp):Bool {
+	static public function hasProp(p_node:GFbxParserNode, p_prop:FbxProp):Bool {
 		for( p2 in p_node.props ) {
 			if(Type.enumEq(p_prop, p2)) {
 				return true;
@@ -128,7 +128,7 @@ class FbxTools {
 		}
 	}
 
-	static public function getId(p_node:FbxNode):Int {
+	static public function getId(p_node:GFbxParserNode):Int {
 		if( p_node.props.length != 3 ) throw p_node.name + " is not an object";
 
 		return switch( p_node.props[0] ) {
@@ -141,7 +141,7 @@ class FbxTools {
 		}
 	}
 
-	static public function getName(p_node:FbxNode):String {
+	static public function getName(p_node:GFbxParserNode):String {
 		if( p_node.props.length != 3 ) throw p_node.name + " is not an object";
 
 		return switch( p_node.props[1] ) {
@@ -152,7 +152,7 @@ class FbxTools {
 		}
 	}
 
-	static public function getType(n:FbxNode):String {
+	static public function getType(n:GFbxParserNode):String {
 		if( n.props.length != 3 ) throw n.name + " is not an object";
 
 		return switch( n.props[2] ) {
