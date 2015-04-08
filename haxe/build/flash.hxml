@@ -16,8 +16,8 @@
 
 # Genome2D flags
 -D genome_stage3donly
--D genome_debug
--D genome_debug_autodump
+#-D genome_debug
+#-D genome_debug_autodump
 #-D genome_no_profiles
 
 # Haxe flags
@@ -26,11 +26,11 @@
 
 # Main class
 #-main test.ShowcaseFbx
--main test.ShowcaseParticles
+#-main test.ShowcaseParticles
 #-main test.ShowcaseDebug
-#-main test.Test
+-main test.Test
 
 # Flash flags
 -swf-version 12.0
--swf ../Test/Example.swf
+-swf Genome2D-Examples/bin/Example.swf
 -swf-header 800:600:60:000000

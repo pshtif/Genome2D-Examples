@@ -31,29 +31,29 @@ class BunnyMark
         GStats.visible = true;
 
         genome = Genome2D.getInstance();
-        genome.onInitialized.add(genomeInitializedHandler);
+        genome.onInitialized.add(genomeInitialized_handler);
         genome.init(new GContextConfig());
     }
 
-    private function genomeInitializedHandler():Void {
+    private function genomeInitialized_handler():Void {
         initAssets();
     }
 
     private function initAssets():Void {
         assetManager = new GAssetManager();
         assetManager.addUrl("bunny_gfx", "bunny.png");
-        assetManager.onAllLoaded.add(assetsInitializedHandler);
+        assetManager.onAllLoaded.add(assetsInitialized_handler);
         assetManager.load();
     }
 
-    private function assetsInitializedHandler():Void {
+    private function assetsInitialized_handler():Void {
         texture = GTextureFactory.createFromAsset("bunny", assetManager.getImageAssetById("bunny_gfx"));
 
         bunnies = new Array<Bunny>();
 
         addBunnies();
 
-        //genome.onPostRender.add(postRenderHandler);
+        //genome.onPostRender.add(postRender_handler);
     }
 
     private function addBunnies():Void {
@@ -72,7 +72,7 @@ class BunnyMark
         }
     }
 
-    private function postRenderHandler():Void {
+    private function postRender_handler():Void {
         for (i in 0...bunnies.length) {
             var bunny:Bunny = bunnies[i];
 
