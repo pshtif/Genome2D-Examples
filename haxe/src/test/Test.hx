@@ -1,18 +1,21 @@
 package test;
 
-import com.genome2d.components.renderable.GFlipBook;
+import com.genome2d.context.stage3d.GStage3DContext;
+import com.genome2d.Genome2D;
+import com.genome2d.context.bitmap.GBitmapContext;
 import com.genome2d.context.GBlendMode;
 import com.genome2d.input.GKeyboardInputType;
-import com.genome2d.signals.GKeyboardInput;
 import com.genome2d.particles.GParticlePool;
 import com.genome2d.geom.GCurve;
 import com.genome2d.components.renderable.particles.GParticleSystem;
 import com.genome2d.textures.GTextureManager;
+import com.genome2d.textures.GTexture;
 import com.genome2d.node.GNode;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.context.stats.GStats;
+import flash.display.BitmapData;
 
 class Test {
     static function main() {
@@ -20,8 +23,8 @@ class Test {
     }
 
     private var genome:Genome2D;
-    private var particleSystem:GParticleSystem;
-    private var particleAffector:ParticleAffector;
+    private var texture:GTexture;
+    private var background:GTexture;
 
 
     public function new() {
@@ -29,9 +32,11 @@ class Test {
     }
 
     private function initGenome():Void {
+        var config:GContextConfig = new GContextConfig();
+        config.profile = "baselineConstrained";
         genome = Genome2D.getInstance();
         genome.onInitialized.addOnce(genomeInitializedHandler);
-        genome.init(new GContextConfig());
+        genome.init(config);
     }
 
     private function genomeInitializedHandler():Void {
@@ -47,11 +52,20 @@ class Test {
     private function assetsLoaded_handler():Void {
         GAssetManager.generateTextures();
 
-        for (i in 0...10000) {
-            var sprite:GFlipBook = cast GNode.createWithComponent(GFlipBook);
-            sprite.texture = GTextureManager.getTextureById("bunny.png");
-            sprite.node.setPosition(Math.random()*800, Math.random()*600);
-            genome.root.addChild(sprite.node);
-        }
+        texture = GTextureManager.createTextureFromBitmapData("red", new BitmapData(32,128,false,0xFF0000), 1);
+        background = GTextureManager.createTextureFromBitmapData("background", new BitmapData(800,600,false,0x222222), 1);
+
+        genome.onPostRender.add(postRender_handler);
+    }
+
+    private var moveX:Float=0;
+    private var SPEED:Float=5;
+    private var inc:Float= 5.0;
+
+    private function postRender_handler():Void {
+        genome.getContext().draw(background, 400, 300);
+        if(moveX>800)inc=-SPEED;
+        if(moveX<0)inc=SPEED;
+        genome.getContext().draw(texture, moveX+=inc,150);
     }
 }
