@@ -9,7 +9,7 @@ import com.genome2d.ui.layout.GUILayout;
 import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.components.GCameraController;
-import com.genome2d.signals.GUIMouseSignal;
+import com.genome2d.signals.GUIMouseInput;
 import com.genome2d.assets.GAsset;
 import flash.Lib;
 import com.genome2d.ui.skin.GUISkin;
@@ -100,7 +100,7 @@ class UIEdit {
     private var elementDef:String = '<element name="Quest" mouseDown="questDownHandler" skinId="ui_btn_bottom"><element name="label" skinId="uiFont">Quests</element></element>';
     private var skinDef:String = '<fontSkin id="font" fontAtlasId="font_ui.png" autoSize="0"/>';
 
-    public function test(signal:GUIMouseSignal):Void {
+    public function test(signal:GUIMouseInput):Void {
         trace("here");
     }
 
@@ -138,7 +138,7 @@ class UIEdit {
 
     private var test2:String = '<element anchorX="0" anchorY="200" anchorLeft="0" anchorRight="0" anchorTop="0" anchorBottom="0" pivotX="0" pivotY="0" left="0" right="0" top="0" bottom="0" preferredWidth="0" preferredHeight="0" name="GUIElement" skinId="" mouseEnabled="true" visible="true" flushBatch="false" mouseDown="null" mouseUp="null" mouseClick="null" mouseOver="null" mouseOut="null" mouseMove="null"><horizontal gap="10" type="2"/><element anchorX="0" anchorY="0" anchorLeft="0" anchorRight="0" anchorTop="0" anchorBottom="0" pivotX="0" pivotY="0" left="0" right="0" top="0" bottom="0" preferredWidth="0" preferredHeight="0" name="Quest" skinId="ui_btn_bottom" mouseEnabled="true" visible="true" flushBatch="false" mouseDown="questDownHandler" mouseUp="null" mouseClick="null" mouseOver="null" mouseOut="null" mouseMove="null"><element anchorX="0" anchorY="0" anchorLeft="0" anchorRight="0" anchorTop="0" anchorBottom="0" pivotX="0" pivotY="0" left="0" right="0" top="0" bottom="0" preferredWidth="0" preferredHeight="0" name="label" skinId="uiFont" mouseEnabled="true" visible="true" flushBatch="false" mouseDown="null" mouseUp="null" mouseClick="null" mouseOver="null" mouseOut="null" mouseMove="null"/></element><element anchorX="0" anchorY="0" anchorLeft="0" anchorRight="0" anchorTop="0" anchorBottom="0" pivotX="0" pivotY="0" left="0" right="0" top="0" bottom="0" preferredWidth="0" preferredHeight="0" name="Quest" skinId="ui_btn_bottom" mouseEnabled="true" visible="true" flushBatch="false" mouseDown="questDownHandler" mouseUp="null" mouseClick="null" mouseOver="null" mouseOut="null" mouseMove="null"><element anchorX="0" anchorY="0" anchorLeft="0" anchorRight="0" anchorTop="0" anchorBottom="0" pivotX="0" pivotY="0" left="0" right="0" top="0" bottom="0" preferredWidth="0" preferredHeight="0" name="label" skinId="uiFont" mouseEnabled="true" visible="true" flushBatch="false" mouseDown="null" mouseUp="null" mouseClick="null" mouseOver="null" mouseOut="null" mouseMove="null"/></element></element>';
 
-    private function mouseDownHandler(signal:GUIMouseSignal):Void {
+    private function mouseDownHandler(signal:GUIMouseInput):Void {
         trace(signal.target, signal.target.skin!=null?signal.target.skinId:"");
     }
 

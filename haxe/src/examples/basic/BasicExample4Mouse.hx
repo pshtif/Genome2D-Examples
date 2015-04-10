@@ -11,7 +11,7 @@ package examples.basic;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.Genome2D;
-import com.genome2d.signals.GNodeMouseSignal;
+import com.genome2d.signals.GNodeMouseInput;
 import com.genome2d.node.GNode;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
@@ -96,35 +96,35 @@ class BasicExample4Mouse
     /**
         Mouse click handler
      **/
-    private function mouseClickHandler(signal:GNodeMouseSignal):Void {
+    private function mouseClickHandler(signal:GNodeMouseInput):Void {
         trace("CLICK", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse over handler
      **/
-    private function mouseOverHandler(signal:GNodeMouseSignal):Void {
+    private function mouseOverHandler(signal:GNodeMouseInput):Void {
         trace("OVER", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse out handler
      **/
-    private function mouseOutHandler(signal:GNodeMouseSignal):Void {
+    private function mouseOutHandler(signal:GNodeMouseInput):Void {
         trace("OUT", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse down handler
      **/
-    private function mouseDownHandler(signal:GNodeMouseSignal):Void {
+    private function mouseDownHandler(signal:GNodeMouseInput):Void {
         trace("DOWN", signal.dispatcher.name, signal.target.name);
     }
 
     /**
         Mouse up handler
      **/
-    private function mouseUpHandler(signal:GNodeMouseSignal):Void {
+    private function mouseUpHandler(signal:GNodeMouseInput):Void {
         trace("UP", signal.dispatcher.name, signal.target.name);
     }
 }

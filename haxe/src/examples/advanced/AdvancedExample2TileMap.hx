@@ -8,10 +8,10 @@
  */
 package examples.advanced;
 
-import com.genome2d.signals.GNodeMouseSignal;
+import com.genome2d.signals.GNodeMouseInput;
 import flash.display.BitmapData;
 import com.genome2d.textures.factories.GTextureFactory;
-import com.genome2d.signals.GMouseSignal;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.components.GCameraController;
 import com.genome2d.textures.GTexture;
 import com.genome2d.tilemap.GTile;
@@ -111,13 +111,13 @@ class AdvancedExample2TileMap
         genome.getContext().onMouseSignal.add(mouseHandler);
     }
 
-    private function mouseMoveHandler(signal:GNodeMouseSignal):Void {
+    private function mouseMoveHandler(signal:GNodeMouseInput):Void {
 
     }
 
     private var omx:Float = -1;
     private var omy:Float = -1;
-    private function mouseHandler(signal:GMouseSignal):Void {
+    private function mouseHandler(signal:GMouseInput):Void {
         if (!signal.buttonDown) {
             omx = -1;
             omy = -1;

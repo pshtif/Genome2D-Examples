@@ -3,9 +3,9 @@ import com.genome2d.assets.GXmlAsset;
 import com.genome2d.assets.GImageAsset;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.geom.GRectangle;
-import com.genome2d.signals.GMouseSignalType;
-import com.genome2d.signals.GMouseSignal;
-import com.genome2d.signals.GKeyboardSignal;
+import com.genome2d.input.GMouseInputType;
+import com.genome2d.input.GMouseInput;
+import com.genome2d.signals.GKeyboardInput;
 import examples.basic.custom.Initializer;
 import examples.basic.custom.Affector;
 import com.genome2d.particles.IGAffector;
@@ -73,16 +73,16 @@ class Example7ParticleSystem {
         genome.getContext().onMouseInteraction.add(mouseHandler);
     }
 
-    private function keyboardHandler(p_keySignal:GKeyboardSignal):Void {
+    private function keyboardHandler(p_keySignal:GKeyboardInput):Void {
         switch (p_keySignal.keyCode) {
             case 32:
                 particleSystem.burst(100);
         }
     }
 
-    private function mouseHandler(p_mouseSignal:GMouseSignal):Void {
+    private function mouseHandler(p_mouseSignal:GMouseInput):Void {
         switch (p_mouseSignal.type) {
-            case GMouseSignalType.MOUSE_DOWN:
+            case GMouseInputType.MOUSE_DOWN:
                 particleSystem.node.transform.setPosition(p_mouseSignal.x, p_mouseSignal.y);
                 particleSystem.burst(100);
         }

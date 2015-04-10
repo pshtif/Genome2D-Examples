@@ -2,7 +2,7 @@ package examples.advanced;
 import com.genome2d.components.renderables.particles.GSimpleParticleSystem;
 import com.genome2d.assets.GXmlAsset;
 import com.genome2d.geom.GRectangle;
-import com.genome2d.signals.GNodeMouseSignal;
+import com.genome2d.signals.GNodeMouseInput;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderables.GMovieClip;
 import com.genome2d.node.factory.GNodeFactory;
@@ -103,7 +103,7 @@ class Example5Cameras {
         Genome2D.getInstance().root.addChild(clip.node);
     }
 
-    private function mouseOverHandler(signal:GNodeMouseSignal):Void {
+    private function mouseOverHandler(signal:GNodeMouseInput):Void {
         trace("over");
     }
 }

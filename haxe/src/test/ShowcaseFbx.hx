@@ -21,14 +21,13 @@ import com.genome2d.postprocess.GBloomPP;
 import com.genome2d.geom.GRectangle;
 import flash.Vector;
 import fbx.GFbxScene;
-import com.genome2d.signals.GMouseSignal;
 import flash.events.Event;
 import flash.net.URLRequest;
 import flash.net.URLLoader;
-import com.genome2d.signals.GKeyboardSignal;
-import com.genome2d.signals.GKeyboardSignalType;
-import com.genome2d.signals.GMouseSignalType;
-import com.genome2d.signals.GMouseSignal;
+import com.genome2d.signals.GKeyboardInput;
+import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.input.GMouseInputType;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.context.GBlendMode;
 import flash.geom.Vector3D;
 import com.genome2d.geom.GMatrix3D;
@@ -243,8 +242,8 @@ class ShowcaseFbx {
         context.draw(GTextureManager.getTextureById("logo.png"),408,550,1,1,0,1,1,1,1,GBlendMode.NORMAL);
     }
 
-    private function mouse_handler(signal:GMouseSignal):Void {
-        if (signal.buttonDown && signal.type == GMouseSignalType.MOUSE_MOVE) {
+    private function mouse_handler(signal:GMouseInput):Void {
+        if (signal.buttonDown && signal.type == GMouseInputType.MOUSE_MOVE) {
             if (signal.ctrlKey) {
                 _lightRotationX += signal.y-_omy;
                 _lightRotationZ -= signal.x-_omx;
@@ -253,16 +252,16 @@ class ShowcaseFbx {
             }
             _omx = signal.x;
             _omy = signal.y;
-        } else if (signal.type == GMouseSignalType.MOUSE_DOWN) {
+        } else if (signal.type == GMouseInputType.MOUSE_DOWN) {
             _omx = signal.x;
             _omy = signal.y;
-        } else if (signal.type == GMouseSignalType.MOUSE_WHEEL) {
+        } else if (signal.type == GMouseInputType.MOUSE_WHEEL) {
             _modelScale += signal.delta/100;
         }
     }
 
-    private function key_handler(signal:GKeyboardSignal):Void {
-        if (signal.type != GKeyboardSignalType.KEY_DOWN) return;
+    private function key_handler(signal:GKeyboardInput):Void {
+        if (signal.type != GKeyboardInputType.KEY_DOWN) return;
 
         switch (signal.keyCode) {
             case 48:

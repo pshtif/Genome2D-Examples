@@ -8,8 +8,8 @@
  */
 package examples.advanced;
 
-import com.genome2d.signals.GKeyboardSignalType;
-import com.genome2d.signals.GKeyboardSignal;
+import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.signals.GKeyboardInput;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import flash.Lib;
@@ -31,7 +31,7 @@ import com.genome2d.context.filters.GBlurPassFilter;
 import com.genome2d.postprocesses.GBlurPP;
 import com.genome2d.node.GNode;
 import com.genome2d.components.renderables.GSprite;
-import com.genome2d.signals.GMouseSignal;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.components.GCameraController;
 import com.genome2d.textures.GTexture;
 import com.genome2d.tilemap.GTile;
@@ -147,8 +147,8 @@ class AdvancedExample3PostProcess
         genome.onKeySignal.add(keyHandler);
     }
 
-    private function keyHandler(p_signal:GKeyboardSignal):Void {
-        if (p_signal.type != GKeyboardSignalType.KEY_DOWN) return;
+    private function keyHandler(p_signal:GKeyboardInput):Void {
+        if (p_signal.type != GKeyboardInputType.KEY_DOWN) return;
         switch (p_signal.keyCode) {
             case 49:
                 container.postProcess = container.postProcess == null ? blurPP : null;

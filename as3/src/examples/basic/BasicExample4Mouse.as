@@ -12,7 +12,7 @@ import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderables.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.node.factory.GNodeFactory;
-import com.genome2d.signals.GNodeMouseSignal;
+import com.genome2d.callbacks.GNodeMouseSignal;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.factories.GTextureAtlasFactory;
 

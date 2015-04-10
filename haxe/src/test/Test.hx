@@ -2,8 +2,8 @@ package test;
 
 import com.genome2d.components.renderable.GFlipBook;
 import com.genome2d.context.GBlendMode;
-import com.genome2d.signals.GKeyboardSignalType;
-import com.genome2d.signals.GKeyboardSignal;
+import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.signals.GKeyboardInput;
 import com.genome2d.particles.GParticlePool;
 import com.genome2d.geom.GCurve;
 import com.genome2d.components.renderable.particles.GParticleSystem;
