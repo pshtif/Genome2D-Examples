@@ -28,7 +28,8 @@
 #-main test.ShowcaseFbx
 #-main test.ShowcaseParticles
 #-main test.ShowcaseDebug
--main test.Test
+#-main test.Test
+-main examples.advanced.AdvancedExample2TileMap
 
 # Flash flags
 -swf-version 12.0
