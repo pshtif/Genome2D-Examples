@@ -25,10 +25,16 @@
 #--no-traces
 
 # Main class
-#-main test.ShowcaseFbx
-#-main test.ShowcaseParticles
-#-main test.ShowcaseDebug
--main test.Test
+	# Tests
+	#-main test.ShowcaseFbx
+	#-main test.ShowcaseParticles
+	#-main test.ShowcaseDebug
+	#-main test.Test
+
+	# Examples
+	#-main examples.advanced.AdvancedExample2TileMap
+	#-main examples.basic.BasicExample4Mouse
+	-main examples.ui.UIExample2Test
 
 # Flash flags
 -swf-version 12.0

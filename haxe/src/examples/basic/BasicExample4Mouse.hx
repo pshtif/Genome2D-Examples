@@ -9,9 +9,9 @@
 package examples.basic;
 
 import com.genome2d.components.renderable.GSprite;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.Genome2D;
-import com.genome2d.signals.GNodeMouseInput;
 import com.genome2d.node.GNode;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
@@ -79,52 +79,58 @@ class BasicExample4Mouse
         trace("initExample");
         GAssetManager.generateTextures();
 
-        var node:GNode = GNode.create();
-        node.texture = GTextureManager.getTextureById("atlas.png_0");
-        node.setPosition(400, 300);
+        var sprite:GSprite = cast GNode.createWithComponent(GSprite);
+        sprite.texture = GTextureManager.getTextureById("atlas.png_0");
+        sprite.node.setPosition(400, 300);
 
-        node.mouseEnabled = true;
-        node.onMouseClick.add(mouseClickHandler);
-        node.onMouseOver.add(mouseOverHandler);
-        node.onMouseOut.add(mouseOutHandler);
-        node.onMouseDown.add(mouseDownHandler);
-        node.onMouseUp.add(mouseUpHandler);
+        sprite.node.mouseEnabled = true;
+        sprite.node.onMouseClick.add(mouseClickHandler);
+        sprite.node.onMouseOver.add(mouseOverHandler);
+        sprite.node.onMouseOut.add(mouseOutHandler);
+        sprite.node.onMouseDown.add(mouseDownHandler);
+        sprite.node.onMouseUp.add(mouseUpHandler);
 
-        genome.root.addChild(node);
+        genome.root.addChild(sprite.node);
+		
+		genome.getContext().onMouseInput.add(contextMouse);
     }
+	
+	private function contextMouse(input:GMouseInput):Void {
+		trace(input.localX, input.localY, input.contextX, input.contextY);
+	}
 
     /**
         Mouse click handler
      **/
-    private function mouseClickHandler(signal:GNodeMouseInput):Void {
-        trace("CLICK", signal.dispatcher.name, signal.target.name);
+    private function mouseClickHandler(signal:GMouseInput):Void {
+        trace("CLICK");
     }
 
     /**
         Mouse over handler
      **/
-    private function mouseOverHandler(signal:GNodeMouseInput):Void {
-        trace("OVER", signal.dispatcher.name, signal.target.name);
+    private function mouseOverHandler(signal:GMouseInput):Void {
+        trace("OVER");
     }
 
     /**
         Mouse out handler
      **/
-    private function mouseOutHandler(signal:GNodeMouseInput):Void {
-        trace("OUT", signal.dispatcher.name, signal.target.name);
+    private function mouseOutHandler(signal:GMouseInput):Void {
+        trace("OUT");
     }
 
     /**
         Mouse down handler
      **/
-    private function mouseDownHandler(signal:GNodeMouseInput):Void {
-        trace("DOWN", signal.dispatcher.name, signal.target.name);
+    private function mouseDownHandler(signal:GMouseInput):Void {
+        trace("DOWN");
     }
 
     /**
         Mouse up handler
      **/
-    private function mouseUpHandler(signal:GNodeMouseInput):Void {
-        trace("UP", signal.dispatcher.name, signal.target.name);
+    private function mouseUpHandler(signal:GMouseInput):Void {
+        trace("UP");
     }
 }

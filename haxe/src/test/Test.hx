@@ -1,20 +1,10 @@
 package test;
 
-import com.genome2d.context.stage3d.GStage3DContext;
-import com.genome2d.Genome2D;
-import com.genome2d.context.bitmap.GBitmapContext;
-import com.genome2d.context.GBlendMode;
-import com.genome2d.input.GKeyboardInputType;
-import com.genome2d.particles.GParticlePool;
-import com.genome2d.geom.GCurve;
-import com.genome2d.components.renderable.particles.GParticleSystem;
-import com.genome2d.textures.GTextureManager;
-import com.genome2d.textures.GTexture;
-import com.genome2d.node.GNode;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
-import com.genome2d.context.stats.GStats;
+import com.genome2d.textures.GTexture;
+import com.genome2d.textures.GTextureManager;
 import flash.display.BitmapData;
 
 class Test {
@@ -44,6 +34,7 @@ class Test {
     }
 
     private function initAssets():Void {
+		trace("aaaaa");
         GAssetManager.addFromUrl("bunny.png");
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
