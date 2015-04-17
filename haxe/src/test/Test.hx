@@ -1,8 +1,10 @@
 package test;
 
 import com.genome2d.assets.GAssetManager;
+import com.genome2d.components.renderable.flash.GFlashText;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
+import com.genome2d.node.GNode;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 import flash.display.BitmapData;
@@ -42,21 +44,15 @@ class Test {
 
     private function assetsLoaded_handler():Void {
         GAssetManager.generateTextures();
-
-        texture = GTextureManager.createTextureFromBitmapData("red", new BitmapData(32,128,false,0xFF0000), 1);
-        background = GTextureManager.createTextureFromBitmapData("background", new BitmapData(800,600,false,0x222222), 1);
-
-        genome.onPostRender.add(postRender_handler);
-    }
-
-    private var moveX:Float=0;
-    private var SPEED:Float=5;
-    private var inc:Float= 5.0;
-
-    private function postRender_handler():Void {
-        genome.getContext().draw(background, 400, 300);
-        if(moveX>800)inc=-SPEED;
-        if(moveX<0)inc=SPEED;
-        genome.getContext().draw(texture, moveX+=inc,150);
+		genome.getContext().setBackgroundColor(0x222222);
+	
+        var text:GFlashText = cast GNode.createWithComponent(GFlashText);
+		text.textField.text = "Hello world";
+		text.textField.background = true;
+		text.textField.backgroundColor = 0xFFFFFF;
+		text.blendMode = 0;
+		
+		text.node.setPosition(400, 300);
+		genome.root.addChild(text.node);
     }
 }
