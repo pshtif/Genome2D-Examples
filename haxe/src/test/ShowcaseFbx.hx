@@ -1,44 +1,32 @@
 package test;
 
-import com.genome2d.context.filters.GDesaturateFilter;
-import com.genome2d.context.filters.GPixelateFilter;
-import com.genome2d.geom.GCurve;
-import com.genome2d.particles.GParticlePool;
-import com.genome2d.components.renderable.particles.GParticleSystem;
-import com.genome2d.node.GNode;
-import com.genome2d.macros.MGProfiler;
-import com.genome2d.debug.IGDebuggable;
-import com.genome2d.postprocess.GPostProcess;
-import com.genome2d.postprocess.GHDRPP;
-import com.genome2d.geom.GFloat4;
-import com.genome2d.macros.MGDebug;
-import com.genome2d.debug.GDebug;
-import fbx.FbxParser;
-import fbx.FbxNode;
-import com.genome2d.context.filters.GDisplacementFilter;
-import com.genome2d.textures.GTextureFilteringType;
-import com.genome2d.postprocess.GBloomPP;
-import com.genome2d.geom.GRectangle;
-import flash.Vector;
-import fbx.GFbxScene;
-import flash.events.Event;
-import flash.net.URLRequest;
-import flash.net.URLLoader;
-import com.genome2d.signals.GKeyboardInput;
-import com.genome2d.input.GKeyboardInputType;
-import com.genome2d.input.GMouseInputType;
-import com.genome2d.input.GMouseInput;
-import com.genome2d.context.GBlendMode;
-import flash.geom.Vector3D;
-import com.genome2d.geom.GMatrix3D;
-import flash.display.BitmapData;
-import com.genome2d.textures.GTextureManager;
-import com.genome2d.context.IContext;
 import com.genome2d.assets.GAsset;
-import com.genome2d.textures.GTexture;
-import com.genome2d.Genome2D;
-import com.genome2d.context.GContextConfig;
 import com.genome2d.assets.GAssetManager;
+import com.genome2d.context.filters.GDisplacementFilter;
+import com.genome2d.context.GBlendMode;
+import com.genome2d.context.GContextConfig;
+import com.genome2d.context.IGContext;
+import com.genome2d.fbx.GFbxNode;
+import com.genome2d.fbx.GFbxParser;
+import com.genome2d.fbx.GFbxParserNode;
+import com.genome2d.fbx.GFbxScene;
+import com.genome2d.Genome2D;
+import com.genome2d.geom.GFloat4;
+import com.genome2d.geom.GMatrix3D;
+import com.genome2d.geom.GRectangle;
+import com.genome2d.input.GKeyboardInput;
+import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.input.GMouseInput;
+import com.genome2d.input.GMouseInputType;
+import com.genome2d.macros.MGDebug;
+import com.genome2d.postprocess.GBloomPP;
+import com.genome2d.postprocess.GPostProcess;
+import com.genome2d.textures.GTextureManager;
+import flash.display.BitmapData;
+import flash.events.Event;
+import flash.geom.Vector3D;
+import flash.net.URLLoader;
+import flash.net.URLRequest;
 
 class ShowcaseFbx {
 
@@ -50,7 +38,7 @@ class ShowcaseFbx {
 
     private var _fbxModel:GFbxScene;
 
-    private var _renderWater:Bool = false;
+    private var _renderWater:Bool = true;
     private var _renderBackground:Bool = false;
     private var _applyDisplacement:Bool = false;
     private var _displacement:GDisplacementFilter;
@@ -104,13 +92,7 @@ class ShowcaseFbx {
         MGDebug.DUMP();
 
         GAssetManager.init();
-        GAssetManager.addFromUrl("fire.png");
-        GAssetManager.addFromUrl("fire.xml");
-        GAssetManager.addFromUrl("water.png");
-        GAssetManager.addFromUrl("logo.png");
-        GAssetManager.addFromUrl("floor2.png");
-        GAssetManager.addFromUrl("skel_base_col.png");
-        GAssetManager.addFromUrl("skel_warrior1.png");
+        GAssetManager.addFromUrl("untitled.png");
         GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsInitialized_handler);
         GAssetManager.loadQueue();
@@ -137,7 +119,7 @@ class ShowcaseFbx {
         _postProcess = new GBloomPP();
         _postProcess.setBounds(new GRectangle(0,0,1024,1024));
 
-        loadFBX("test.fbx");
+        loadFBX("box.fbx");
     }
 
     private function createDisplacement():Void {
@@ -159,7 +141,7 @@ class ShowcaseFbx {
     private function fbxLoadComplete_handler(event:Event):Void {
         MGDebug.DUMP();
 
-        var fbxNode:FbxNode = FbxParser.parse(event.target.data);
+        var fbxNode:GFbxParserNode = GFbxParser.parse(event.target.data);
         _fbxModel = new GFbxScene();
         _fbxModel.init(fbxNode);
         _fbxModel.ambientColor = new GFloat4(.5,.5,.5,1);
@@ -172,8 +154,8 @@ class ShowcaseFbx {
         MGDebug.DUMP();
 
         _genome.getContext().setBackgroundColor(0x0,1);
-        _genome.getContext().onKeyboardSignal.add(key_handler);
-        _genome.getContext().onMouseSignal.add(mouse_handler);
+        _genome.getContext().onKeyboardInput.add(key_handler);
+        _genome.getContext().onMouseInput.add(mouse_handler);
         _genome.onPostRender.add(postRender_handler);
     }
 
@@ -187,7 +169,7 @@ class ShowcaseFbx {
     }
 
     private function postRender_handler():Void {
-        var context:IContext = _genome.getContext();
+        var context:IGContext = _genome.getContext();
 
         var r:Float = _fbxModel.ambientColor.x+_fbxModel.lightColor.x/2;
         var g:Float = _fbxModel.ambientColor.y+_fbxModel.lightColor.y/2;
@@ -213,14 +195,13 @@ class ShowcaseFbx {
 
         // Render water
         context.setRenderTarget(GTextureManager.getTextureById("waterCompositionTarget"));
-        //_postProcess.render(GTextureManager.getTextureById("water.png"),512,512);
-        context.draw(GTextureManager.getTextureById("water.png"),512,512,1,1,0,r,g,b,1,GBlendMode.NORMAL);
+        //context.draw(GTextureManager.getTextureById("water.png"),512,512,1,1,0,r,g,b,1,GBlendMode.NORMAL);
         if (_renderPass==0 || _renderPass == 2) context.draw(GTextureManager.getTextureById("reflectionTarget"),512,512,1,1,0,r,g,b,.35,GBlendMode.NORMAL);
 
         context.setRenderTarget(GTextureManager.getTextureById("finalCompositionTarget"));
 
         if (_renderBackground) {
-            context.draw(GTextureManager.getTextureById("floor2.png"),512,512,1,1,0,r,g,b,1,GBlendMode.NORMAL);
+            context.draw(GTextureManager.getTextureById("untitled.png"),512,512,1,1,0,r,g,b,1,GBlendMode.NORMAL);
             if (_renderWater) {
                 if (_applyDisplacement) {
                     context.draw(GTextureManager.getTextureById("waterCompositionTarget"),510,508,1,1,0,1,1,1,1,GBlendMode.NORMAL, _displacement);
@@ -236,34 +217,31 @@ class ShowcaseFbx {
 
         context.setRenderTarget(null);
 
-        //_postProcess.render(GTextureManager.getTextureById("finalCompositionTarget"),400,300);
         context.draw(GTextureManager.getTextureById("finalCompositionTarget"),400,300,1,1,0,1,1,1,1,GBlendMode.NORMAL);
-
-        context.draw(GTextureManager.getTextureById("logo.png"),408,550,1,1,0,1,1,1,1,GBlendMode.NORMAL);
     }
 
-    private function mouse_handler(signal:GMouseInput):Void {
-        if (signal.buttonDown && signal.type == GMouseInputType.MOUSE_MOVE) {
-            if (signal.ctrlKey) {
-                _lightRotationX += signal.y-_omy;
-                _lightRotationZ -= signal.x-_omx;
+    private function mouse_handler(input:GMouseInput):Void {
+        if (input.buttonDown && input.type == GMouseInputType.MOUSE_MOVE) {
+            if (input.ctrlKey) {
+                //_lightRotationX += (input.localX-_omy)/100;
+                _lightRotationZ -= (input.contextX-_omx);
             } else {
-                _modelRotation -= signal.x-_omx;
+                _modelRotation -= input.localX-_omx;
             }
-            _omx = signal.x;
-            _omy = signal.y;
-        } else if (signal.type == GMouseInputType.MOUSE_DOWN) {
-            _omx = signal.x;
-            _omy = signal.y;
-        } else if (signal.type == GMouseInputType.MOUSE_WHEEL) {
-            _modelScale += signal.delta/100;
+            _omx = input.localX;
+            _omy = input.localY;
+        } else if (input.type == GMouseInputType.MOUSE_DOWN) {
+            _omx = input.localX;
+            _omy = input.localY;
+        } else if (input.type == GMouseInputType.MOUSE_WHEEL) {
+            _modelScale += input.delta/100;
         }
     }
 
-    private function key_handler(signal:GKeyboardInput):Void {
-        if (signal.type != GKeyboardInputType.KEY_DOWN) return;
+    private function key_handler(input:GKeyboardInput):Void {
+        if (input.type != GKeyboardInputType.KEY_DOWN) return;
 
-        switch (signal.keyCode) {
+        switch (input.keyCode) {
             case 48:
                 _renderPass = 0;
             case 49:
@@ -289,7 +267,7 @@ class ShowcaseFbx {
             case 40:
                 _fbxModel.ambientColor.x = _fbxModel.ambientColor.y = _fbxModel.ambientColor.z -= .02;
             case _:
-                //MGDebug.INFO(signal.keyCode);
+                MGDebug.INFO(signal.keyCode);
         }
     }
 }

@@ -26,10 +26,10 @@
 
 # Main class
 	# Tests
-	#-main test.ShowcaseFbx
+	-main test.ShowcaseFbx
 	#-main test.ShowcaseParticles
 	#-main test.ShowcaseDebug
-	-main test.Test
+	#-main test.Test
 
 	# Examples
 	#-main examples.advanced.AdvancedExample2TileMap
