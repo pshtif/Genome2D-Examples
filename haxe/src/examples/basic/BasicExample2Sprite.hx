@@ -103,8 +103,9 @@ class BasicExample2Sprite
         Create a sprite helper function
      **/
     private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
-        var sprite:GSprite = cast GNode.createWithComponent(GSprite);
-        sprite.textureId = p_textureId;
+		var n:GNode = GNode.create();
+        var sprite:GSprite = n.addComponent(GSprite);//GNode.createWithComponent(GSprite);
+        sprite.texture = GTextureManager.getTextureById(p_textureId);
         sprite.node.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 
