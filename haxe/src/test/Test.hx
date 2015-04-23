@@ -3,9 +3,12 @@ package test;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.flash.GFlashText;
 import com.genome2d.components.renderable.GSprite;
+import com.genome2d.components.renderable.text.GText;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
+import com.genome2d.node.GNodePool;
+import com.genome2d.proto.GPrototypeHelper;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 import flash.display.BitmapData;
@@ -48,7 +51,16 @@ class Test {
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
 		sprite.texture = GTextureManager.getTextureById("bunny.png");
 		sprite.node.setPosition(100, 100);
-		genome.root.addChild(sprite.node);
 		trace(sprite.node.getPrototype());
+		var pool:GNodePool = new GNodePool(sprite.node.getPrototype());
+		
+		var node:GNode = pool.getNext();
+		node.setPosition(100, 100);
+		var sprite:GSprite = node.getComponent(GSprite);
+		//sprite.texture = GTextureManager.getTextureById("bunny.png");
+		genome.root.addChild(node);
+		
+		var text:GText = GNode.createWithComponent(GText);
+		trace(text.getPrototype());
     }
 }
