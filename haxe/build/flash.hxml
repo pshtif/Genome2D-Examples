@@ -29,10 +29,10 @@
 	#-main test.ShowcaseFbx
 	#-main test.ShowcaseParticles
 	#-main test.ShowcaseDebug
-	-main test.Test
+	#-main test.Test
 
 	# Examples
-	#-main examples.basic.BasicExample2Sprite
+	-main examples.basic.BasicExample2Sprite
 	#-main examples.advanced.AdvancedExample2TileMap
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.ui.UIExample2Test

@@ -8,6 +8,7 @@
  */
 package examples.basic;
 
+import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
@@ -80,22 +81,40 @@ class BasicExample2Sprite
 
         var sprite:GSprite;
 
-        sprite = createSprite(300, 200, "atlas_0");
+        sprite = createSprite(100, 200, "atlas_0");
 
-        sprite = createSprite(500, 200, "atlas_0");
+        sprite = createSprite(300, 200, "atlas_0");
         sprite.node.setScale(2,2);
+
+        sprite = createSprite(100, 400, "atlas_0");
+        sprite.node.rotation = 0.753;
 
         sprite = createSprite(300, 400, "atlas_0");
         sprite.node.rotation = 0.753;
+        sprite.node.setScale(2,2);
 
-        sprite = createSprite(500, 400, "atlas_0");
+        sprite = createSprite(100, 300, "atlas_0");
+        sprite.node.alpha = .5;
+
+        sprite = createSprite(300, 300, "atlas_0");
+        sprite.node.color = 0x00FF00;
+		
+		sprite = createAnimatedSprite(500, 200);
+
+        sprite = createAnimatedSprite(700, 200);
+        sprite.node.setScale(2,2);
+
+        sprite = createAnimatedSprite(500, 400);
+        sprite.node.rotation = 0.753;
+
+        sprite = createAnimatedSprite(700, 400);
         sprite.node.rotation = 0.753;
         sprite.node.setScale(2,2);
 
-        sprite = createSprite(300, 300, "atlas_0");
+        sprite = createAnimatedSprite(500, 300);
         sprite.node.alpha = .5;
 
-        sprite = createSprite(500, 300, "atlas_0");
+        sprite = createAnimatedSprite(700, 300);
         sprite.node.color = 0x00FF00;
     }
 
@@ -103,9 +122,22 @@ class BasicExample2Sprite
         Create a sprite helper function
      **/
     private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
-		var n:GNode = GNode.create();
-        var sprite:GSprite = n.addComponent(GSprite);//GNode.createWithComponent(GSprite);
+        var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTextureById(p_textureId);
+        sprite.node.setPosition(p_x, p_y);
+        genome.root.addChild(sprite.node);
+
+        return sprite;
+    }
+	
+	/**
+        Create a sprite helper function
+     **/
+    private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
+		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTexturesByIds(["atlas_1", "atlas_2", "atlas_3", "atlas_4", "atlas_5", "atlas_6", "atlas_7"]));
+		animation.frameRate = 10;
+        var sprite:GSprite = GNode.createWithComponent(GSprite);
+        sprite.frameAnimation = animation;
         sprite.node.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 
