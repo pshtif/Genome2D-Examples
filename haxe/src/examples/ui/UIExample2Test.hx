@@ -8,10 +8,15 @@
  */
 package examples.ui;
 
+import com.genome2d.assets.GAsset;
 import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.input.GMouseInput;
 import com.genome2d.node.GNode;
+import com.genome2d.textures.GTextureFilteringType;
+import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
+import com.genome2d.ui.element.GUIInputField;
+import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.utils.GVAlignType;
 import com.genome2d.utils.GHAlignType;
@@ -46,7 +51,7 @@ class UIExample2Test
         initGenome();
     }
 
-/**
+	/**
         Initialize Genome2D
      **/
     private function initGenome():Void {
@@ -55,23 +60,34 @@ class UIExample2Test
         genome.init(new GContextConfig());
     }
 
-/**
+	/**
         Genome2D initialized handler
      **/
     private function genomeInitializedHandler():Void {
         initAssets();
     }
 
-/**
+	/**
         Initialize assets
      **/
     private function initAssets():Void {
         GAssetManager.addFromUrl("Untitled.png");
-        GAssetManager.onQueueLoaded.add(assetsInitializedHandler);
+		GAssetManager.addFromUrl("font_black\\font.png");
+        GAssetManager.addFromUrl("font_black\\font.fnt");
+		GAssetManager.addFromUrl("font_white\\font.png");
+        GAssetManager.addFromUrl("font_white\\font.fnt");
+		GAssetManager.addFromUrl("font.png");
+        GAssetManager.addFromUrl("font.fnt");
+		GAssetManager.onQueueFailed.add(assetsFailed_handler);
+        GAssetManager.onQueueLoaded.add(assetsInitialized_handler);
         GAssetManager.loadQueue();
     }
+	
+	private function assetsFailed_handler(asset:GAsset):Void {
+		trace(asset.url);
+	}
 
-    private function assetsInitializedHandler():Void {
+    private function assetsInitialized_handler():Void {
         initExample();
     }
 
@@ -79,23 +95,42 @@ class UIExample2Test
         Genome2D initialized handler
      **/
     private function initExample():Void {
+		GTextureManager.defaultFilteringType = GTextureFilteringType.NEAREST;
 		GAssetManager.generateTextures();
 		
-		var skin:GUITextureSkin = new GUITextureSkin("logo","Untitled.png");
+		var cursor:GTexture = GTextureManager.createTextureFromBitmapData("background", new BitmapData(4, 4, false, 0xAAAAAA));		
+		
+		var backgroundSkin:GUITextureSkin = new GUITextureSkin("background", "background");
+		var fontSkin:GUIFontSkin = new GUIFontSkin("font", "font_black\\font.png", 1, false);
 		
 		var gui:GUI = cast GNode.createWithComponent(GUI);
 		gui.node.mouseEnabled = true;
 		
-		var element:GUIElement = new GUIElement(skin);
-		element.anchorLeft = element.anchorRight = .5;
-		element.g2d_pivotY = element.g2d_pivotX = element.anchorTop = element.anchorBottom = .5;
+		var background:GUIElement = new GUIElement(backgroundSkin);
+		background.anchorLeft = 0;
+		background.anchorRight = 1;
+		background.g2d_pivotY = background.g2d_pivotX = 0;
+		background.anchorTop = 0;
+		background.top = 380;
+		background.anchorBottom = 1;
+		gui.root.addChild(background);
+		
+		var element:GUIInputField = new GUIInputField(fontSkin);
+		element.anchorLeft = 0;
+		element.anchorRight = 1;
+		element.setValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus pellentesque lectus, at interdum diam semper et. Morbi eget mi blandit, sollicitudin mi non, cursus tellus.");
+		element.g2d_pivotY = element.g2d_pivotX = 0;
+		element.anchorTop = 0;
+		element.top = 5;
+		element.left = element.right = 5;
+		element.anchorBottom = 1;
 		element.onMouseUp.add(mouseUp_handler);
-		gui.root.addChild(element);
+		background.addChild(element);
 		
 		genome.root.addChild(gui.node);
     }
 	
 	private function mouseUp_handler(input:GMouseInput):Void {
-		trace("here");
+		
 	}
 }
