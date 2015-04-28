@@ -8,6 +8,7 @@
  */
 package examples.basic;
 
+import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.input.GMouseInput;
 import com.genome2d.textures.GTextureManager;
@@ -79,9 +80,7 @@ class BasicExample4Mouse
         trace("initExample");
         GAssetManager.generateTextures();
 
-        var sprite:GSprite = cast GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTextureById("atlas.png_0");
-        sprite.node.setPosition(400, 300);
+        var sprite:GSprite = createAnimatedSprite(400, 300);
 
         sprite.node.mouseEnabled = true;
         sprite.node.onMouseClick.add(mouseClickHandler);
@@ -132,5 +131,19 @@ class BasicExample4Mouse
      **/
     private function mouseUpHandler(signal:GMouseInput):Void {
         trace("UP");
+    }
+	
+	/**
+        Create an animated sprite helper function
+     **/
+    private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
+		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTexturesByIds(["atlas.png_1", "atlas.png_2", "atlas.png_3", "atlas.png_4", "atlas.png_5", "atlas.png_6", "atlas_7"]));
+		animation.frameRate = 10;
+        var sprite:GSprite = GNode.createWithComponent(GSprite);
+        sprite.frameAnimation = animation;
+        sprite.node.setPosition(p_x, p_y);
+        genome.root.addChild(sprite.node);
+
+        return sprite;
     }
 }

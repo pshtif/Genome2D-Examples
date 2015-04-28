@@ -131,7 +131,7 @@ class BasicExample2Sprite
     }
 	
 	/**
-        Create a sprite helper function
+        Create an animated sprite helper function
      **/
     private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
 		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTexturesByIds(["atlas_1", "atlas_2", "atlas_3", "atlas_4", "atlas_5", "atlas_6", "atlas_7"]));
