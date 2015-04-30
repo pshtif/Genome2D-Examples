@@ -10,7 +10,9 @@ package examples.basic;
 
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.context.stats.GStats;
+import com.genome2d.geom.GRectangle;
 import com.genome2d.node.GNode;
+import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.assets.GAssetManager;
@@ -62,6 +64,7 @@ class BasicExample2Sprite
     private function initAssets():Void {
         GAssetManager.addFromUrl("atlas.png");
         GAssetManager.addFromUrl("atlas.xml");
+		GAssetManager.addFromUrl("Untitled.png");
         GAssetManager.onQueueLoaded.addOnce(assetsLoadedHandler);
         GAssetManager.loadQueue();
     }
@@ -77,13 +80,16 @@ class BasicExample2Sprite
         Initialize Example code
      **/
     private function initExample():Void {
-        GTextureManager.createAtlasFromAssetIds("atlas", "atlas.png", "atlas.xml");
+        //GTextureManager.createAtlasFromAssetIds("atlas", "atlas.png", "atlas.xml");
+		var atlas:GTexture = GTextureManager.createTextureFromAssetId("Untitled", "Untitled.png");
+		var texture:GTexture = new GTexture("test", atlas);
+		texture.region = new GRectangle(0, 0, 32, 32);
 
         var sprite:GSprite;
 
-        sprite = createSprite(100, 200, "atlas_0");
+        sprite = createSprite(100, 200, "Untitled");
 
-        sprite = createSprite(300, 200, "atlas_0");
+        sprite = createSprite(300, 200, "test");
         sprite.node.setScale(2,2);
 
         sprite = createSprite(100, 400, "atlas_0");
