@@ -8,6 +8,7 @@
  */
 package examples.basic;
 
+import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.components.renderable.text.GText;
@@ -34,11 +35,6 @@ class BasicExample5TextureText
      **/
     private var genome:Genome2D;
 
-    /**
-        Asset manager instance for loading assets
-     **/
-    private var assetManager:GAssetManager;
-
     public function new() {
         initGenome();
     }
@@ -48,33 +44,49 @@ class BasicExample5TextureText
      **/
     private function initGenome():Void {
         genome = Genome2D.getInstance();
-        genome.onInitialized.add(genomeInitializedHandler);
+		genome.onFailed.addOnce(genomeFailed_handler);
+        genome.onInitialized.addOnce(genomeInitialized_handler);
         genome.init(new GContextConfig());
     }
 
+	/**
+        Genome2D failed handler
+     **/
+    private function genomeFailed_handler(p_msg:String):Void {
+        // Here we can check why Genome2D initialization failed
+    }
+	
     /**
         Genome2D initialized handler
      **/
-    private function genomeInitializedHandler():Void {
-        initAssets();
+    private function genomeInitialized_handler():Void {
+        loadAssets();
     }
-
-    /**
-        Initialize assets
-     **/
-    private function initAssets():Void {
-        GAssetManager.addFromUrl("font.png");
+	
+	/**	
+	 * 	Asset loading
+	 */
+	private function loadAssets():Void {
+		GAssetManager.addFromUrl("font.png");
         GAssetManager.addFromUrl("font.fnt");
-        GAssetManager.onQueueLoaded.addOnce(assetsInitializedHandler);
+		GAssetManager.onQueueFailed.add(assetsFailed_handler);
+        GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
-    }
+	}
+	
+	/**
+	 * 	Asset loading failed
+	 */
+	private function assetsFailed_handler(p_asset:GAsset):Void {
+		// Asset loading failed at p_asset
+	}
 
-    /**
-        Assets initialization handler dispatched after all assets were initialized
-     **/
-    private function assetsInitializedHandler():Void {
-        initExample();
-    }
+	/**
+	 * 	Asset loading completed
+	 */
+	private function assetsLoaded_handler():Void {
+		initExample();
+	}
 
     /**
         Initialize Example code
@@ -89,7 +101,7 @@ class BasicExample5TextureText
 		
 		GFontManager.createTextureFont("font", GTextureManager.getTexture("font.png"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
-		createText(100, 100, "Hello", GVAlignType.TOP, GHAlignType.LEFT);
+		createText(250, 150, "Hello world.", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }
 	
     private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {

@@ -31,14 +31,22 @@ class BasicExample1Initialization
      **/
     private function initGenome():Void {
         genome = Genome2D.getInstance();
-        genome.onInitialized.addOnce(genomeInitializedHandler);
+		genome.onFailed.addOnce(genomeFailed_handler);
+        genome.onInitialized.addOnce(genomeInitialized_handler);
         genome.init(new GContextConfig());
     }
 
+	/**
+        Genome2D failed handler
+     **/
+    private function genomeFailed_handler(msg:String):Void {
+        // Here we can check why Genome2D initialization failed
+    }
+	
     /**
         Genome2D initialized handler
      **/
-    private function genomeInitializedHandler():Void {
+    private function genomeInitialized_handler():Void {
         // Here we can do any Genome2D related code as its initialized)
     }
 }

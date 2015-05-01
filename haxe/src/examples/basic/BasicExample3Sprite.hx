@@ -14,15 +14,13 @@ import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
-import com.genome2d.input.GMouseInput;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
-class BasicExample4Mouse
+class BasicExample3Sprite
 {
-
     static public function main() {
-        var inst = new BasicExample4Mouse();
+        var inst = new BasicExample3Sprite();
     }
 
     /**
@@ -89,61 +87,82 @@ class BasicExample4Mouse
      **/
     private function initExample():Void {
 		// Generate textures from all assets, their IDs will be the same as their asset ID
-        GAssetManager.generateTextures();
+		GAssetManager.generateTextures();
 
-        var sprite:GSprite = createAnimatedSprite(400, 300);
+        var sprite:GSprite;
 
-        sprite.node.mouseEnabled = true;
-        sprite.node.onMouseClick.add(mouseClickHandler);
-        sprite.node.onMouseOver.add(mouseOverHandler);
-        sprite.node.onMouseOut.add(mouseOutHandler);
-        sprite.node.onMouseDown.add(mouseDownHandler);
-        sprite.node.onMouseUp.add(mouseUpHandler);
+		// Create a sprite
+        sprite = createSprite(100, 200, "atlas.png_0");
 
+		// Create a sprite with scaling
+        sprite = createSprite(300, 200, "atlas.png_0");
+        sprite.node.setScale(2,2);
+
+		// Create a sprite with rotation
+        sprite = createSprite(100, 400, "atlas.png_0");
+        sprite.node.rotation = 0.753;
+
+		// Create a sprite with rotation and scaling
+        sprite = createSprite(300, 400, "atlas.png_0");
+        sprite.node.rotation = 0.753;
+        sprite.node.setScale(2,2);
+
+		// Create a sprite with alpha
+        sprite = createSprite(100, 300, "atlas.png_0");
+        sprite.node.alpha = .5;
+
+		// Create a sprite with tint
+        sprite = createSprite(300, 300, "atlas.png_0");
+        sprite.node.color = 0x00FF00;
+		
+		// Create an animated sprite
+		sprite = createAnimatedSprite(500, 200);
+
+		// Create an animated sprite with scaling
+        sprite = createAnimatedSprite(700, 200);
+        sprite.node.setScale(2,2);
+
+		// Create an animated sprite with rotation
+        sprite = createAnimatedSprite(500, 400);
+        sprite.node.rotation = 0.753;
+
+		// Create an animated sprite with rotation and scaling
+        sprite = createAnimatedSprite(700, 400);
+        sprite.node.rotation = 0.753;
+        sprite.node.setScale(2,2);
+
+		// Create an animated sprite with alpha
+        sprite = createAnimatedSprite(500, 300);
+        sprite.node.alpha = .5;
+
+		// Create an animated sprite with tint
+        sprite = createAnimatedSprite(700, 300);
+        sprite.node.color = 0x00FF00;
+    }
+
+    /**
+        Create a sprite helper function
+     **/
+    private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
+		// Create a node with sprite component
+        var sprite:GSprite = GNode.createWithComponent(GSprite);
+        sprite.texture = GTextureManager.getTexture(p_textureId);
+        sprite.node.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
-    }
-	
-    /**
-        Mouse click handler
-     **/
-    private function mouseClickHandler(signal:GMouseInput):Void {
-        trace("CLICK");
-    }
 
-    /**
-        Mouse over handler
-     **/
-    private function mouseOverHandler(signal:GMouseInput):Void {
-        trace("OVER");
-    }
-
-    /**
-        Mouse out handler
-     **/
-    private function mouseOutHandler(signal:GMouseInput):Void {
-        trace("OUT");
-    }
-
-    /**
-        Mouse down handler
-     **/
-    private function mouseDownHandler(signal:GMouseInput):Void {
-        trace("DOWN");
-    }
-
-    /**
-        Mouse up handler
-     **/
-    private function mouseUpHandler(signal:GMouseInput):Void {
-        trace("UP");
+        return sprite;
     }
 	
 	/**
-        Create a sprite helper function
+        Create an animated sprite helper function
      **/
     private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
+		// To animate a sprite we need a frame animation instance with defined texture frames
+		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["atlas.png_1", "atlas.png_2", "atlas.png_3", "atlas.png_4", "atlas.png_5", "atlas.png_6", "atlas.png_7"]));
+		animation.frameRate = 10;
+		
         var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTexture("atlas.png_0");
+        sprite.frameAnimation = animation;
         sprite.node.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 

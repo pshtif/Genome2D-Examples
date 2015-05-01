@@ -9,18 +9,14 @@
 package examples.basic;
 
 import com.genome2d.assets.GAsset;
-import com.genome2d.components.renderable.particles.GSimpleParticleSystem;
-import com.genome2d.node.GNode;
-import com.genome2d.Genome2D;
-import com.genome2d.context.GContextConfig;
 import com.genome2d.assets.GAssetManager;
-import com.genome2d.textures.GTextureManager;
+import com.genome2d.context.GContextConfig;
+import com.genome2d.Genome2D;
 
-class BasicExample6SimpleParticles
+class BasicExample1Initialization
 {
-
     static public function main() {
-        var inst = new BasicExample6SimpleParticles();
+        var inst = new BasicExample1Initialization();
     }
 
     /**
@@ -62,6 +58,7 @@ class BasicExample6SimpleParticles
 	private function loadAssets():Void {
 		GAssetManager.addFromUrl("atlas.png");
         GAssetManager.addFromUrl("atlas.xml");
+		GAssetManager.addFromUrl("texture.png");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
@@ -70,7 +67,7 @@ class BasicExample6SimpleParticles
 	/**
 	 * 	Asset loading failed
 	 */
-	private function assetsFailed_handler(p_asset:GAsset):Void {
+	private function assetsFailed(p_asset:GAsset):Void {
 		// Asset loading failed at p_asset
 	}
 	
@@ -78,30 +75,6 @@ class BasicExample6SimpleParticles
 	 * 	Asset loading completed
 	 */
 	private function assetsLoaded_handler():Void {
-		initExample();
+		// Loading of assets was succesfull so we can do our stuff
 	}
-
-    /**
-        Initialize Example code
-     **/
-    private function initExample():Void {
-        GAssetManager.generateTextures();
-
-		// Create a node with simple particle system component
-        var particleSystem:GSimpleParticleSystem = GNode.createWithComponent(GSimpleParticleSystem);
-        particleSystem.texture = GTextureManager.getTexture("atlas.png_particle");
-        particleSystem.emission = 128;
-        particleSystem.emit = true;
-        particleSystem.dispersionAngleVariance = Math.PI*2;
-        particleSystem.energy = 1;
-        particleSystem.initialVelocity = 50;
-        particleSystem.initialVelocityVariance = 100;
-        particleSystem.initialAngleVariance = 5;
-        particleSystem.endAlpha = 0;
-        particleSystem.initialScale = 2;
-        particleSystem.endScale = .2;
-        particleSystem.node.setPosition(400,300);
-
-        Genome2D.getInstance().root.addChild(particleSystem.node);
-    }
 }
