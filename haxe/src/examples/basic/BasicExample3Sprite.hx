@@ -15,6 +15,7 @@ import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
+import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 
 class BasicExample3Sprite
@@ -88,11 +89,13 @@ class BasicExample3Sprite
     private function initExample():Void {
 		// Generate textures from all assets, their IDs will be the same as their asset ID
 		GAssetManager.generateTextures();
-
+		
         var sprite:GSprite;
 
 		// Create a sprite
         sprite = createSprite(100, 200, "atlas.png_0");
+		
+		trace(sprite.node.getPrototype());
 
 		// Create a sprite with scaling
         sprite = createSprite(300, 200, "atlas.png_0");

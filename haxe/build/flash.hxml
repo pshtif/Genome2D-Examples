@@ -26,10 +26,7 @@
 
 # Main class
 	# Tests
-	#-main test.ShowcaseFbx
-	#-main test.ShowcaseParticles
-	#-main test.ShowcaseDebug
-	#-main test.Test
+	-main examples.ShowcaseFbx
 
 	# Examples
 	#-main examples.basic.BasicExample1Initialization
@@ -37,7 +34,7 @@
 	#-main examples.basic.BasicExample3Sprite
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.basic.BasicExample5TextureText
-	-main examples.basic.BasicExample6SimpleParticles
+	#-main examples.basic.BasicExample6SimpleParticles
 	
 	#-main examples.advanced.AdvancedExample2TileMap
 	#-main examples.ui.UIExample2Test
