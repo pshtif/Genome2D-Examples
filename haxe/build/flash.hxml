@@ -26,12 +26,12 @@
 
 # Main class
 	# Tests
-	-main examples.ShowcaseFbx
+	#-main examples.ShowcaseFbx
 
 	# Examples
 	#-main examples.basic.BasicExample1Initialization
 	#-main examples.basic.BasicExample2Assets
-	#-main examples.basic.BasicExample3Sprite
+	-main examples.basic.BasicExample3Sprite
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.basic.BasicExample5TextureText
 	#-main examples.basic.BasicExample6SimpleParticles
