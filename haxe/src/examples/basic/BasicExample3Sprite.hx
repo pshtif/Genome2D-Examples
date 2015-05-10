@@ -15,6 +15,7 @@ import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
+import com.genome2d.proto.GPrototypeHelper;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 
@@ -55,6 +56,8 @@ class BasicExample3Sprite
      **/
     private function genomeInitialized_handler():Void {
         loadAssets();
+		var a:GPrototypeHelper;
+		trace(Type.getClassFields(GPrototypeHelper)[0]);
     }
 	
 	/**	
