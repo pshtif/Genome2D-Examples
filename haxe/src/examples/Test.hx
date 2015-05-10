@@ -11,6 +11,7 @@ package examples;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
+import com.genome2d.components.renderable.flash.GFlashText;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
@@ -101,6 +102,8 @@ class Test
 		texture.pivotX = -50;
 		texture.pivotY = -50;
 		trace(texture.height);
+		
+		var a:GFlashText;
 		
         var sprite:GSprite = createSprite(100, 100, "test");
 		
