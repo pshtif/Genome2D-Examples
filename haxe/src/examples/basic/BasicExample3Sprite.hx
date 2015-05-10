@@ -15,9 +15,14 @@ import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
+<<<<<<< HEAD
+=======
+import com.genome2d.proto.GPrototypeFactory;
+>>>>>>> origin/master
 import com.genome2d.proto.GPrototypeHelper;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
+import haxe.rtti.Rtti;
 
 class BasicExample3Sprite
 {
@@ -94,11 +99,9 @@ class BasicExample3Sprite
 		GAssetManager.generateTextures();
 		
         var sprite:GSprite;
-
+		
 		// Create a sprite
         sprite = createSprite(100, 200, "atlas.png_0");
-		
-		trace(sprite.node.getPrototype());
 
 		// Create a sprite with scaling
         sprite = createSprite(300, 200, "atlas.png_0");

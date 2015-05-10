@@ -3,7 +3,6 @@
 -cp Genome2D-ContextCommon/src
 -cp Genome2D-Core/src
 -cp Genome2D-Examples/haxe/src
--cp ../external
 
 # Include libraries
 -swf-lib Genome2D-ContextFlash/lib/AGAL.swc
@@ -25,7 +24,11 @@
 
 # Main class
 	# Tests
+<<<<<<< HEAD
 	#-main examples.ShowcaseFbx
+=======
+	-main examples.Test
+>>>>>>> origin/master
 
 	# Examples
 	#-main examples.basic.BasicExample1Initialization
@@ -34,9 +37,6 @@
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.basic.BasicExample5TextureText
 	#-main examples.basic.BasicExample6SimpleParticles
-	
-	#-main examples.advanced.AdvancedExample2TileMap
-	#-main examples.ui.UIExample2Test
 
 # Flash flags
 -swf-version 12.0
