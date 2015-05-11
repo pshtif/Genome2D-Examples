@@ -13,12 +13,11 @@ import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
+import com.genome2d.debug.GDebug;
 import com.genome2d.Genome2D;
+import com.genome2d.macros.MGDebug;
 import com.genome2d.node.GNode;
-<<<<<<< HEAD
-=======
 import com.genome2d.proto.GPrototypeFactory;
->>>>>>> origin/master
 import com.genome2d.proto.GPrototypeHelper;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
@@ -80,6 +79,7 @@ class BasicExample3Sprite
 	 */
 	private function assetsFailed_handler(p_asset:GAsset):Void {
 		// Asset loading failed at p_asset
+		GDebug.trace("Can't load assets " + p_asset.url);
 	}
 	
 	/**
@@ -99,27 +99,27 @@ class BasicExample3Sprite
         var sprite:GSprite;
 		
 		// Create a sprite
-        sprite = createSprite(100, 200, "atlas.png_0");
+        sprite = createSprite(100, 200, "atlas_0");
 
 		// Create a sprite with scaling
-        sprite = createSprite(300, 200, "atlas.png_0");
+        sprite = createSprite(300, 200, "atlas_0");
         sprite.node.setScale(2,2);
 
 		// Create a sprite with rotation
-        sprite = createSprite(100, 400, "atlas.png_0");
+        sprite = createSprite(100, 400, "atlas_0");
         sprite.node.rotation = 0.753;
 
 		// Create a sprite with rotation and scaling
-        sprite = createSprite(300, 400, "atlas.png_0");
+        sprite = createSprite(300, 400, "atlas_0");
         sprite.node.rotation = 0.753;
         sprite.node.setScale(2,2);
 
 		// Create a sprite with alpha
-        sprite = createSprite(100, 300, "atlas.png_0");
+        sprite = createSprite(100, 300, "atlas_0");
         sprite.node.alpha = .5;
 
 		// Create a sprite with tint
-        sprite = createSprite(300, 300, "atlas.png_0");
+        sprite = createSprite(300, 300, "atlas_0");
         sprite.node.color = 0x00FF00;
 		
 		// Create an animated sprite
@@ -165,7 +165,7 @@ class BasicExample3Sprite
      **/
     private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
 		// To animate a sprite we need a frame animation instance with defined texture frames
-		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["atlas.png_1", "atlas.png_2", "atlas.png_3", "atlas.png_4", "atlas.png_5", "atlas.png_6", "atlas.png_7"]));
+		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["atlas_1", "atlas_2", "atlas_3", "atlas_4", "atlas_5", "atlas_6", "atlas_7"]));
 		animation.frameRate = 10;
 		
         var sprite:GSprite = GNode.createWithComponent(GSprite);
