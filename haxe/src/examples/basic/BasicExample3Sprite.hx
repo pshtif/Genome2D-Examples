@@ -61,8 +61,6 @@ class BasicExample3Sprite
      **/
     private function genomeInitialized_handler():Void {
         loadAssets();
-		var a:GPrototypeHelper;
-		trace(Type.getClassFields(GPrototypeHelper)[0]);
     }
 	
 	/**	

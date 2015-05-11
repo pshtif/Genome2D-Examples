@@ -101,7 +101,6 @@ class Test
 		var texture:GTexture = GTextureManager.createTexture("test", new BitmapData(128, 100, false, 0xFF0000));
 		texture.pivotX = -50;
 		texture.pivotY = -50;
-		trace(texture.height);
 		
 		var a:GFlashText;
 		
