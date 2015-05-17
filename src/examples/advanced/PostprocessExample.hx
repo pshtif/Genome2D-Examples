@@ -108,7 +108,7 @@ class PostprocessExample
         //sprite.node.rotation = 0.753;
         sprite.node.setScale(2,2);
 		trace(sprite.node.getBounds(), sprite.texture);
-		var filterPP:GFilterPP =  new GFilterPP([new GOutlineFilter(1, 1)]);
+		var filterPP:GFilterPP =  new GFilterPP([new GOutlineFilter(1)]);
 		filterPP.setMargins(5, 5, 5, 5);
 		sprite.node.postProcess = filterPP;
 		
