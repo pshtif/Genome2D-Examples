@@ -29,12 +29,12 @@
 	# Examples
 	#-main examples.basic.BasicExample1Initialization
 	#-main examples.basic.BasicExample2Assets
-	#-main examples.basic.BasicExample3Sprite
+	-main examples.basic.BasicExample3Sprite
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.basic.BasicExample5TextureText
 	#-main examples.basic.BasicExample6SimpleParticles
 	
-	-main examples.advanced.PostprocessExample
+	#-main examples.advanced.PostprocessExample
 
 # Flash flags
 -swf-version 12.0
