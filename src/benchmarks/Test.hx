@@ -6,23 +6,23 @@
  *
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
-package examples;
+package benchmarks;
 
-import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.flash.GFlashText;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
+import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
-import com.genome2d.proto.GPrototypeFactory;
-import com.genome2d.proto.GPrototypeHelper;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 import flash.display.BitmapData;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
 import flash.display3D.Context3DProfile;
-import haxe.rtti.Rtti;
+import flash.Lib;
 
 class Test
 {
@@ -36,6 +36,9 @@ class Test
     private var genome:Genome2D;
 
     public function new() {
+		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
+		Lib.current.stage.align = StageAlign.TOP_LEFT;
+		
         initGenome();
     }
 
@@ -43,8 +46,11 @@ class Test
         Initialize Genome2D
      **/
     private function initGenome():Void {
+		GStats.visible = true;
+		
+		GStats.customStats = [Std.string(Lib.current.stage.stageWidth), Std.string(Lib.current.stage.stageHeight)];
 		var config:GContextConfig = new GContextConfig();
-		config.profile = Context3DProfile.BASELINE_CONSTRAINED;
+		//config.profile = Context3DProfile.BASELINE_CONSTRAINED;
         genome = Genome2D.getInstance();
 		genome.onFailed.addOnce(genomeFailed_handler);
         genome.onInitialized.addOnce(genomeInitialized_handler);
@@ -98,19 +104,18 @@ class Test
 		// Generate textures from all assets, their IDs will be the same as their asset ID
 		GAssetManager.generateTextures();
 		
-		var texture:GTexture = GTextureManager.createTexture("test", new BitmapData(128, 100, false, 0xFF0000));
-		texture.pivotX = -50;
-		texture.pivotY = -50;
+		GTextureManager.createTexture("test", new BitmapData(1024, 1024, false, 0xFF0000));
 		
-		var a:GFlashText;
-		
-        var sprite:GSprite = createSprite(100, 100, "test");
+		for (i in 0...50) {
+			//createSprite(Math.random() * 800, Math.random() * 600, "test");
+			createSprite(512, 512, "test");
+		}
     }
 
     /**
         Create a sprite helper function
      **/
-    private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
+    private function createSprite(p_x:Float, p_y:Float, p_textureId:String):GSprite {
 		// Create a node with sprite component
         var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture(p_textureId);

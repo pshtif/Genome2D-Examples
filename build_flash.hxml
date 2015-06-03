@@ -8,9 +8,9 @@
 -swf-lib Genome2D-ContextFlash/lib/AGAL.swc
 
 # Debug flags
--D fdb
--debug
--D advanced-telemetry
+#-D fdb
+#-debug
+#-D advanced-telemetry
 
 # Genome2D flags
 -D genome_stage3donly
@@ -22,21 +22,21 @@
 #--no-inline
 #--no-traces
 
+# Flash flags
+-swf-version 12.0
+-swf Genome2D-Examples/bin/Example.swf
+-swf-header 512:512:60:000000
+
 # Main class
-	# Tests
-	#-main examples.Test
+	# Benchmarks
+	-main benchmarks.Test
 
 	# Examples
 	#-main examples.basic.BasicExample1Initialization
 	#-main examples.basic.BasicExample2Assets
-	-main examples.basic.BasicExample3Sprite
+	#-main examples.basic.BasicExample3Sprite
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.basic.BasicExample5TextureText
 	#-main examples.basic.BasicExample6SimpleParticles
 	
 	#-main examples.advanced.PostprocessExample
-
-# Flash flags
--swf-version 12.0
--swf Genome2D-Examples/bin/Example.swf
--swf-header 800:600:60:000000
