@@ -101,14 +101,18 @@ class PostprocessExample
     private function initExample():Void {
 		// Generate textures from all assets, their IDs will be the same as their asset ID
 		GAssetManager.generateTextures();
-	
+
 		// Create an animated sprite with rotation and scaling
 		sprite = createAnimatedSprite(700, 400);
 		sprite.node.name = "test";
         //sprite.node.rotation = 0.753;
         sprite.node.setScale(2,2);
+<<<<<<< HEAD
 		trace(sprite.node.getBounds(), sprite.texture);
 		var filterPP:GFilterPP =  new GFilterPP([new GOutlineFilter(2)]);
+=======
+		var filterPP:GFilterPP =  new GFilterPP([new GOutlineFilter(1)]);
+>>>>>>> origin/master
 		filterPP.setMargins(5, 5, 5, 5);
 		sprite.node.postProcess = filterPP;
 		

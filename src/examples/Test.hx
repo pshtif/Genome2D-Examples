@@ -105,7 +105,6 @@ class Test
 		var a:GFlashText;
 		
         var sprite:GSprite = createSprite(100, 100, "test");
-		
     }
 
     /**

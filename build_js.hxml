@@ -1,19 +1,17 @@
 # Include sources
--cp context/common/src
--cp context/html/src
--cp core/src
--cp examples/haxe/src
+-cp Genome2D-ContextHTML/src
+-cp Genome2D-ContextCommon/src
+-cp Genome2D-Core/src
+-cp Genome2D-Examples/src
 
 # Include libraries
--lib msignal
--lib actuate
+
 
 # Genome2D flags
 -D webGLonly
 
 # Main class
-#-main examples.ExampleWrapper
--main benchmark.BunnyMark
+-main examples.basic.BasicExample1Initialization
 
 # JavaScript flags
 -js ../remote/Example.js
