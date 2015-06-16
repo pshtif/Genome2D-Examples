@@ -8,7 +8,7 @@
 
 
 # Genome2D flags
--D webGLonly
+-D genome_webGLonly
 
 # Main class
 -main examples.basic.BasicExample1Initialization

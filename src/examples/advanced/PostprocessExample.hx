@@ -107,7 +107,12 @@ class PostprocessExample
 		sprite.node.name = "test";
         //sprite.node.rotation = 0.753;
         sprite.node.setScale(2,2);
+<<<<<<< HEAD
+		trace(sprite.node.getBounds(), sprite.texture);
+		var filterPP:GFilterPP =  new GFilterPP([new GOutlineFilter(2)]);
+=======
 		var filterPP:GFilterPP =  new GFilterPP([new GOutlineFilter(1)]);
+>>>>>>> origin/master
 		filterPP.setMargins(5, 5, 5, 5);
 		sprite.node.postProcess = filterPP;
 		
@@ -115,7 +120,7 @@ class PostprocessExample
     }
 	
 	private function update_handler(p_deltaTime:Float):Void {
-	//	sprite.node.rotation += .005;
+		sprite.node.rotation += .005;
 	}
 
 	/**
