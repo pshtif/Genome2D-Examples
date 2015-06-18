@@ -6,13 +6,15 @@
  *
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
-package benchmarks;
+package examples;
 
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.flash.GFlashText;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
+import com.genome2d.context.stage3d.GShaderCode;
+import com.genome2d.context.stage3d.renderers.GBufferRenderer;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
@@ -23,6 +25,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.display3D.Context3DProfile;
 import flash.Lib;
+import flash.Vector;
 
 class Test
 {
@@ -100,28 +103,25 @@ class Test
     /**
         Initialize Example code
      **/
+	private var renderer:GBufferRenderer;
     private function initExample():Void {
 		// Generate textures from all assets, their IDs will be the same as their asset ID
 		GAssetManager.generateTextures();
 		
-		GTextureManager.createTexture("test", new BitmapData(1024, 1024, false, 0xFF0000));
+		renderer = new GBufferRenderer(genome.getContext());
+		renderer.setFragmentProgram(GShaderCode.FRAGMENT_FINAL_VARYING_CODE);
+		renderer.setVertexProgram(GShaderCode.VERTEX_COLOR_CODE);
+		var indices:Vector<UInt> = new Vector<UInt>();
+		indices.push(0);
+		indices.push(1);
+		indices.push(2);
+		renderer.setIndexBuffer(indices);
+		renderer.setVertexBuffer(Vector.ofArray([100, 100.0, 0, 0, 1, 1, 200, 100, 0, 1, 0, 1, 100, 200, 1, 0, 0, 1]), [2, 4]);
 		
-		for (i in 0...50) {
-			//createSprite(Math.random() * 800, Math.random() * 600, "test");
-			createSprite(512, 512, "test");
-		}
+		genome.onPostRender.add(postRender_handler);
     }
-
-    /**
-        Create a sprite helper function
-     **/
-    private function createSprite(p_x:Float, p_y:Float, p_textureId:String):GSprite {
-		// Create a node with sprite component
-        var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTexture(p_textureId);
-        sprite.node.setPosition(p_x, p_y);
-        genome.root.addChild(sprite.node);
-
-        return sprite;
-    }
+	
+	private function postRender_handler():Void {
+		genome.getContext().bindRenderer(renderer);
+	}
 }

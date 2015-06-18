@@ -55,7 +55,7 @@ class FbxExample {
     private var _lightRotationZ:Float = 0;
     private var _lightMatrix:GMatrix3D;
 
-    private var _modelScale:Float = 1.5;
+    private var _modelScale:Float = .1;
     private var _modelRotation:Float = 0;
 
     private var _cameraMatrix:GMatrix3D;
@@ -103,6 +103,8 @@ class FbxExample {
 
         GAssetManager.init();
         GAssetManager.addFromUrl("texture.png");
+		GAssetManager.addFromUrl("Santa_Maria_Diff.png");
+		GAssetManager.addFromUrl("Santa_Maria_plachty_Diff.png");
         GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsInitialized_handler);
         GAssetManager.loadQueue();
@@ -129,7 +131,8 @@ class FbxExample {
         _postProcess = new GBloomPP();
         _postProcess.setBounds(new GRectangle(0,0,1024,1024));
 
-        loadFBX("box.fbx");
+        //loadFBX("box.fbx");
+		loadFBX("Santa_Maria_XL.FBX");
     }
 
     private function createDisplacement():Void {
@@ -226,7 +229,7 @@ class FbxExample {
 
         if (_renderPass==0 || _renderPass == 3) context.draw(GTextureManager.getTexture("shadowTarget"),512,512,1,1,0,1,1,1,.35,GBlendMode.NORMAL);
 		/**/
-        if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 1);
+        if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 0);
 
         //context.setRenderTarget(null);
 
