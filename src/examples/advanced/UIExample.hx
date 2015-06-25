@@ -1,33 +1,25 @@
-/*
- * 	Genome2D - 2D GPU Framework
- * 	http://www.genome2d.com
- *
- *	Copyright 2011-2014 Peter Stefcek. All rights reserved.
- *
- *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
- */
-package examples.basic;
-
+package examples.advanced;
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
-import com.genome2d.components.renderable.GSprite;
 import com.genome2d.components.renderable.text.GText;
+import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
+import com.genome2d.geom.GRectangle;
+import com.genome2d.input.GKeyboardInput;
+import com.genome2d.input.GKeyboardInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.text.GFontManager;
-import com.genome2d.text.GTextureTextRenderer;
 import com.genome2d.textures.GTextureManager;
+import com.genome2d.ui.element.GUIElement;
+import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
-import flash.display.BitmapData;
 
-
-class BasicExample5TextureText
+class UIExample
 {
-
-    static public function main() {
-        var inst = new BasicExample5TextureText();
+	static public function main() {
+        var inst = new UIExample();
     }
 
     /**
@@ -91,29 +83,46 @@ class BasicExample5TextureText
     /**
         Initialize Example code
      **/
+	private var element:GUIElement;
+	private var align:Int = 0;
     private function initExample():Void {
 		GTextureManager.createTexture("font.png", GAssetManager.getImageAssetById("font.png"));
 		
 		GFontManager.createTextureFont("font", GTextureManager.getTexture("font.png"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
-		createText(250, 150, "Hello world.\ntest", GVAlignType.MIDDLE, GHAlignType.CENTER);
+		var skin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("font"), .6, false);
+		
+		var ui:GUI = GNode.createWithComponent(GUI);
+		ui.setBounds(new GRectangle(0, 0, 800, 600));
+		
+		//<element name="text" preferredWidth="400" preferredHeight="300" visible="false" anchorLeft=".5" anchorRight=".5" anchorY="80" skin="infoFont" pivotY="0" pivotX=".5"/>
+		
+		element = new GUIElement(skin);
+		element.preferredWidth = 300;
+		element.preferredHeight = 300;
+		element.anchorLeft = .5;
+		element.anchorRight = .5;
+		element.anchorY - 80;
+		element.pivotY = 0;
+		element.pivotX = .5;
+		element.setModel("Lorem ipsum dolor sit amet and some other bullshit that comes here to inform you about this material.");
+		ui.root.addChild(element);
+		
+		genome.root.addChild(ui.node);
+		
+		genome.getContext().onKeyboardInput.add(key_handler);
     }
 	
-    private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
-        var text:GText = cast GNode.createWithComponent(GText);
-		
-        text.renderer.textureFont = GFontManager.getFont("font");
-        text.width = 300;
-        text.height = 300;
-        text.text = p_text;
-        text.tracking = p_tracking;
-        text.lineSpace = p_lineSpace;
-        text.vAlign = p_vAlign;
-        text.hAlign = p_hAlign;
-        text.node.setPosition(p_x, p_y);
-		
-        genome.root.addChild(text.node);
-
-        return text;
-    }
+	private function key_handler(p_input:GKeyboardInput):Void {
+		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
+			switch (p_input.keyCode) {
+				case 32:
+					align++;
+					if (align > 2) align = 0;
+					cast(element.skin, GUIFontSkin).hAlign = align;
+					trace(cast(element.skin, GUIFontSkin).getMinWidth());
+			}
+		}
+	}
+	
 }

@@ -22,11 +22,13 @@ import com.genome2d.input.GMouseInputType;
 import com.genome2d.macros.MGDebug;
 import com.genome2d.postprocess.GBloomPP;
 import com.genome2d.postprocess.GPostProcess;
+import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
 import flash.display.BitmapData;
 import flash.events.Event;
 import flash.geom.Matrix3D;
+import flash.geom.Point;
 import flash.geom.Vector3D;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
@@ -46,8 +48,9 @@ class FbxExample {
 
     private var _renderWater:Bool = true;
     private var _renderBackground:Bool = false;
+	private var _renderNoise:Bool = false;
     private var _applyDisplacement:Bool = false;
-    private var _displacement:GDisplacementFilter;
+    private var _displacement:WaterFilter;
     private var _postProcess:GPostProcess;
     private var _renderPass:Int = 1;
 
@@ -74,6 +77,8 @@ class FbxExample {
     private function initGenome():Void {
         MGDebug.DUMP();
 
+		trace(Std.parseInt("0x5b"));
+		
         _cameraMatrix = new GMatrix3D();
         _cameraMatrix.appendRotation(CAMERA_ANGLE,Vector3D.X_AXIS);
         _cameraMatrix.appendTranslation(_cameraX, 0, 400);
@@ -102,9 +107,10 @@ class FbxExample {
         MGDebug.DUMP();
 
         GAssetManager.init();
-        GAssetManager.addFromUrl("texture.png");
-		GAssetManager.addFromUrl("Santa_Maria_Diff.png");
-		GAssetManager.addFromUrl("Santa_Maria_plachty_Diff.png");
+        GAssetManager.addFromUrl("w_1.png");
+		GAssetManager.addFromUrl("w_2.png");
+		//GAssetManager.addFromUrl("Santa_Maria_Diff.png");
+		//GAssetManager.addFromUrl("Santa_Maria_plachty_Diff.png");
         GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsInitialized_handler);
         GAssetManager.loadQueue();
@@ -119,7 +125,7 @@ class FbxExample {
 
         GAssetManager.generateTextures();
 
-        //createDisplacement();
+        createDisplacement();
 
         // Create render targets
         GTextureManager.createRenderTexture("reflectionTarget", 1024, 1024);
@@ -132,18 +138,36 @@ class FbxExample {
         _postProcess.setBounds(new GRectangle(0,0,1024,1024));
 
         //loadFBX("box.fbx");
-		loadFBX("Santa_Maria_XL.FBX");
+		//loadFBX("Santa_Maria_XL.FBX");
+		initExample();
     }
 
+	private var perlinData1:BitmapData;
+	private var perlinData2:BitmapData;
+	private var perlinOffset:Float = 0;
     private function createDisplacement():Void {
-        var perlinData:BitmapData = new BitmapData(256, 256, false);
-        perlinData.perlinNoise(10, 2, 2, 5, true, true, 0, true);
-        GTextureManager.createTexture("map",perlinData,1,true);
+        perlinData1 = new BitmapData(256, 256, false);
+		perlinData2 = new BitmapData(256, 256, false);
+        GTextureManager.createTexture("map1", perlinData1, 1, true);
+		GTextureManager.createTexture("map2", perlinData2, 1, true);
 
-        _displacement = new GDisplacementFilter();
-        _displacement.displacementMap = GTextureManager.getTexture("map");
-        _displacement.alphaMap = GTextureManager.getTexture("texture.png");
+        _displacement = new WaterFilter(.04,.02);
+        _displacement.displacementMap = GTextureManager.getTexture("w_2");
+		_displacement.alphaMap1 = GTextureManager.getTexture("map1");
+		_displacement.alphaMap2 = GTextureManager.getTexture("map2");
     }
+	
+	private function updateDisplacement():Void {
+		perlinOffset += .1;
+		var texture:GTexture;
+		texture = GTextureManager.getTexture("map1");
+		perlinData1.perlinNoise(30, 20, 2, 1, true, true, 0, true, [new Point(3*perlinOffset/4, 3*perlinOffset/4),  new Point(-perlinOffset, perlinOffset)]);
+		texture.invalidateNativeTexture(false);
+		
+		texture = GTextureManager.getTexture("map2");
+		perlinData2.perlinNoise(30, 20, 2, 10, true, true, 0, true, [new Point(3*perlinOffset/4, 3*perlinOffset/4),  new Point(-perlinOffset, perlinOffset)]);
+		texture.invalidateNativeTexture(false);
+	}
 
     private function loadFBX(p_url:String):Void {
         var loader:URLLoader = new URLLoader();
@@ -158,7 +182,7 @@ class FbxExample {
         _fbxScene = new GFbxScene();
         _fbxScene.init(fbxNode);
         _fbxScene.ambientColor = new GFloat4(.5,.5,.5,1);
-        _fbxScene.lightColor = new GFloat4(1, .75, .5, 1);
+        _fbxScene.lightColor = new GFloat4(0, .75, .5, 1);
 		
 		//_fbxScene.getModelByName("Model::Object002").visible = false;
 
@@ -168,7 +192,7 @@ class FbxExample {
     private function initExample():Void {
         MGDebug.DUMP();
 
-        _genome.getContext().setBackgroundColor(0x0000FF,1);
+        _genome.getContext().setBackgroundColor(0x0,1);
         _genome.getContext().onKeyboardInput.add(key_handler);
         _genome.getContext().onMouseInput.add(mouse_handler);
         _genome.onPostRender.add(postRender_handler);
@@ -180,23 +204,18 @@ class FbxExample {
         _fbxScene.getModelMatrix().appendRotation(p_rotation, Vector3D.Z_AXIS);
         _fbxScene.getModelMatrix().appendTranslation(p_x,-p_y,0);
 
-		_fbxScene.tintColor = new GFloat4(.2, .2, .2, .2);
         _fbxScene.render((p_renderType==2) ? _reflectionMatrix : _cameraMatrix, p_renderType);
     }
 
     private function postRender_handler():Void {
         var context:IGContext = _genome.getContext();
 
-        var r:Float = _fbxScene.ambientColor.x+_fbxScene.lightColor.x/2;
-        var g:Float = _fbxScene.ambientColor.y+_fbxScene.lightColor.y/2;
-        var b:Float = _fbxScene.ambientColor.z+_fbxScene.lightColor.z/2;
-
         // Update light direction
         _lightMatrix.identity();
         //_lightMatrix.appendRotation(_lightRotationX, Vector3D.X_AXIS);
         _lightMatrix.appendRotation(_lightRotationZ, Vector3D.Z_AXIS);
         _lightRotationX = _lightRotationZ = 0;
-        _fbxScene.lightDirection = _lightMatrix.transformVector(_fbxScene.lightDirection);
+        //_fbxScene.lightDirection = _lightMatrix.transformVector(_fbxScene.lightDirection);
 		/*
         // Render reflections
         if (_renderPass==0 || _renderPass == 2) {
@@ -229,7 +248,17 @@ class FbxExample {
 
         if (_renderPass==0 || _renderPass == 3) context.draw(GTextureManager.getTexture("shadowTarget"),512,512,1,1,0,1,1,1,.35,GBlendMode.NORMAL);
 		/**/
-        if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 0);
+		updateDisplacement();
+		
+		context.draw(GTextureManager.getTexture("w_1"), 400, 300, 1, 1, 0, 1, 1, 1, 1, 1, _displacement);
+		
+		if (_renderNoise) {
+			context.draw(GTextureManager.getTexture("map1"), 128, 128, 1, 1, 0, 1, 1, 1, 1, 1, null);
+			
+			context.draw(GTextureManager.getTexture("map2"), 512 - 128, 128, 1, 1, 0, 1, 1, 1, 1, 1, null);
+		}
+		
+        //if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 1);
 
         //context.setRenderTarget(null);
 
@@ -240,7 +269,7 @@ class FbxExample {
         if (input.buttonDown && input.type == GMouseInputType.MOUSE_MOVE) {
             if (input.ctrlKey) {
                 //_lightRotationX += (input.localX-_omy)/100;
-                //_lightRotationZ -= (input.contextX-_omx);
+                _lightRotationZ -= (input.contextX-_omx);
             } else {
                 _modelRotation -= input.localX-_omx;
             }
@@ -281,6 +310,8 @@ class FbxExample {
                 _renderPass = 4;
             case 53:
                 _renderPass = 5;
+			case 78:
+				_renderNoise = !_renderNoise;
             case 66:
                 _renderBackground = !_renderBackground;
             case 68:
@@ -294,7 +325,7 @@ class FbxExample {
             case 40:
                 _fbxScene.ambientColor.x = _fbxScene.ambientColor.y = _fbxScene.ambientColor.z -= .02;
             case _:
-                MGDebug.INFO(signal.keyCode);
+                MGDebug.INFO(input.keyCode);
         }
     }
 	

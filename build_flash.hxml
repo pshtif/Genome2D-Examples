@@ -24,7 +24,7 @@
 
 # Main class
 	# Tests
-	-main examples.Test
+	#-main examples.Test
 
 	# Examples
 	#-main examples.basic.BasicExample1Initialization
@@ -36,6 +36,7 @@
 	
 	#-main examples.advanced.PostprocessExample
 	#-main examples.advanced.FbxExample
+	-main examples.advanced.UIExample
 
 # Flash flags
 -swf-version 12.0
