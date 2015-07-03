@@ -67,8 +67,8 @@ class BasicExample5TextureText
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {
-		GAssetManager.addFromUrl("font.png");
-        GAssetManager.addFromUrl("font.fnt");
+		GAssetManager.addFromUrl("font2.png");
+        GAssetManager.addFromUrl("font2.fnt");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
@@ -92,9 +92,9 @@ class BasicExample5TextureText
         Initialize Example code
      **/
     private function initExample():Void {
-		GTextureManager.createTexture("font.png", GAssetManager.getImageAssetById("font.png"));
+		GTextureManager.createTexture("font2.png", GAssetManager.getImageAssetById("font2.png"));
 		
-		GFontManager.createTextureFont("font", GTextureManager.getTexture("font.png"), GAssetManager.getXmlAssetById("font.fnt").xml);
+		GFontManager.createTextureFont("font", GTextureManager.getTexture("font2.png"), GAssetManager.getXmlAssetById("font2.fnt").xml);
 		
 		createText(250, 150, "Hello world.\ntest", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }

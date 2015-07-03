@@ -13,6 +13,7 @@ import com.genome2d.text.GFontManager;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.skin.GUIFontSkin;
+import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
 
@@ -120,6 +121,7 @@ class UIExample
 					align++;
 					if (align > 2) align = 0;
 					cast(element.skin, GUIFontSkin).hAlign = align;
+					trace(align);
 					trace(cast(element.skin, GUIFontSkin).getMinWidth());
 			}
 		}
