@@ -91,7 +91,7 @@ class UIExample
 		
 		GFontManager.createTextureFont("font", GTextureManager.getTexture("font.png"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
-		var skin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("font"), .6, false);
+		var skin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("font"), .8, true);
 		
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
@@ -99,14 +99,16 @@ class UIExample
 		//<element name="text" preferredWidth="400" preferredHeight="300" visible="false" anchorLeft=".5" anchorRight=".5" anchorY="80" skin="infoFont" pivotY="0" pivotX=".5"/>
 		
 		element = new GUIElement(skin);
-		element.preferredWidth = 300;
-		element.preferredHeight = 300;
+		//element.preferredWidth = 300;
+		//element.preferredHeight = 300;
 		element.anchorLeft = .5;
 		element.anchorRight = .5;
 		element.anchorY - 80;
 		element.pivotY = 0;
 		element.pivotX = .5;
-		element.setModel("Lorem ipsum dolor sit amet and some other bullshit that comes here to inform you about this material.");
+		element.setModel("ehm\nLorem ipsum\ndolor");
+		trace(element.skin.getMinHeight());
+		//element.setModel("Lorem ipsum dolor sit amet and some other bullshit that comes here to inform you about this material.");
 		ui.root.addChild(element);
 		
 		genome.root.addChild(ui.node);
