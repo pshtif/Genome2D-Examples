@@ -9,6 +9,7 @@ import com.genome2d.geom.GRectangle;
 import com.genome2d.input.GKeyboardInput;
 import com.genome2d.input.GKeyboardInputType;
 import com.genome2d.node.GNode;
+import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.text.GFontManager;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
@@ -29,6 +30,12 @@ class UIExample
     private var genome:Genome2D;
 
     public function new() {
+		var expr = "var x = 4; var y=3; 1 + y * x";
+		var parser = new hscript.Parser();
+		var ast = parser.parseString(expr);
+		var interp = new hscript.Interp();
+		trace(interp.execute(ast));
+		
         initGenome();
     }
 
@@ -96,19 +103,12 @@ class UIExample
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
 		
-		//<element name="text" preferredWidth="400" preferredHeight="300" visible="false" anchorLeft=".5" anchorRight=".5" anchorY="80" skin="infoFont" pivotY="0" pivotX=".5"/>
+		var xml:Xml = Xml.parse('<element anchorRight.test=".5" anchorRight="1" anchorBottom="1"><p:layout><horizontal gap="0"/></p:layout><element anchorY.test="0" anchorY="50" skin="@font"></element><element skin="@font"></element></element>').firstElement();
 		
-		element = new GUIElement(skin);
-		//element.preferredWidth = 300;
-		//element.preferredHeight = 300;
-		element.anchorLeft = .5;
-		element.anchorRight = .5;
-		element.anchorY - 80;
-		element.pivotY = 0;
-		element.pivotX = .5;
-		element.setModel("ehm\nLorem ipsum\ndolor");
-		trace(element.skin.getMinHeight());
-		//element.setModel("Lorem ipsum dolor sit amet and some other bullshit that comes here to inform you about this material.");
+		element = cast GPrototypeFactory.createPrototype(xml);
+		element.getChildAt(0).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
+		element.getChildAt(1).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
+		var child:GUIElement = element.getChildAt(0);
 		ui.root.addChild(element);
 		
 		genome.root.addChild(ui.node);
@@ -116,15 +116,17 @@ class UIExample
 		genome.getContext().onKeyboardInput.add(key_handler);
     }
 	
+	private var s:Bool = false;
 	private function key_handler(p_input:GKeyboardInput):Void {
 		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
 			switch (p_input.keyCode) {
 				case 32:
-					align++;
-					if (align > 2) align = 0;
-					cast(element.skin, GUIFontSkin).hAlign = align;
-					trace(align);
-					trace(cast(element.skin, GUIFontSkin).getMinWidth());
+					if (!s) {
+						element.setState("test");
+					} else {
+						element.setState("default");
+					}
+					s = !s;
 			}
 		}
 	}
