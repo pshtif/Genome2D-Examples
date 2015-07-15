@@ -20,7 +20,6 @@ import com.genome2d.text.GTextureTextRenderer;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
-import flash.display.BitmapData;
 
 
 class BasicExample5TextureText
@@ -67,8 +66,8 @@ class BasicExample5TextureText
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {
-		GAssetManager.addFromUrl("font2.png");
-        GAssetManager.addFromUrl("font2.fnt");
+		GAssetManager.addFromUrl("font.png");
+        GAssetManager.addFromUrl("font.fnt");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
@@ -92,9 +91,9 @@ class BasicExample5TextureText
         Initialize Example code
      **/
     private function initExample():Void {
-		GTextureManager.createTexture("font2.png", GAssetManager.getImageAssetById("font2.png"));
+		GTextureManager.createTexture("font", GAssetManager.getImageAssetById("font.png"));
 		
-		GFontManager.createTextureFont("font", GTextureManager.getTexture("font2.png"), GAssetManager.getXmlAssetById("font2.fnt").xml);
+		GFontManager.createTextureFont("font", GTextureManager.getTexture("font"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
 		createText(250, 150, "Hello world.\ntest", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }

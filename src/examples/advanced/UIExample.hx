@@ -103,10 +103,10 @@ class UIExample
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
 		
-		var xml:Xml = Xml.parse('<element anchorRight.test=".5" anchorRight="1" anchorBottom="1"><p:layout><horizontal gap="0"/></p:layout><element anchorY.test="0" anchorY="50" skin="@font"></element><element skin="@font"></element></element>').firstElement();
+		var xml:Xml = Xml.parse('<element anchorRight="1" anchorBottom="1"><element setAnchorAlign="5" setModel="test" anchorY="50" skin="@font"></element><element skin="@font"></element></element>').firstElement();
 		
 		element = cast GPrototypeFactory.createPrototype(xml);
-		element.getChildAt(0).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
+		//element.getChildAt(0).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
 		element.getChildAt(1).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
 		var child:GUIElement = element.getChildAt(0);
 		ui.root.addChild(element);

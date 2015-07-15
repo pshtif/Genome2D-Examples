@@ -143,7 +143,7 @@ class BasicExample4Mouse
      **/
     private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
         var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTexture("atlas.png_0");
+        sprite.texture = GTextureManager.getTexture("atlas_0");
         sprite.node.setPosition(p_x, p_y);
         genome.root.addChild(sprite.node);
 

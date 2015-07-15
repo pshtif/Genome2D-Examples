@@ -8,10 +8,13 @@
 
 
 # Genome2D flags
--D genome_webGLonly
+-D genome_webglonly
 
 # Main class
--main examples.basic.BasicExample1Initialization
+#-main examples.basic.BasicExample3Sprite
+#-main examples.basic.BasicExample4Mouse
+#-main examples.basic.BasicExample5TextureText
+-main examples.basic.BasicExample6Particles
 
 # JavaScript flags
--js ../remote/Example.js
+-js ./Genome2D-Examples/bin/Example.js

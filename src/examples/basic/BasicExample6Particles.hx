@@ -10,17 +10,18 @@ package examples.basic;
 
 import com.genome2d.assets.GAsset;
 import com.genome2d.components.renderable.particles.GSimpleParticleSystem;
+import com.genome2d.context.stats.GStats;
 import com.genome2d.node.GNode;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.textures.GTextureManager;
 
-class BasicExample6SimpleParticles
+class BasicExample6Particles
 {
 
     static public function main() {
-        var inst = new BasicExample6SimpleParticles();
+        var inst = new BasicExample6Particles();
     }
 
     /**
@@ -89,7 +90,8 @@ class BasicExample6SimpleParticles
 
 		// Create a node with simple particle system component
         var particleSystem:GSimpleParticleSystem = GNode.createWithComponent(GSimpleParticleSystem);
-        particleSystem.texture = GTextureManager.getTexture("atlas.png_particle");
+        particleSystem.texture = GTextureManager.getTexture("atlas_particle");
+		GStats.visible = true;
         particleSystem.emission = 128;
         particleSystem.emit = true;
         particleSystem.dispersionAngleVariance = Math.PI*2;
