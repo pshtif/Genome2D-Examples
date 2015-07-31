@@ -92,23 +92,29 @@ class UIExample
         Initialize Example code
      **/
 	private var element:GUIElement;
+	private var textElement:GUIElement;
+	private var textElement2:GUIElement;
 	private var align:Int = 0;
     private function initExample():Void {
 		GTextureManager.createTexture("font.png", GAssetManager.getImageAssetById("font.png"));
 		
 		GFontManager.createTextureFont("font", GTextureManager.getTexture("font.png"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
-		var skin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("font"), .8, true);
+		new GUIFontSkin("font", GFontManager.getFont("font"), .6, true);
 		
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
 		
-		var xml:Xml = Xml.parse('<element anchorRight="1" anchorBottom="1"><element setAnchorAlign="5" setModel="test" anchorY="50" skin="@font"></element><element skin="@font"></element></element>').firstElement();
+		var xml:Xml = Xml.parse('<element anchorLeft="0" anchorRight="1" anchorBottom="1" anchorTop="0"><element setAlign="2" skin="@font"/><element setAlign="2" anchorY="100" skin="@font"/></element>').firstElement();
 		
 		element = cast GPrototypeFactory.createPrototype(xml);
 		//element.getChildAt(0).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
-		element.getChildAt(1).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
-		var child:GUIElement = element.getChildAt(0);
+		textElement = element.getChildAt(0);
+		textElement.setModel("Lorem ipsumm\ndolor");
+		
+		textElement2 = element.getChildAt(1);
+		textElement2.setModel("Loremolor");
+		
 		ui.root.addChild(element);
 		
 		genome.root.addChild(ui.node);
@@ -120,13 +126,14 @@ class UIExample
 	private function key_handler(p_input:GKeyboardInput):Void {
 		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
 			switch (p_input.keyCode) {
-				case 32:
-					if (!s) {
-						element.setState("test");
-					} else {
-						element.setState("default");
-					}
-					s = !s;
+				case 72:
+					var skin:GUIFontSkin = cast(textElement.skin, GUIFontSkin);
+					skin.hAlign = (skin.hAlign == 2) ? 0 : skin.hAlign + 1;
+				case 86:
+					var skin:GUIFontSkin = cast(textElement.skin, GUIFontSkin);
+					skin.vAlign = (skin.vAlign == 2) ? 0 : skin.vAlign + 1;
+				case _:
+					trace(p_input.keyCode);
 			}
 		}
 	}

@@ -18,8 +18,12 @@ import com.genome2d.context.stage3d.renderers.GBufferRenderer;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
+import com.genome2d.proto.GPrototype;
+import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
+import com.genome2d.ui.element.GUIElement;
+import com.genome2d.ui.layout.GUIHorizontalLayout;
 import flash.display.BitmapData;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
@@ -78,9 +82,9 @@ class Test
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {
-		//GAssetManager.addFromUrl("atlas.png");
-        //GAssetManager.addFromUrl("atlas.xml");
-		//GAssetManager.addFromUrl("texture.png");
+		GAssetManager.addFromUrl("atlas.png");
+        GAssetManager.addFromUrl("atlas.xml");
+		GAssetManager.addFromUrl("texture.png");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
@@ -108,20 +112,51 @@ class Test
 		// Generate textures from all assets, their IDs will be the same as their asset ID
 		GAssetManager.generateTextures();
 		
-		renderer = new GBufferRenderer(genome.getContext());
-		renderer.setFragmentProgram(GShaderCode.FRAGMENT_FINAL_VARYING_CODE);
-		renderer.setVertexProgram(GShaderCode.VERTEX_COLOR_CODE);
-		var indices:Vector<UInt> = new Vector<UInt>();
-		indices.push(0);
-		indices.push(1);
-		indices.push(2);
-		renderer.setIndexBuffer(indices);
-		renderer.setVertexBuffer(Vector.ofArray([100, 100.0, 0, 0, 1, 1, 200, 100, 0, 1, 0, 1, 100, 200, 1, 0, 0, 1]), [2, 4]);
-		
-		genome.onPostRender.add(postRender_handler);
-    }
+		testElement();
+	}
 	
-	private function postRender_handler():Void {
-		genome.getContext().bindRenderer(renderer);
+	private function testElement():Void {
+		var element:GUIElement = new GUIElement();
+		element.anchorX = 1;
+		element.layout = new GUIHorizontalLayout();
+		var child:GUIElement = new GUIElement();
+		element.addChild(child);
+		
+		var child2:GUIElement = new GUIElement();
+		child.addChild(child2);
+		
+		var prototype:GPrototype = element.getPrototype();
+		var prototypeXml:Xml = prototype.toXml();
+		
+		trace(prototypeXml);
+
+		element = cast GPrototypeFactory.createPrototype(prototype);
+		
+		trace(element.getPrototype().toXml());
+		
+		prototype = GPrototype.fromXml(prototypeXml);
+		
+		element = cast GPrototypeFactory.createPrototype(prototype);
+		
+		trace(element.getPrototype().toXml());
+	}		
+
+	private function testNode():Void {
+		var sprite:GSprite = GNode.createWithComponent(GSprite);
+		sprite.texture = GTextureManager.getTexture("atlas_0");
+		var prototype:GPrototype = sprite.node.getPrototype();
+		var prototypeXml:Xml = prototype.toXml();
+		
+		trace(prototypeXml);
+		
+		var prototypeNode:GNode = GNode.createFromPrototype(prototype);
+		
+		trace(prototypeNode.getPrototype().toXml());
+		
+		prototype = GPrototype.fromXml(prototypeXml);
+		
+		var xmlNode:GNode = GNode.createFromPrototype(prototype);
+		
+		trace(xmlNode.getPrototype().toXml());
 	}
 }
