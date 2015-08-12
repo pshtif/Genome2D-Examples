@@ -12,11 +12,13 @@ import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.flash.GFlashText;
 import com.genome2d.components.renderable.GSprite;
+import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.context.stage3d.GShaderCode;
 import com.genome2d.context.stage3d.renderers.GBufferRenderer;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
+import com.genome2d.geom.GRectangle;
 import com.genome2d.node.GNode;
 import com.genome2d.proto.GPrototype;
 import com.genome2d.proto.GPrototypeFactory;
@@ -24,6 +26,7 @@ import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.layout.GUIHorizontalLayout;
+import com.genome2d.ui.skin.GUITextureSkin;
 import flash.display.BitmapData;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
@@ -116,15 +119,24 @@ class Test
 	}
 	
 	private function testElement():Void {
+		var ui:GUI = GNode.createWithComponent(GUI);
+		ui.setBounds(new GRectangle(0, 0, 800, 600));
+		genome.root.addChild(ui.node);
+		
+		var skin:GUITextureSkin = new GUITextureSkin("texture", GTextureManager.getTexture("texture"));
+		trace(skin.getPrototype().toXml());
+		var skin2:GUITextureSkin = cast GPrototypeFactory.createPrototype(GPrototype.fromXml(Xml.parse('<textureSkin texture="@texture" id="test"/>').firstElement()));
+		trace(skin2.id, skin2.toReference());
+		
 		var element:GUIElement = new GUIElement();
-		element.anchorX = 1;
-		element.layout = new GUIHorizontalLayout();
-		var child:GUIElement = new GUIElement();
-		element.addChild(child);
+		element.skin = skin2;
+		trace(element.skin.id, element.skin.toReference());
+		ui.root.addChild(element);
 		
-		var child2:GUIElement = new GUIElement();
-		child.addChild(child2);
+		trace(element.getPrototype().toXml());
+
 		
+		/*
 		var prototype:GPrototype = element.getPrototype();
 		var prototypeXml:Xml = prototype.toXml();
 		
@@ -139,6 +151,7 @@ class Test
 		element = cast GPrototypeFactory.createPrototype(prototype);
 		
 		trace(element.getPrototype().toXml());
+		/**/
 	}		
 
 	private function testNode():Void {
