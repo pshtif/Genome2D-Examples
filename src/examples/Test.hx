@@ -19,11 +19,14 @@ import com.genome2d.context.stage3d.renderers.GBufferRenderer;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
 import com.genome2d.geom.GRectangle;
+import com.genome2d.input.GKeyboardInput;
+import com.genome2d.input.GKeyboardInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.proto.GPrototype;
 import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
+import com.genome2d.transitions.GTransition;
 import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.layout.GUIHorizontalLayout;
 import com.genome2d.ui.skin.GUITextureSkin;
@@ -118,6 +121,8 @@ class Test
 		testElement();
 	}
 	
+	private var element:GUIElement;
+	
 	private function testElement():Void {
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
@@ -125,12 +130,11 @@ class Test
 		
 		var skin:GUITextureSkin = new GUITextureSkin("texture", GTextureManager.getTexture("texture"));
 		trace(skin.getPrototype().toXml());
-		var skin2:GUITextureSkin = cast GPrototypeFactory.createPrototype(GPrototype.fromXml(Xml.parse('<textureSkin texture="@texture" id="test"/>').firstElement()));
-		trace(skin2.id, skin2.toReference());
+		GPrototypeFactory.createPrototypeFromXmlString('<textureSkin texture="@texture" id="test"/>');
+		GPrototypeFactory.createPrototypeFromXmlString('<transition id="test" time="1"/>');
+		GPrototypeFactory.createPrototypeFromXmlString('<transition id="test2" time="0.001" delay="1"/>');
 		
-		var element:GUIElement = new GUIElement();
-		element.skin = skin2;
-		trace(element.skin.id, element.skin.toReference());
+		element = cast GPrototypeFactory.createPrototypeFromXmlString('<element><element anchorX.hmm.test="200" anchorX.default.test="100" alpha.default.test2="1" alpha.hmm.test2="0" skin="@test"/><element anchorY="300" anchorX.hmm.test="100" anchorX.default.test="200" skin="@test"/></element>');
 		ui.root.addChild(element);
 		
 		trace(element.getPrototype().toXml());
@@ -152,6 +156,8 @@ class Test
 		
 		trace(element.getPrototype().toXml());
 		/**/
+		
+		Genome2D.getInstance().onKeyboardInput.add(keyboard_handler);
 	}		
 
 	private function testNode():Void {
@@ -171,5 +177,15 @@ class Test
 		var xmlNode:GNode = GNode.createFromPrototype(prototype);
 		
 		trace(xmlNode.getPrototype().toXml());
+	}
+	
+	private function keyboard_handler(input:GKeyboardInput):Void {
+		if (input.type == GKeyboardInputType.KEY_DOWN) {
+			if (element.getState() == "hmm") {
+				element.setState("default");
+			} else {
+				element.setState("hmm");
+			}
+		}
 	}
 }

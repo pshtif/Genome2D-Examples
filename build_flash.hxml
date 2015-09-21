@@ -7,6 +7,7 @@
 # Include libraries
 -swf-lib Genome2D-ContextFlash/lib/AGAL.swc
 -lib hscript
+-lib Actuate
 
 # Debug flags
 -D fdb
