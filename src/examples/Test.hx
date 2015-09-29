@@ -21,6 +21,7 @@ import com.genome2d.Genome2D;
 import com.genome2d.geom.GRectangle;
 import com.genome2d.input.GKeyboardInput;
 import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.node.GNode;
 import com.genome2d.proto.GPrototype;
 import com.genome2d.proto.GPrototypeFactory;
@@ -123,21 +124,29 @@ class Test
 	
 	private var element:GUIElement;
 	
+	public function test(input:GMouseInput):Void {
+		trace("fuck");
+	}
+	
 	private function testElement():Void {
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
+		ui.node.mouseEnabled = true;
 		genome.root.addChild(ui.node);
 		
 		var skin:GUITextureSkin = new GUITextureSkin("texture", GTextureManager.getTexture("texture"));
-		trace(skin.getPrototype().toXml());
-		GPrototypeFactory.createPrototypeFromXmlString('<textureSkin texture="@texture" id="test"/>');
+		//trace(skin.getPrototype().toXml());
+		GPrototypeFactory.createPrototypeFromXmlString('<textureSkin texture="@texture" id="test" tiled="true" autoSize="false"/>');
+		GPrototypeFactory.createPrototypeFromXmlString('<textureSkin texture="@texture" id="test2"/>');
 		GPrototypeFactory.createPrototypeFromXmlString('<transition id="test" time="1"/>');
 		GPrototypeFactory.createPrototypeFromXmlString('<transition id="test2" time="0.001" delay="1"/>');
 		
-		element = cast GPrototypeFactory.createPrototypeFromXmlString('<element><element anchorX.hmm.test="200" anchorX.default.test="100" alpha.default.test2="1" alpha.hmm.test2="0" skin="@test"/><element anchorY="300" anchorX.hmm.test="100" anchorX.default.test="200" skin="@test"/></element>');
+		//element = cast GPrototypeFactory.createPrototypeFromXmlString('<element><element setAlign="0" preferredWidth="50" preferredHeight="50" anchorX.hmm.test="200" anchorX.default.test="100" alpha.default.test2="1" alpha.test2="0" skin.default="@test" skin.hmm=""/><element preferredWidth="500" anchorY="300" anchorX.hmm.test="200" anchorX.default.test="100" skin="@test2"/></element>');
+		element = cast GPrototypeFactory.createPrototypeFromXmlString('<element mouseDown="test"><element skin.default="@test2" mouseDown="test" mouseOut="test"/></element>');
+		element.setController(this);
 		ui.root.addChild(element);
 		
-		trace(element.getPrototype().toXml());
+		//trace(element.getPrototype().toXml());
 
 		
 		/*
