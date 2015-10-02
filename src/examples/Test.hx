@@ -165,9 +165,16 @@ class Test
 		
 		trace(element.getPrototype().toXml());
 		/**/
+		var tex:GTexture = GTextureManager.createTexture("aaa", new BitmapData(100, 100, false, 0xFF0000));
+		tex.nativeTexture.dispose();
 		
 		Genome2D.getInstance().onKeyboardInput.add(keyboard_handler);
+		Genome2D.getInstance().onPostRender.add(postRender_handler);
 	}		
+	
+	private function postRender_handler():Void {
+		Genome2D.getInstance().getContext().draw(GTextureManager.getTexture("aaa"), 100, 100);
+	}
 
 	private function testNode():Void {
 		var sprite:GSprite = GNode.createWithComponent(GSprite);

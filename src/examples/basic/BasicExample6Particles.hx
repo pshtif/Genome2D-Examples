@@ -11,11 +11,15 @@ package examples.basic;
 import com.genome2d.assets.GAsset;
 import com.genome2d.components.renderable.particles.GSimpleParticleSystem;
 import com.genome2d.context.stats.GStats;
+import com.genome2d.input.GKeyboardInput;
+import com.genome2d.input.GKeyboardInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.textures.GTextureManager;
+import motion.Actuate;
+import motion.easing.Linear;
 
 class BasicExample6Particles
 {
@@ -28,6 +32,8 @@ class BasicExample6Particles
         Genome2D singleton instance
      **/
     private var genome:Genome2D;
+	
+	private var particleSystem:GSimpleParticleSystem;
 
     public function new() {
         initGenome();
@@ -89,21 +95,46 @@ class BasicExample6Particles
         GAssetManager.generateTextures();
 
 		// Create a node with simple particle system component
-        var particleSystem:GSimpleParticleSystem = GNode.createWithComponent(GSimpleParticleSystem);
+        particleSystem = GNode.createWithComponent(GSimpleParticleSystem);
         particleSystem.texture = GTextureManager.getTexture("atlas_particle");
-		GStats.visible = true;
         particleSystem.emission = 128;
         particleSystem.emit = true;
         particleSystem.dispersionAngleVariance = Math.PI*2;
-        particleSystem.energy = 1;
-        particleSystem.initialVelocity = 50;
-        particleSystem.initialVelocityVariance = 100;
+        particleSystem.energy = 5;
+        particleSystem.initialVelocity = 20;
+        particleSystem.initialVelocityVariance = 40;
         particleSystem.initialAngleVariance = 5;
         particleSystem.endAlpha = 0;
         particleSystem.initialScale = 2;
         particleSystem.endScale = .2;
-        particleSystem.node.setPosition(400,300);
+        particleSystem.node.setPosition(100, 300);
+		particleSystem.useWorldSpace = true;
+		//Genome2D.getInstance().root.addChild(particleSystem.node);
+		
+		Actuate.tween(particleSystem.node, 2, { x:700 } ).repeat().reflect().ease(Linear.easeNone);
 
-        Genome2D.getInstance().root.addChild(particleSystem.node);
+		Genome2D.getInstance().onKeyboardInput.add(keyHandler);
+		Genome2D.getInstance().onPostRender.add(postRender_handler);
     }
+	
+	private var paused:Bool = false;
+	private function postRender_handler():Void {
+		if (!paused) {
+			particleSystem.update(Genome2D.getInstance().getCurrentFrameDeltaTime());
+			particleSystem.render(Genome2D.getInstance().getContext().getDefaultCamera(), false);
+		}
+	}
+	
+	private var state:Bool = true;
+	private function keyHandler(p_input:GKeyboardInput):Void {
+		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
+			if (state) {
+				paused = true;
+			} else {
+				paused = false;
+				particleSystem.clear(); 
+			}
+			state = !state;
+		}
+	}
 }
