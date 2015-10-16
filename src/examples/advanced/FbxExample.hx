@@ -107,8 +107,10 @@ class FbxExample {
         MGDebug.DUMP();
 
         GAssetManager.init();
-        GAssetManager.addFromUrl("w_1.png");
-		GAssetManager.addFromUrl("w_2.png");
+		GAssetManager.addFromUrl("Bellona_diffuse.png");
+		GAssetManager.addFromUrl("sovereign.png");
+        //GAssetManager.addFromUrl("w_1.png");
+		//GAssetManager.addFromUrl("w_2.png");
 		//GAssetManager.addFromUrl("Santa_Maria_Diff.png");
 		//GAssetManager.addFromUrl("Santa_Maria_plachty_Diff.png");
         GAssetManager.onQueueFailed.add(assetsFailed_handler);
@@ -125,21 +127,21 @@ class FbxExample {
 
         GAssetManager.generateTextures();
 
-        createDisplacement();
+		GTextureManager.createTexture("aaa", null);
+        //createDisplacement();
 
         // Create render targets
-        GTextureManager.createRenderTexture("reflectionTarget", 1024, 1024);
-        GTextureManager.createRenderTexture("shadowTarget", 1024, 1024);
-        GTextureManager.createRenderTexture("waterCompositionTarget", 1024, 1024);
-        GTextureManager.createRenderTexture("finalCompositionTarget", 1024, 1024);
+        //GTextureManager.createRenderTexture("reflectionTarget", 1024, 1024);
+        //GTextureManager.createRenderTexture("shadowTarget", 1024, 1024);
+        //GTextureManager.createRenderTexture("waterCompositionTarget", 1024, 1024);
+        //GTextureManager.createRenderTexture("finalCompositionTarget", 1024, 1024);
 
         // Create some postprocess to show
-        _postProcess = new GBloomPP();
-        _postProcess.setBounds(new GRectangle(0,0,1024,1024));
+        //_postProcess = new GBloomPP();
+        //_postProcess.setBounds(new GRectangle(0,0,1024,1024));
 
-        //loadFBX("box.fbx");
+        loadFBX("hmsBellona.fbx");
 		//loadFBX("Santa_Maria_XL.FBX");
-		initExample();
     }
 
 	private var perlinData1:BitmapData;
@@ -182,7 +184,7 @@ class FbxExample {
         _fbxScene = new GFbxScene();
         _fbxScene.init(fbxNode);
         _fbxScene.ambientColor = new GFloat4(.5,.5,.5,1);
-        _fbxScene.lightColor = new GFloat4(0, .75, .5, 1);
+        _fbxScene.lightColor = new GFloat4(1, 1, 1, 1);
 		
 		//_fbxScene.getModelByName("Model::Object002").visible = false;
 
@@ -248,17 +250,17 @@ class FbxExample {
 
         if (_renderPass==0 || _renderPass == 3) context.draw(GTextureManager.getTexture("shadowTarget"),512,512,1,1,0,1,1,1,.35,GBlendMode.NORMAL);
 		/**/
-		updateDisplacement();
+		//updateDisplacement();
 		
-		context.draw(GTextureManager.getTexture("w_1"), 400, 300, 1, 1, 0, 1, 1, 1, 1, 1, _displacement);
-		
+		//context.draw(GTextureManager.getTexture("w_1"), 400, 300, 1, 1, 0, 1, 1, 1, 1, 1, _displacement);
+		/*
 		if (_renderNoise) {
 			context.draw(GTextureManager.getTexture("map1"), 128, 128, 1, 1, 0, 1, 1, 1, 1, 1, null);
 			
 			context.draw(GTextureManager.getTexture("map2"), 512 - 128, 128, 1, 1, 0, 1, 1, 1, 1, 1, null);
 		}
-		
-        //if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 1);
+		/**/
+        if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 1);
 
         //context.setRenderTarget(null);
 

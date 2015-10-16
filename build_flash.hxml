@@ -34,10 +34,10 @@
 	#-main examples.basic.BasicExample3Sprite
 	#-main examples.basic.BasicExample4Mouse
 	#-main examples.basic.BasicExample5TextureText
-	-main examples.basic.BasicExample6Particles
+	#-main examples.basic.BasicExample6Particles
 	
 	#-main examples.advanced.PostprocessExample
-	#-main examples.advanced.FbxExample
+	-main examples.advanced.FbxExample
 	#-main examples.advanced.UIExample
 
 # Flash flags
