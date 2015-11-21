@@ -104,18 +104,18 @@ class UIExample
 		
 		new GUIFontSkin("font", GFontManager.getFont("font"), .6, true);
 		var skin:GUITextureSkin = new GUITextureSkin("hud_dialog_bg", GTextureManager.getTexture("hud_dialog_bg"));
-		skin.sliceLeft = 44;
-		skin.sliceRight = 48;
-		skin.sliceTop = 44;
-		skin.sliceBottom = 48;
-		skin.scaleX = skin.scaleY = .5;
-		trace("here");
+		//skin.sliceLeft = 44;
+		//skin.sliceRight = 48;
+		//skin.sliceTop = 44;
+		//skin.sliceBottom = 48;
+		skin.tiled = true;
+		skin.scaleX = skin.scaleY = 1;
 		
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
 		
 		//var xml:Xml = Xml.parse('<element anchorLeft="0" anchorRight="1" anchorBottom="1" anchorTop="0"><element setAlign="2" skin="@font"/><element setAlign="2" anchorY="100" skin="@font"/></element>').firstElement();
-		var xml:Xml = Xml.parse('<element anchorX="100" anchorY="100" setAlign="2" skin="@hud_dialog_bg"/>').firstElement();
+		var xml:Xml = Xml.parse('<element preferredWidth="800" preferredHeight="200" anchorX="0" anchorY="100" skin="@hud_dialog_bg"/>').firstElement();
 		element = cast GPrototypeFactory.createPrototype(GPrototype.fromXml(xml));
 		//element.getChildAt(0).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
 		element.setModel("Lorem ipsumm\ndolor");
