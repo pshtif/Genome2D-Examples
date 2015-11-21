@@ -9,6 +9,7 @@ import com.genome2d.geom.GRectangle;
 import com.genome2d.input.GKeyboardInput;
 import com.genome2d.input.GKeyboardInputType;
 import com.genome2d.node.GNode;
+import com.genome2d.proto.GPrototype;
 import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.text.GFontManager;
 import com.genome2d.textures.GTextureManager;
@@ -67,6 +68,7 @@ class UIExample
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {
+		GAssetManager.addFromUrl("hud_dialog_bg.png");
 		GAssetManager.addFromUrl("font.png");
         GAssetManager.addFromUrl("font.fnt");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
@@ -96,25 +98,28 @@ class UIExample
 	private var textElement2:GUIElement;
 	private var align:Int = 0;
     private function initExample():Void {
-		GTextureManager.createTexture("font.png", GAssetManager.getImageAssetById("font.png"));
+		GAssetManager.generateTextures();
 		
-		GFontManager.createTextureFont("font", GTextureManager.getTexture("font.png"), GAssetManager.getXmlAssetById("font.fnt").xml);
+		//GFontManager.createTextureFont("font", GTextureManager.getTexture("font"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
 		new GUIFontSkin("font", GFontManager.getFont("font"), .6, true);
+		var skin:GUITextureSkin = new GUITextureSkin("hud_dialog_bg", GTextureManager.getTexture("hud_dialog_bg"));
+		skin.sliceLeft = 44;
+		skin.sliceRight = 48;
+		skin.sliceTop = 44;
+		skin.sliceBottom = 48;
+		skin.scaleX = skin.scaleY = .5;
+		trace("here");
 		
 		var ui:GUI = GNode.createWithComponent(GUI);
 		ui.setBounds(new GRectangle(0, 0, 800, 600));
 		
-		var xml:Xml = Xml.parse('<element anchorLeft="0" anchorRight="1" anchorBottom="1" anchorTop="0"><element setAlign="2" skin="@font"/><element setAlign="2" anchorY="100" skin="@font"/></element>').firstElement();
-		
-		element = cast GPrototypeFactory.createPrototype(xml);
+		//var xml:Xml = Xml.parse('<element anchorLeft="0" anchorRight="1" anchorBottom="1" anchorTop="0"><element setAlign="2" skin="@font"/><element setAlign="2" anchorY="100" skin="@font"/></element>').firstElement();
+		var xml:Xml = Xml.parse('<element anchorX="100" anchorY="100" setAlign="2" skin="@hud_dialog_bg"/>').firstElement();
+		element = cast GPrototypeFactory.createPrototype(GPrototype.fromXml(xml));
 		//element.getChildAt(0).setModel("Lorem ipsum.");// dolor sit amet and some other bullshit that comes here to inform you about this material.");
-		textElement = element.getChildAt(0);
-		textElement.setModel("Lorem ipsumm\ndolor");
-		
-		textElement2 = element.getChildAt(1);
-		textElement2.setModel("Loremolor");
-		
+		element.setModel("Lorem ipsumm\ndolor");
+				
 		ui.root.addChild(element);
 		
 		genome.root.addChild(ui.node);
