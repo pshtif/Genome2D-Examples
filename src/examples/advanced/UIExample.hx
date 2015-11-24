@@ -4,6 +4,7 @@ import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.text.GText;
 import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.context.GContextConfig;
+import com.genome2d.context.stats.GStats;
 import com.genome2d.Genome2D;
 import com.genome2d.geom.GRectangle;
 import com.genome2d.input.GKeyboardInput;
@@ -18,6 +19,7 @@ import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
+import flash.display.BitmapData;
 
 class UIExample
 {
@@ -31,19 +33,24 @@ class UIExample
     private var genome:Genome2D;
 
     public function new() {
+		var a:Dynamic = null;
+		var b = a;
+		$type(b);
+		
 		var expr = "var x = 4; var y=3; 1 + y * x";
 		var parser = new hscript.Parser();
 		var ast = parser.parseString(expr);
 		var interp = new hscript.Interp();
 		trace(interp.execute(ast));
-		
-        initGenome();
+        //initGenome();
     }
 
     /**
         Initialize Genome2D
      **/
     private function initGenome():Void {
+		GStats.visible = true;
+		
         genome = Genome2D.getInstance();
 		genome.onFailed.addOnce(genomeFailed_handler);
         genome.onInitialized.addOnce(genomeInitialized_handler);
@@ -139,6 +146,7 @@ class UIExample
 					skin.vAlign = (skin.vAlign == 2) ? 0 : skin.vAlign + 1;
 				case _:
 					trace(p_input.keyCode);
+					GTextureManager.disposeAll();
 			}
 		}
 	}
