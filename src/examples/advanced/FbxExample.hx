@@ -7,6 +7,7 @@ import com.genome2d.context.GBlendMode;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.context.IGContext;
 import com.genome2d.context.stage3d.renderers.GFbxRenderer;
+import com.genome2d.context.stats.GStats;
 import com.genome2d.fbx.GFbxNode;
 import com.genome2d.fbx.GFbxParser;
 import com.genome2d.fbx.GFbxParserNode;
@@ -92,6 +93,8 @@ class FbxExample {
         config.enableDepthAndStencil = true;
         config.antiAliasing = 16;
 
+		GStats.visible = true;
+		
         _genome = Genome2D.getInstance();
         _genome.onInitialized.add(genomeInitializedHandler);
         _genome.init(config);
@@ -127,7 +130,6 @@ class FbxExample {
 
         GAssetManager.generateTextures();
 
-		GTextureManager.createTexture("aaa", null);
         //createDisplacement();
 
         // Create render targets

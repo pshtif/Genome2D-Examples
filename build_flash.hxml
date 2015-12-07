@@ -41,6 +41,6 @@
 	-main examples.advanced.UIExample
 
 # Flash flags
--swf-version 12.0
+-swf-version 17.0
 -swf Genome2D-Examples/bin/Example.swf
 -swf-header 800:600:60:000000
