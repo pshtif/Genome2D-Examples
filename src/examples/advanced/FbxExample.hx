@@ -212,6 +212,7 @@ class FbxExample {
     }
 
     private function postRender_handler():Void {
+		if (!render) return;
         var context:IGContext = _genome.getContext();
 
         // Update light direction
@@ -298,9 +299,12 @@ class FbxExample {
         }
     }
 
+	private var render:Bool = false;
     private function key_handler(input:GKeyboardInput):Void {
         if (input.type != GKeyboardInputType.KEY_DOWN) return;
 
+		render = !render;
+		
         switch (input.keyCode) {
             case 48:
                 _renderPass = 0;

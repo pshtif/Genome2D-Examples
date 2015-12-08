@@ -37,8 +37,8 @@
 	#-main examples.basic.BasicExample6Particles
 	
 	#-main examples.advanced.PostprocessExample
-	#-main examples.advanced.FbxExample
-	-main examples.advanced.UIExample
+	-main examples.advanced.FbxExample
+	#-main examples.advanced.UIExample
 
 # Flash flags
 -swf-version 17.0
