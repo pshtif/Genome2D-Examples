@@ -109,32 +109,6 @@ class BasicExample6Particles
         particleSystem.endScale = .2;
         particleSystem.node.setPosition(100, 300);
 		particleSystem.useWorldSpace = true;
-		//Genome2D.getInstance().root.addChild(particleSystem.node);
-		
-		Actuate.tween(particleSystem.node, 2, { x:700 } ).repeat().reflect().ease(Linear.easeNone);
-
-		Genome2D.getInstance().onKeyboardInput.add(keyHandler);
-		Genome2D.getInstance().onPostRender.add(postRender_handler);
+		Genome2D.getInstance().root.addChild(particleSystem.node);
     }
-	
-	private var paused:Bool = false;
-	private function postRender_handler():Void {
-		if (!paused) {
-			particleSystem.update(Genome2D.getInstance().getCurrentFrameDeltaTime());
-			particleSystem.render(Genome2D.getInstance().getContext().getDefaultCamera(), false);
-		}
-	}
-	
-	private var state:Bool = true;
-	private function keyHandler(p_input:GKeyboardInput):Void {
-		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
-			if (state) {
-				paused = true;
-			} else {
-				paused = false;
-				particleSystem.clear(); 
-			}
-			state = !state;
-		}
-	}
 }
