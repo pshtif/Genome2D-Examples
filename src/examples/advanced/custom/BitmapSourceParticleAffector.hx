@@ -1,4 +1,4 @@
-package examples.advanced;
+package examples.advanced.custom;
 import com.genome2d.components.renderable.particles.GParticleSystem;
 import com.genome2d.particles.GParticle;
 import com.genome2d.particles.IGAffector;
