@@ -74,7 +74,7 @@ class Shell extends GComponent
 	private function explode():Void {
 		_particleSystem.node.visible = false;
 		
-		if (_type == 2) {
+		if (_type == 1) {
 			createAdvanced(_endX, _endY, _char);
 		} else {
 			createSimple(_endX, _endY);
@@ -124,11 +124,11 @@ class Shell extends GComponent
 	
 	private function createAdvanced(p_x:Float, p_y:Float, p_char:String):Void {
 		var explodeSystem:GParticleSystem = GNode.createWithComponent(GParticleSystem);
+		explodeSystem.emission = new GCurve(500);
+		explodeSystem.texture = GTextureManager.getTexture("atlas_particle");
+		explodeSystem.node.setPosition(p_x, p_y);
 		explodeSystem.addInitializer(new BitmapSourceParticleInitializer(text(p_char), 1, .9, .5, _scale));
 		explodeSystem.addAffector(new BitmapSourceParticleAffector());
-		explodeSystem.emission = new GCurve(500);
-		explodeSystem.node.setPosition(p_x, p_y);
-        explodeSystem.texture = GTextureManager.getTexture("atlas_particle");
 		Actuate.timer(.3).onComplete(disable, [explodeSystem]);
 		node.addChild(explodeSystem.node);
 	}

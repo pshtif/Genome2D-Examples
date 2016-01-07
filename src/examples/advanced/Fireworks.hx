@@ -17,6 +17,7 @@ import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import motion.Actuate;
 import motion.easing.Linear;
+import examples.advanced.custom.Shell;
 
 /**
  * ...
@@ -88,8 +89,8 @@ class Fireworks
 	}
 	
 	private function initExample():Void {
-		createSimple();
-		return;
+		//createSimple();
+		//return;
 		
 		var scale:Float = .1;
 		var offset:Float = 0;

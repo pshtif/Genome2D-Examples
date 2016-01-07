@@ -13,6 +13,8 @@ import com.genome2d.components.renderable.particles.GSimpleParticleSystem;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.input.GKeyboardInput;
 import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.input.GMouseInput;
+import com.genome2d.input.GMouseInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.Genome2D;
 import com.genome2d.context.GContextConfig;
@@ -98,17 +100,53 @@ class BasicExample6Particles
         particleSystem = GNode.createWithComponent(GSimpleParticleSystem);
         particleSystem.texture = GTextureManager.getTexture("atlas_particle");
         particleSystem.emission = 128;
+		particleSystem.emissionTime = 1;
+		particleSystem.emissionDelay = 1;
         particleSystem.emit = true;
-        particleSystem.dispersionAngleVariance = Math.PI*2;
         particleSystem.energy = 5;
+		particleSystem.dispersionAngleVariance = Math.PI*2;
         particleSystem.initialVelocity = 20;
         particleSystem.initialVelocityVariance = 40;
         particleSystem.initialAngleVariance = 5;
         particleSystem.endAlpha = 0;
         particleSystem.initialScale = 2;
         particleSystem.endScale = .2;
-        particleSystem.node.setPosition(100, 300);
 		particleSystem.useWorldSpace = true;
-		Genome2D.getInstance().root.addChild(particleSystem.node);
+		particleSystem.node.setPosition(200, 300);
+		genome.root.addChild(particleSystem.node);
+		
+		particleSystem2 = GNode.createWithComponent(GSimpleParticleSystem);
+        particleSystem2.texture = GTextureManager.getTexture("atlas_particle");
+        particleSystem2.emission = 1128;
+        //particleSystem.emit = true;
+        particleSystem2.energy = 5;
+		particleSystem2.dispersionAngleVariance = Math.PI*2;
+        particleSystem2.initialVelocity = 20;
+        particleSystem2.initialVelocityVariance = 40;
+        particleSystem2.initialAngleVariance = 5;
+        particleSystem2.endAlpha = 0;
+        particleSystem2.initialScale = 2;
+        particleSystem2.endScale = .2;
+		
+		particleSystem2.useWorldSpace = true;
+		particleSystem2.node.setPosition(600, 300);
+		genome.root.addChild(particleSystem2.node);
+		
+		//particleSystem2.initialRed = 1;
+		//particleSystem2.initialGreen = 0;
+		//particleSystem2.initialBlue = 0;
+		particleSystem2.initialColor = 0xFF0000;
+		
+		genome.getContext().onMouseInput.add(mouse_handler);
     }
+	
+	private var particleSystem2:GSimpleParticleSystem;
+	
+	private function mouse_handler(input:GMouseInput):Void {
+		if (input.type == GMouseInputType.MOUSE_DOWN) {
+			particleSystem2.forceBurst();
+		} else if (input.type == GMouseInputType.MOUSE_MOVE) {
+			particleSystem.node.setPosition(input.contextX, input.contextY);
+		}
+	}
 }
