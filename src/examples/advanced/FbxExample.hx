@@ -85,10 +85,6 @@ class FbxExample {
         _cameraMatrix.appendTranslation(_cameraX, 0, 400);
 		_cameraMatrix.appendScale(_cameraScale,_cameraScale,1);
 
-        _reflectionMatrix = _cameraMatrix.clone();
-        _reflectionMatrix.prependScale(1,1,-1);
-        _lightMatrix = new GMatrix3D();
-
         var config:GContextConfig = new GContextConfig();
         config.enableDepthAndStencil = true;
         config.antiAliasing = 16;
@@ -110,12 +106,7 @@ class FbxExample {
         MGDebug.DUMP();
 
         GAssetManager.init();
-		GAssetManager.addFromUrl("Bellona_diffuse.png");
-		GAssetManager.addFromUrl("sovereign.png");
-        //GAssetManager.addFromUrl("w_1.png");
-		//GAssetManager.addFromUrl("w_2.png");
-		//GAssetManager.addFromUrl("Santa_Maria_Diff.png");
-		//GAssetManager.addFromUrl("Santa_Maria_plachty_Diff.png");
+		GAssetManager.addFromUrl("box.png");
         GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsInitialized_handler);
         GAssetManager.loadQueue();
@@ -130,48 +121,8 @@ class FbxExample {
 
         GAssetManager.generateTextures();
 
-        //createDisplacement();
-
-        // Create render targets
-        //GTextureManager.createRenderTexture("reflectionTarget", 1024, 1024);
-        //GTextureManager.createRenderTexture("shadowTarget", 1024, 1024);
-        //GTextureManager.createRenderTexture("waterCompositionTarget", 1024, 1024);
-        //GTextureManager.createRenderTexture("finalCompositionTarget", 1024, 1024);
-
-        // Create some postprocess to show
-        //_postProcess = new GBloomPP();
-        //_postProcess.setBounds(new GRectangle(0,0,1024,1024));
-
-        loadFBX("hmsBellona.fbx");
-		//loadFBX("Santa_Maria_XL.FBX");
+        loadFBX("box.fbx");
     }
-
-	private var perlinData1:BitmapData;
-	private var perlinData2:BitmapData;
-	private var perlinOffset:Float = 0;
-    private function createDisplacement():Void {
-        perlinData1 = new BitmapData(256, 256, false);
-		perlinData2 = new BitmapData(256, 256, false);
-        GTextureManager.createTexture("map1", perlinData1, 1, true);
-		GTextureManager.createTexture("map2", perlinData2, 1, true);
-
-        _displacement = new WaterFilter(.04,.02);
-        _displacement.displacementMap = GTextureManager.getTexture("w_2");
-		_displacement.alphaMap1 = GTextureManager.getTexture("map1");
-		_displacement.alphaMap2 = GTextureManager.getTexture("map2");
-    }
-	
-	private function updateDisplacement():Void {
-		perlinOffset += .1;
-		var texture:GTexture;
-		texture = GTextureManager.getTexture("map1");
-		perlinData1.perlinNoise(30, 20, 2, 1, true, true, 0, true, [new Point(3*perlinOffset/4, 3*perlinOffset/4),  new Point(-perlinOffset, perlinOffset)]);
-		texture.invalidateNativeTexture(false);
-		
-		texture = GTextureManager.getTexture("map2");
-		perlinData2.perlinNoise(30, 20, 2, 10, true, true, 0, true, [new Point(3*perlinOffset/4, 3*perlinOffset/4),  new Point(-perlinOffset, perlinOffset)]);
-		texture.invalidateNativeTexture(false);
-	}
 
     private function loadFBX(p_url:String):Void {
         var loader:URLLoader = new URLLoader();
@@ -212,62 +163,9 @@ class FbxExample {
     }
 
     private function postRender_handler():Void {
-		if (!render) return;
         var context:IGContext = _genome.getContext();
 
-        // Update light direction
-        _lightMatrix.identity();
-        //_lightMatrix.appendRotation(_lightRotationX, Vector3D.X_AXIS);
-        _lightMatrix.appendRotation(_lightRotationZ, Vector3D.Z_AXIS);
-        _lightRotationX = _lightRotationZ = 0;
-        //_fbxScene.lightDirection = _lightMatrix.transformVector(_fbxScene.lightDirection);
-		/*
-        // Render reflections
-        if (_renderPass==0 || _renderPass == 2) {
-            context.setRenderTarget(GTextureManager.getTexture("reflectionTarget"));
-            renderModel(0, 0, _modelRotation, 2);
-        }
-        // Render shadows
-        if (_renderPass==0 || _renderPass == 3) {
-            context.setRenderTarget(GTextureManager.getTexture("shadowTarget"));
-            renderModel(0, 0, _modelRotation, 3);
-        }
-
-        // Render water
-        context.setRenderTarget(GTextureManager.getTexture("waterCompositionTarget"));
-        //context.draw(GTextureManager.getTextureById("water.png"),512,512,1,1,0,r,g,b,1,GBlendMode.NORMAL);
-        if (_renderPass==0 || _renderPass == 2) context.draw(GTextureManager.getTexture("reflectionTarget"),512,512,1,1,0,r,g,b,.35,GBlendMode.NORMAL);
-
-        context.setRenderTarget(GTextureManager.getTexture("finalCompositionTarget"));
-
-        if (_renderBackground) {
-            context.draw(GTextureManager.getTexture("untitled.png"),512,512,1,1,0,r,g,b,1,GBlendMode.NORMAL);
-            if (_renderWater) {
-                if (_applyDisplacement) {
-                    context.draw(GTextureManager.getTexture("waterCompositionTarget"),510,508,1,1,0,1,1,1,1,GBlendMode.NORMAL, _displacement);
-                } else {
-                    context.draw(GTextureManager.getTexture("waterCompositionTarget"),512,512,1,1,0,1,1,1,1,GBlendMode.NORMAL, null);
-                }
-            }
-        }
-
-        if (_renderPass==0 || _renderPass == 3) context.draw(GTextureManager.getTexture("shadowTarget"),512,512,1,1,0,1,1,1,.35,GBlendMode.NORMAL);
-		/**/
-		//updateDisplacement();
-		
-		//context.draw(GTextureManager.getTexture("w_1"), 400, 300, 1, 1, 0, 1, 1, 1, 1, 1, _displacement);
-		/*
-		if (_renderNoise) {
-			context.draw(GTextureManager.getTexture("map1"), 128, 128, 1, 1, 0, 1, 1, 1, 1, 1, null);
-			
-			context.draw(GTextureManager.getTexture("map2"), 512 - 128, 128, 1, 1, 0, 1, 1, 1, 1, 1, null);
-		}
-		/**/
-        if (_renderPass==0 || _renderPass == 1) renderScene(400, 300, _modelRotation, 1);
-
-        //context.setRenderTarget(null);
-
-        //context.draw(GTextureManager.getTexture("finalCompositionTarget"),400,300,1,1,0,1,1,1,1,GBlendMode.NORMAL);
+        renderScene(400, 300, _modelRotation, 1);
     }
 
     private function mouse_handler(input:GMouseInput):Void {

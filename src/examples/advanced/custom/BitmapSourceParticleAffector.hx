@@ -19,11 +19,11 @@ class BitmapSourceParticleAffector implements IGAffector
 		p_particle.velocityX *= .95;
 		p_particle.velocityY *= .95;
 		p_particle.velocityY += .01;
-		p_particle.accumulatedEnergy += p_deltaTime;
 		
 		p_particle.alpha = Math.random();// 1 - (p_particle.accumulatedEnergy / 5000);
 		p_particle.scaleX = p_particle.scaleY = Math.random();
 		
+		p_particle.accumulatedEnergy += p_deltaTime;
 		if (p_particle.accumulatedEnergy > 5000) p_particle.die = true;
 	}
 	

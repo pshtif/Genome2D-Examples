@@ -39,7 +39,8 @@
 	#-main examples.advanced.PostprocessExample
 	#-main examples.advanced.FbxExample
 	#-main examples.advanced.UIExample
-	-main examples.advanced.Fireworks
+	#-main examples.advanced.Fireworks
+	-main examples.advanced.RendererExample
 
 # Flash flags
 -swf-version 17.0
