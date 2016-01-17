@@ -6,11 +6,12 @@
  *
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
-package examples.basic;
+package examples.advanced;
 
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
+import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.debug.GDebug;
@@ -22,16 +23,21 @@ import com.genome2d.proto.GPrototypeHelper;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 
-class BasicExample3Sprite
+class CameraRenderTexture
 {
     static public function main() {
-        var inst = new BasicExample3Sprite();
+        var inst = new CameraRenderTexture();
     }
 
     /**
         Genome2D singleton instance
      **/
     private var genome:Genome2D;
+	private var camera1:GCameraController;
+	private var camera2:GCameraController;
+	private var renderTexture:GTexture;
+	private var container1:GNode;
+	private var container2:GNode;
 
     public function new() {
         initGenome();
@@ -95,82 +101,49 @@ class BasicExample3Sprite
 		// Generate textures from all assets, their IDs will be the same as their asset ID
 		GAssetManager.generateTextures();
 		
-        var sprite:GSprite;
+		// Create render texture for out Camera 1 target
+		renderTexture = GTextureManager.createRenderTexture("render", 800, 600);
 		
-		// Create a sprite
-        sprite = createSprite(100, 200, "atlas_0");
-
-		// Create a sprite with scaling
-        sprite = createSprite(300, 200, "atlas_0");
-        sprite.node.setScale(2,2);
-
-		// Create a sprite with rotation
-        sprite = createSprite(100, 400, "atlas_0");
-        sprite.node.rotation = 0.753;
-
-		// Create a sprite with rotation and scaling
-        sprite = createSprite(300, 400, "atlas_0");
-        sprite.node.rotation = 0.753;
-        sprite.node.setScale(2,2);
-
-		// Create a sprite with alpha
-        sprite = createSprite(100, 300, "atlas_0");
-        sprite.node.alpha = .5;
-
-		// Create a sprite with tint
-        sprite = createSprite(300, 300, "atlas_0");
-        sprite.node.color = 0x00FF00;
+		// Create Camera 1 which will render to a texture
+		camera1 = GNode.createWithComponent(GCameraController);
+		camera1.node.setPosition(400, 300);
+		camera1.contextCamera.mask = 1;
+		camera1.renderTarget = renderTexture;
+		genome.root.addChild(camera1.node);
 		
-		// Create an animated sprite
-		sprite = createAnimatedSprite(500, 200);
-
-		// Create an animated sprite with scaling
-        sprite = createAnimatedSprite(700, 200);
-        sprite.node.setScale(2,2);
-
-		// Create an animated sprite with rotation
-        sprite = createAnimatedSprite(500, 400);
-        sprite.node.rotation = 0.753;
-
-		// Create an animated sprite with rotation and scaling
-        sprite = createAnimatedSprite(700, 400);
-        sprite.node.rotation = 0.753;
-        sprite.node.setScale(2,2);
-
-		// Create an animated sprite with alpha
-        sprite = createAnimatedSprite(500, 300);
-        sprite.node.alpha = .5;
-
-		// Create an animated sprite with tint
-        sprite = createAnimatedSprite(700, 300);
-        sprite.node.color = 0x00FF00;
+		// Create Camera 2 which will render to the backbuffer
+		camera2 = GNode.createWithComponent(GCameraController);
+		camera2.node.setPosition(400, 300);
+		camera2.contextCamera.mask = 2;
+		genome.root.addChild(camera2.node);
+				
+		// Create Container 1 this will contain all nodes we want to render with Camera 1 to a texture
+		container1 = GNode.create();
+		container1.cameraGroup = 1;
+		genome.root.addChild(container1);
+        
+		var sprite:GSprite;
+		for (i in 0...500) {
+			createSprite(100+Math.random()*600, 100+Math.random()*400, "atlas_"+Std.int(Math.random()*7), container1);
+		}
+		
+		// Create Container 2 which will containe stuff we want to render to a back buffer with Camera 2
+		container2 = GNode.create();
+		container2.cameraGroup = 2;
+		genome.root.addChild(container2);
+		// Create a sprite that will use the render texture rendered with Camera 1
+		createSprite(400, 300, "render", container2);
     }
 
     /**
         Create a sprite helper function
      **/
-    private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
+    private function createSprite(p_x:Float, p_y:Float, p_textureId:String, p_parent:GNode):GSprite {
 		// Create a node with sprite component
         var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture(p_textureId);
         sprite.node.setPosition(p_x, p_y);
-        genome.root.addChild(sprite.node);
-
-        return sprite;
-    }
-	
-	/**
-        Create an animated sprite helper function
-     **/
-    private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
-		// To animate a sprite we need a frame animation instance with defined texture frames
-		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["atlas_1", "atlas_2", "atlas_3", "atlas_4", "atlas_5", "atlas_6", "atlas_7"]));
-		animation.frameRate = 10;
-		
-        var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.frameAnimation = animation;
-        sprite.node.setPosition(p_x, p_y);
-        genome.root.addChild(sprite.node);
+        p_parent.addChild(sprite.node);
 
         return sprite;
     }

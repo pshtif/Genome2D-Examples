@@ -40,7 +40,8 @@
 	#-main examples.advanced.FbxExample
 	#-main examples.advanced.UIExample
 	#-main examples.advanced.Fireworks
-	-main examples.advanced.RendererExample
+	#-main examples.advanced.RendererExample
+	-main examples.advanced.CameraRenderTexture
 
 # Flash flags
 -swf-version 17.0
