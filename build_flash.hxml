@@ -10,9 +10,9 @@
 -lib Actuate
 
 # Debug flags
--D fdb
--debug
--D advanced-telemetry
+#-D fdb
+#-debug
+#-D advanced-telemetry
 
 # Genome2D flags
 -D genome_stage3donly
@@ -42,7 +42,8 @@
 	#-main examples.advanced.Fireworks
 	#-main examples.advanced.RendererExample
 	#-main examples.advanced.CameraRenderTexture
-	-main examples.advanced.ContextDrawExample
+	#-main examples.advanced.ContextDrawExample
+	-main Test
 
 # Flash flags
 -swf-version 17.0

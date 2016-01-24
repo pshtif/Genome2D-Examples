@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:8a4063ae186757fbeedb20f51c97176f:1b7672f4d0113f640169bc644536c08b:cde709370900f12288f3449eded86f07$ -->
+<TextureAtlas imagePath="atlas.png">
+    <SubTexture name="0" x="200" y="2" width="32" height="32"/>
+    <SubTexture name="1" x="166" y="218" width="32" height="32"/>
+    <SubTexture name="2" x="166" y="184" width="32" height="32"/>
+    <SubTexture name="3" x="132" y="218" width="32" height="32"/>
+    <SubTexture name="4" x="132" y="184" width="32" height="32"/>
+    <SubTexture name="5" x="98" y="218" width="32" height="32"/>
+    <SubTexture name="6" x="98" y="184" width="32" height="32"/>
+    <SubTexture name="7" x="64" y="218" width="32" height="32"/>
+    <SubTexture name="8" x="64" y="184" width="32" height="32"/>
+    <SubTexture name="particle" x="2" y="246" width="8" height="8"/>
+    <SubTexture name="tile1x1" x="2" y="184" width="60" height="60"/>
+    <SubTexture name="tile3x3" x="2" y="2" width="180" height="180"/>
+</TextureAtlas>
