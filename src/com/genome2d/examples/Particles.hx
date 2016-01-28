@@ -9,7 +9,7 @@
 package examples.basic;
 
 import com.genome2d.assets.GAsset;
-import com.genome2d.components.renderable.particles.GSimpleParticleSystem;
+import Genome2D-Core.src.com.genome2d.deprecated.components.renderable.particles.GSimpleParticleSystem;
 import com.genome2d.context.stats.GStats;
 import com.genome2d.input.GKeyboardInput;
 import com.genome2d.input.GKeyboardInputType;
