@@ -107,28 +107,24 @@ class BasicExample4Mouse
         Mouse click handler
      **/
     private function mouseClickHandler(signal:GMouseInput):Void {
-        trace("CLICK");
     }
 
     /**
         Mouse over handler
      **/
     private function mouseOverHandler(signal:GMouseInput):Void {
-        trace("OVER");
     }
 
     /**
         Mouse out handler
      **/
     private function mouseOutHandler(signal:GMouseInput):Void {
-        trace("OUT");
     }
 
     /**
         Mouse down handler
      **/
     private function mouseDownHandler(signal:GMouseInput):Void {
-        trace("DOWN");
     }
 
     /**
