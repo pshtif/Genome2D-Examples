@@ -29,23 +29,14 @@
 	#-main examples.Test
 
 	# Examples
-	#-main examples.basic.BasicExample1Initialization
-	#-main examples.basic.BasicExample2Assets
-	#-main examples.basic.BasicExample3Sprite
-	#-main examples.basic.BasicExample4Mouse
-	#-main examples.basic.BasicExample5TextureText
-	#-main examples.basic.BasicExample6Particles
-	
-	#-main examples.advanced.PostprocessExample
-	#-main examples.advanced.FbxExample
-	#-main examples.advanced.UIExample
-	#-main examples.advanced.Fireworks
-	#-main examples.advanced.RendererExample
-	#-main examples.advanced.CameraRenderTexture
-	#-main examples.advanced.ContextDrawExample
-	-main Test
+	#-main examples.Initialization
+	#-main examples.Assets
+	#-main examples.Sprite
+	#-main examples.Mouse
+	-main com.genome2d.examples.TextureText
+	#-main examples.Particles
 
 # Flash flags
 -swf-version 12.0
--swf Genome2D-Examples/bin/Example.swf
+-swf Example.swf
 -swf-header 800:600:60:000000

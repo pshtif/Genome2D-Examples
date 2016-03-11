@@ -6,7 +6,7 @@
  *
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
-package examples.basic;
+package com.genome2d.examples;
 
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
@@ -16,17 +16,18 @@ import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
 import com.genome2d.text.GFontManager;
+import com.genome2d.text.GTextFormat;
 import com.genome2d.text.GTextureTextRenderer;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
 
 
-class BasicExample5TextureText
+class TextureText
 {
 
     static public function main() {
-        var inst = new BasicExample5TextureText();
+        var inst = new TextureText();
     }
 
     /**
@@ -95,7 +96,7 @@ class BasicExample5TextureText
 		
 		GFontManager.createTextureFont("font", GTextureManager.getTexture("font"), GAssetManager.getXmlAssetById("font.fnt").xml);
 		
-		createText(250, 150, "Hello world.\ntest", GVAlignType.MIDDLE, GHAlignType.CENTER);
+		createText(250, 150, "HELLO WORLD.", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }
 	
     private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
@@ -110,6 +111,11 @@ class BasicExample5TextureText
         text.vAlign = p_vAlign;
         text.hAlign = p_hAlign;
         text.node.setPosition(p_x, p_y);
+		
+		var format:GTextFormat = new GTextFormat();
+		format.setIndexColor(2, 0xFF0000);
+		format.setIndexColor(4, 0xFFFFFF);
+		text.renderer.format = format;
 		
         genome.root.addChild(text.node);
 
