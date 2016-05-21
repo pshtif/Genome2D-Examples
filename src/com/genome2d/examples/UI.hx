@@ -12,6 +12,7 @@ import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.components.renderable.text.GText;
+import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.node.GNode;
@@ -19,15 +20,18 @@ import com.genome2d.text.GFontManager;
 import com.genome2d.text.GTextFormat;
 import com.genome2d.text.GTextureTextRenderer;
 import com.genome2d.textures.GTextureManager;
+import com.genome2d.ui.element.GUIElement;
+import com.genome2d.ui.skin.GUIFontSkin;
+import com.genome2d.ui.skin.GUITextureSkin;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
 
 
-class TextureText
+class UI
 {
 
     static public function main() {
-        var inst = new TextureText();
+        var inst = new UI();
     }
 
     /**
@@ -69,6 +73,7 @@ class TextureText
 	private function loadAssets():Void {
 		GAssetManager.addFromUrl("assets/font.png");
         GAssetManager.addFromUrl("assets/font.fnt");
+		GAssetManager.addFromUrl("assets/button.png");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
@@ -92,33 +97,30 @@ class TextureText
         Initialize Example code
      **/
     private function initExample():Void {
-		GTextureManager.createTexture("font", GAssetManager.getImageAssetById("assets/font.png"));
+		GAssetManager.generateTextures();		
 		
-		GFontManager.createTextureFont("font", GTextureManager.getTexture("font"), GAssetManager.getXmlAssetById("assets/font.fnt").xml);
+		var gui:GUI = GNode.createWithComponent(GUI);
+		genome.root.addChild(gui.node);
 		
-		createText(250, 150, "HELLO WORLD.", GVAlignType.MIDDLE, GHAlignType.CENTER);
-    }
-	
-    private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
-        var text:GText = cast GNode.createWithComponent(GText);
+		var textureSkin:GUITextureSkin = new GUITextureSkin("texture", GTextureManager.getTexture("assets/button"));
+		textureSkin.sliceLeft = 10;
+		textureSkin.sliceRight = 35;
+		textureSkin.sliceTop = 10;
+		textureSkin.sliceBottom = 35;
 		
-        text.renderer.textureFont = GFontManager.getFont("font");
-        text.width = 300;
-        text.height = 300;
-        text.text = p_text;
-        text.tracking = p_tracking;
-        text.lineSpace = p_lineSpace;
-        text.vAlign = p_vAlign;
-        text.hAlign = p_hAlign;
-        text.node.setPosition(p_x, p_y);
+		var textureElement:GUIElement = new GUIElement(textureSkin);
+		textureElement.anchorLeft = 0;
+		textureElement.anchorRight = 1;
+		gui.root.addChild(textureElement);
 		
-		var format:GTextFormat = new GTextFormat();
-		format.setIndexColor(2, 0xFF0000);
-		format.setIndexColor(4, 0xFFFFFF);
-		text.renderer.format = format;
+		var fontSkin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("assets/font"));
+		fontSkin.color = 0xFF0000;
+		fontSkin.autoSize = true;
 		
-        genome.root.addChild(text.node);
-
-        return text;
+		var fontElement:GUIElement = new GUIElement(fontSkin);
+		fontElement.setModel("HELLO WORLD");
+		fontElement.setAlign(5);
+		textureElement.addChild(fontElement);
+		
     }
 }

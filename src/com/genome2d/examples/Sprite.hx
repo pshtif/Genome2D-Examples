@@ -6,7 +6,7 @@
  *
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
-package examples.basic;
+package examples;
 
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.assets.GAsset;
@@ -25,7 +25,7 @@ import com.genome2d.textures.GTextureManager;
 class BasicExample3Sprite
 {
     static public function main() {
-        var inst = new BasicExample3Sprite();
+        var inst = new Sprite();
     }
 
     /**

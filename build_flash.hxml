@@ -33,10 +33,11 @@
 	#-main examples.Assets
 	#-main examples.Sprite
 	#-main examples.Mouse
-	-main com.genome2d.examples.TextureText
+	#-main com.genome2d.examples.TextureText
+	-main com.genome2d.examples.UI
 	#-main examples.Particles
 
 # Flash flags
 -swf-version 12.0
--swf Example.swf
+-swf Genome2D-Examples/bin/Example.swf
 -swf-header 800:600:60:000000
