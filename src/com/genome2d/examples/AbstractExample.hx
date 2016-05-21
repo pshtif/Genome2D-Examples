@@ -1,15 +1,21 @@
-package;
-
-/**
- * ...
- * @author ...
+/*
+ * 	Genome2D - 2D GPU Framework
+ * 	http://www.genome2d.com
+ *
+ *	Copyright 2011-2014 Peter Stefcek. All rights reserved.
+ *
+ *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
-class Examples
-{
-	static public function main() {
-        var inst = new Examples();
-    }
+package com.genome2d.examples;
 
+import com.genome2d.assets.GAsset;
+import com.genome2d.assets.GAssetManager;
+import com.genome2d.context.GContextConfig;
+import com.genome2d.Genome2D;
+import com.genome2d.macros.MGDebug;
+
+class AbstractExample
+{
     /**
         Genome2D singleton instance
      **/
@@ -47,9 +53,12 @@ class Examples
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {
-		GAssetManager.addFromUrl("atlas.png");
-        GAssetManager.addFromUrl("atlas.xml");
-		GAssetManager.addFromUrl("texture.png");
+		GAssetManager.addFromUrl("assets/atlas.png");
+        GAssetManager.addFromUrl("assets/atlas.xml");
+		GAssetManager.addFromUrl("assets/texture.png");
+		GAssetManager.addFromUrl("assets/font.png");
+        GAssetManager.addFromUrl("assets/font.fnt");
+		GAssetManager.addFromUrl("assets/button.png");
 		GAssetManager.onQueueFailed.add(assetsFailed_handler);
         GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
         GAssetManager.loadQueue();
@@ -58,14 +67,22 @@ class Examples
 	/**
 	 * 	Asset loading failed
 	 */
-	private function assetsFailed(p_asset:GAsset):Void {
-		// Asset loading failed at p_asset
+	private function assetsFailed_handler(p_asset:GAsset):Void {
+		MGDebug.ERROR();
 	}
 	
 	/**
 	 * 	Asset loading completed
 	 */
 	private function assetsLoaded_handler():Void {
-		// Loading of assets was succesfull so we can do our stuff
-	}	
+		MGDebug.INFO();
+		
+		GAssetManager.generate();
+		
+		initExample();
+	}
+	
+	private function initExample():Void {
+		
+	}
 }

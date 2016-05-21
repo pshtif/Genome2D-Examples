@@ -11,11 +11,11 @@
 -D genome_webglonly
 
 # Main class
-#-main examples.basic.BasicExample3Sprite
-#-main examples.basic.BasicExample4Mouse
--main com.genome2d.examples.TextureText
-#-main examples.basic.BasicExample6Particles
-#-main Test
+#-main com.genome2d.examples.Sprite
+#-main com.genome2d.examples.Mouse
+-main com.genome2d.examples.Particles
+#-main com.genome2d.examples.TextureText
+#-main com.genome2d.examples.UI
 
 # JavaScript flags
 -debug
