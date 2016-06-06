@@ -53,6 +53,8 @@ class AbstractExample
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {
+		GAssetManager.addFromUrl("texture.png");
+		
 		GAssetManager.addFromUrl("assets/atlas.png");
         GAssetManager.addFromUrl("assets/atlas.xml");
 		GAssetManager.addFromUrl("assets/texture.png");

@@ -34,8 +34,8 @@
 	#-main examples.Sprite
 	#-main examples.Mouse
 	#-main com.genome2d.examples.TextureText
-	-main com.genome2d.examples.UI
-	#-main examples.Particles
+	#-main com.genome2d.examples.UI
+	-main com.genome2d.examples.G3DExample
 
 # Flash flags
 -swf-version 12.0
