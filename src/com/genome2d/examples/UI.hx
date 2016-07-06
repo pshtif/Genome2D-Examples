@@ -39,18 +39,22 @@ class UI extends AbstractExample
 		textureSkin.sliceBottom = 35;
 		
 		var textureElement:GUIElement = new GUIElement(textureSkin);
-		textureElement.anchorLeft = 0;
-		textureElement.anchorRight = 1;
+		textureElement.anchorLeft = 0.1;
+		textureElement.anchorRight = .9;
+		textureElement.pivotY = .5;
+		textureElement.anchorTop = .5;
+		textureElement.anchorBottom = .5;
+		
 		gui.root.addChild(textureElement);
 		
 		var fontSkin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("assets/font"));
-		fontSkin.color = 0xFF0000;
+		fontSkin.color = 0x000000;
 		fontSkin.autoSize = true;
 		
 		var fontElement:GUIElement = new GUIElement(fontSkin);
-		fontElement.setModel("HELLO WORLD");
+		fontElement.setModel("JUST UI LABEL");
 		fontElement.setAlign(5);
-		//textureElement.addChild(fontElement);
-		
+		fontElement.anchorY = 4;
+		textureElement.addChild(fontElement);
     }
 }

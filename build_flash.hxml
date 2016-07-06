@@ -29,13 +29,12 @@
 	#-main examples.Test
 
 	# Examples
-	#-main examples.Initialization
-	#-main examples.Assets
-	#-main examples.Sprite
-	#-main examples.Mouse
+	#-main com.genome2d.examples.Sprite
+	#-main com.genome2d.examples.Mouse
 	#-main com.genome2d.examples.TextureText
 	#-main com.genome2d.examples.UI
-	-main com.genome2d.examples.G3DExample
+	-main com.genome2d.examples.Particles
+	#-main com.genome2d.examples.G3DExample
 
 # Flash flags
 -swf-version 12.0

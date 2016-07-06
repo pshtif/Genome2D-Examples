@@ -111,12 +111,7 @@ class TextureText
         text.vAlign = p_vAlign;
         text.hAlign = p_hAlign;
         text.node.setPosition(p_x, p_y);
-		
-		var format:GTextFormat = new GTextFormat();
-		format.setIndexColor(2, 0xFF0000);
-		format.setIndexColor(4, 0xFFFFFF);
-		text.renderer.format = format;
-		
+
         genome.root.addChild(text.node);
 
         return text;

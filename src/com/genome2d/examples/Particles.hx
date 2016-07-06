@@ -33,7 +33,6 @@ class Particles extends AbstractExample
         particleSystem.texture = GTextureManager.getTexture("assets/atlas_particle");
         particleSystem.emission = 128;
 		particleSystem.emissionTime = 1;
-		particleSystem.emissionDelay = 1;
         particleSystem.emit = true;
         particleSystem.energy = 5;
 		particleSystem.dispersionAngleVariance = Math.PI*2;
