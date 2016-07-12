@@ -10,14 +10,6 @@
 # Genome2D flags
 -D genome_webglonly
 
-# Main class
-#-main com.genome2d.examples.Sprite
-#-main com.genome2d.examples.Mouse
-#-main com.genome2d.examples.Particles
-#-main com.genome2d.examples.TextureText
-#-main com.genome2d.examples.UI
--main com.genome2d.examples.G3DExample
-
 # JavaScript flags
 -debug
 -js ./Genome2D-Examples/bin/Example.js
