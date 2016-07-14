@@ -42,13 +42,10 @@ class G3DExample extends AbstractExample
 	
 	private function postRender_handler():Void {
 		rotation++;
-
-		genome.getContext().setDepthTest(true, GDepthFunc.LESS);
 		
 		scene.getSceneMatrix().identity();
 		scene.getSceneMatrix().appendRotation(rotation, GVector3D.Y_AXIS);
 		scene.getSceneMatrix().appendRotation(-rotation, GVector3D.X_AXIS);
-		scene.getSceneMatrix().appendScale(1.5, 1.5, 1.5);
 		scene.getSceneMatrix().appendTranslation(400, 300, 100);
 		
 		scene.render(cameraMatrix, 0);
