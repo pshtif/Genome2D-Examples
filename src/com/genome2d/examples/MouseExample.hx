@@ -14,11 +14,11 @@ import com.genome2d.macros.MGDebug;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
-class Mouse extends AbstractExample
+class MouseExample extends AbstractExample
 {
 
     static public function main() {
-        var inst = new Mouse();
+        var inst = new MouseExample();
     }
 
     /**

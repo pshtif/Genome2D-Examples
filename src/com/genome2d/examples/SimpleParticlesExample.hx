@@ -15,11 +15,11 @@ import com.genome2d.input.GMouseInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
-class Particles extends AbstractExample
+class SimpleParticlesExample extends AbstractExample
 {
 
     static public function main() {
-        var inst = new Particles();
+        var inst = new SimpleParticlesExample();
     }
 	
 	private var particleSystem:GSimpleParticleSystemD;

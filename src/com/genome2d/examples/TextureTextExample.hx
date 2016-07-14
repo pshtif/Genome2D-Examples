@@ -23,11 +23,11 @@ import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
 
 
-class TextureText
+class TextureTextExample
 {
 
     static public function main() {
-        var inst = new TextureText();
+        var inst = new TextureTextExample();
     }
 
     /**

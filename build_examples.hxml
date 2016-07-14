@@ -5,9 +5,10 @@ Genome2D-Examples/build_js.hxml
 #Genome2D-Examples/build_flash.hxml
 
 # Main class
-#-main com.genome2d.examples.Sprite
-#-main com.genome2d.examples.Mouse
-#-main com.genome2d.examples.Particles
-#-main com.genome2d.examples.TextureText
-#-main com.genome2d.examples.UI
--main com.genome2d.examples.G3DExample
+#-main com.genome2d.examples.SpriteExample
+#-main com.genome2d.examples.MouseExample
+#-main com.genome2d.examples.SimpleParticlesExample
+#-main com.genome2d.examples.TextureTextExample
+#-main com.genome2d.examples.UIExample
+#-main com.genome2d.examples.G3DExample
+-main com.genome2d.examples.CameraExample

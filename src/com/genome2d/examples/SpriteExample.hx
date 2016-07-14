@@ -14,10 +14,10 @@ import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
-class Sprite extends AbstractExample
+class SpriteExample extends AbstractExample
 {
     static public function main() {
-        var inst = new Sprite();
+        var inst = new SpriteExample();
     }
 
     /**

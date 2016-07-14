@@ -18,11 +18,11 @@ import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.ui.skin.GUITextureSkin;
 
 
-class UI extends AbstractExample
+class UIExample extends AbstractExample
 {
 
     static public function main() {
-        var inst = new UI();
+        var inst = new UIExample();
     }
 
     /**
