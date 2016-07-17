@@ -11,8 +11,12 @@ package com.genome2d.examples;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.GSprite;
+import com.genome2d.components.renderable.particles.GParticleSystemComponent;
 import com.genome2d.examples.AbstractExample;
+import com.genome2d.examples.custom.ParticleModule;
+import com.genome2d.geom.GCurve;
 import com.genome2d.node.GNode;
+import com.genome2d.particles.GParticleEmitter;
 import com.genome2d.textures.GTextureManager;
 
 class CameraExample extends AbstractExample
@@ -27,53 +31,27 @@ class CameraExample extends AbstractExample
     override private function initExample():Void {		
 		/**/
 		var camera1:GCameraController = GNode.createWithComponent(GCameraController);
-		camera1.node.setPosition(200, 300);
+		camera1.node.setPosition(400, 300);
 		camera1.setView(0, 0, .5, 1);
 		genome.root.addChild(camera1.node);
 		
 		var camera2:GCameraController = GNode.createWithComponent(GCameraController);
-		camera2.node.setPosition(200, 300);
+		camera2.node.setPosition(400, 300);
 		camera2.setView(0.5, 0, .5, 1);
-		camera2.zoom = 2;
+		camera2.zoom = 4;
 		genome.root.addChild(camera2.node);
-		/**/
-        var sprite:GSprite;
+
+		var emitter:GParticleEmitter = new GParticleEmitter();
+		emitter.texture = GTextureManager.getTexture("assets/atlas_particle");
+		emitter.rate = new GCurve(50);
+		emitter.duration = 10;
+		emitter.loop = true;
+		emitter.addModule(new ParticleModule());
 		
-		// Create a sprite
-        sprite = createSprite(100, 200, "assets/atlas_0");
-
-		// Create a sprite with scaling
-        sprite = createSprite(300, 200, "assets/atlas_0");
-        sprite.node.setScale(2,2);
-
-		// Create a sprite with rotation
-        sprite = createSprite(100, 400, "assets/atlas_0");
-        sprite.node.rotation = 0.753;
-
-		// Create a sprite with rotation and scaling
-        sprite = createSprite(300, 400, "assets/atlas_0");
-        sprite.node.rotation = 0.753;
-        sprite.node.setScale(2,2);
-
-		// Create a sprite with alpha
-        sprite = createSprite(100, 300, "assets/atlas_0");
-        sprite.node.alpha = .5;
-
-		// Create a sprite with tint
-        sprite = createSprite(300, 300, "assets/atlas_0");
-        sprite.node.color = 0x00FF00;
-    }
-
-    /**
-        Create a sprite helper function
-     **/
-    private function createSprite(p_x:Int, p_y:Int, p_textureId:String):GSprite {
-		// Create a node with sprite component
-        var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTexture(p_textureId);
-        sprite.node.setPosition(p_x, p_y);
-        genome.root.addChild(sprite.node);
-
-        return sprite;
+		// Create a node with simple particle system component
+        var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
+		particleSystem.addEmitter(emitter);
+		particleSystem.node.setPosition(400, 300);
+		genome.root.addChild(particleSystem.node);
     }
 }

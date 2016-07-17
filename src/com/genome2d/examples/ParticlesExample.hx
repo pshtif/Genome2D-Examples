@@ -25,8 +25,6 @@ class ParticlesExample extends AbstractExample
     static public function main() {
         var inst = new ParticlesExample();
     }
-	
-	private var particleSystem:GParticleSystemComponent;
 
     /**
         Initialize Example code
@@ -36,10 +34,11 @@ class ParticlesExample extends AbstractExample
 		emitter.texture = GTextureManager.getTexture("assets/atlas_particle");
 		emitter.rate = new GCurve(50);
 		emitter.duration = 10;
+		emitter.loop = true;
 		emitter.addModule(new ParticleModule());
 		
 		// Create a node with simple particle system component
-        particleSystem = GNode.createWithComponent(GParticleSystemComponent);
+        var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
 		particleSystem.addEmitter(emitter);
 		particleSystem.node.setPosition(400, 300);
 		genome.root.addChild(particleSystem.node);
