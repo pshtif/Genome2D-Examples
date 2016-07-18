@@ -30,6 +30,8 @@ class ParticlesExample extends AbstractExample
         Initialize Example code
      **/
     override private function initExample():Void {
+		label = "PARTICLES EXAMPLE";
+		
 		var emitter:GParticleEmitter = new GParticleEmitter();
 		emitter.texture = GTextureManager.getTexture("assets/atlas_particle");
 		emitter.rate = new GCurve(50);
@@ -41,6 +43,6 @@ class ParticlesExample extends AbstractExample
         var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
 		particleSystem.addEmitter(emitter);
 		particleSystem.node.setPosition(400, 300);
-		genome.root.addChild(particleSystem.node);
+		container.addChild(particleSystem.node);
     }
 }

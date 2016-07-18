@@ -25,6 +25,8 @@ class MouseExample extends AbstractExample
         Initialize Example code
      **/
     override private function initExample():Void {
+		label = "SPRITE EXAMPLE";
+		
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture("assets/atlas_0");
         sprite.node.setPosition(400, 300);
@@ -35,7 +37,7 @@ class MouseExample extends AbstractExample
         sprite.node.onMouseDown.add(mouseDownHandler);
         sprite.node.onMouseUp.add(mouseUpHandler);
 
-        genome.root.addChild(sprite.node);
+        container.addChild(sprite.node);
     }
 
     /**

@@ -10,9 +10,14 @@ package com.genome2d.examples;
 
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
+import com.genome2d.components.GCameraController;
+import com.genome2d.components.renderable.text.GText;
 import com.genome2d.context.GContextConfig;
 import com.genome2d.Genome2D;
 import com.genome2d.macros.MGDebug;
+import com.genome2d.node.GNode;
+import com.genome2d.text.GFontManager;
+import com.genome2d.utils.GHAlignType;
 
 class AbstractExample
 {
@@ -20,6 +25,19 @@ class AbstractExample
         Genome2D singleton instance
      **/
     private var genome:Genome2D;
+	
+	private var container:GNode;
+	
+	private var info:GNode;
+	
+	private var labelText:GText;
+	
+	public var label(default, set):String;
+	
+	private function set_label(p_value:String):String {
+		labelText.text = p_value;
+		return label = p_value;
+	}
 
     public function new() {
         initGenome();
@@ -80,7 +98,37 @@ class AbstractExample
 		
 		GAssetManager.generate();
 		
+		container = GNode.create();
+		container.cameraGroup = 1;
+		genome.root.addChild(container);
+		
+		info = GNode.create();
+		info.cameraGroup = 128;
+		genome.root.addChild(info);
+		
+		var containerCamera:GCameraController = GNode.createWithComponent(GCameraController);
+		containerCamera.node.setPosition(400, 300);
+		containerCamera.contextCamera.mask = 1;
+		genome.root.addChild(containerCamera.node);
+		
+		var infoCamera:GCameraController = GNode.createWithComponent(GCameraController);
+		infoCamera.node.setPosition(400, 300);
+		infoCamera.contextCamera.mask = 128;
+		genome.root.addChild(infoCamera.node);
+		
+		initLabel();
+		
 		initExample();
+	}
+	
+	private function initLabel():Void {
+		labelText = GNode.createWithComponent(GText);
+		labelText.renderer.textureFont = GFontManager.getFont("assets/font");
+		labelText.node.setPosition(0, 500);
+		labelText.width = 800;
+		labelText.hAlign = GHAlignType.CENTER;
+		info.addChild(labelText.node);
+		labelText.text = "ABSTRACT";
 	}
 	
 	private function initExample():Void {

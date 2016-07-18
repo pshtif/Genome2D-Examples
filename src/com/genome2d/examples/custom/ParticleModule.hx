@@ -27,7 +27,8 @@ class ParticleModule extends GParticleEmitterModule
 		p_particle.x += Math.random() * 16;
 		p_particle.y += Math.random() * 16;
 		p_particle.scaleX = p_particle.scaleY = Math.random() * 2 + 2;
-		p_particle.green = p_particle.blue = 0.2;
+		p_particle.green = .4;
+		p_particle.blue = 0.1;
 		p_particle.blendMode = GBlendMode.ADD;
 		
 		p_particle.velocityX = Math.random() * 4 - 2;

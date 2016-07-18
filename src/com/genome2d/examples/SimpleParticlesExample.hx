@@ -28,6 +28,8 @@ class SimpleParticlesExample extends AbstractExample
         Initialize Example code
      **/
     override private function initExample():Void {
+		label = "SIMPLE PARTICLES EXAMPLE";
+		
 		// Create a node with simple particle system component
         particleSystem = GNode.createWithComponent(GSimpleParticleSystemD);
         particleSystem.texture = GTextureManager.getTexture("assets/atlas_particle");
@@ -44,6 +46,6 @@ class SimpleParticlesExample extends AbstractExample
         particleSystem.endScale = .2;
 		particleSystem.useWorldSpace = true;
 		particleSystem.node.setPosition(400, 300);
-		genome.root.addChild(particleSystem.node);
+		container.addChild(particleSystem.node);
     }
 }

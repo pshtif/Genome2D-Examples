@@ -29,16 +29,20 @@ class CameraExample extends AbstractExample
         Initialize Example code
      **/
     override private function initExample():Void {		
+		label = "CAMERA EXAMPLE";
+		
 		/**/
 		var camera1:GCameraController = GNode.createWithComponent(GCameraController);
 		camera1.node.setPosition(400, 300);
 		camera1.setView(0, 0, .5, 1);
+		camera1.contextCamera.mask = 3;
 		genome.root.addChild(camera1.node);
 		
 		var camera2:GCameraController = GNode.createWithComponent(GCameraController);
 		camera2.node.setPosition(400, 300);
 		camera2.setView(0.5, 0, .5, 1);
 		camera2.zoom = 4;
+		camera2.contextCamera.mask = 3;
 		genome.root.addChild(camera2.node);
 
 		var emitter:GParticleEmitter = new GParticleEmitter();
@@ -52,6 +56,7 @@ class CameraExample extends AbstractExample
         var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
 		particleSystem.addEmitter(emitter);
 		particleSystem.node.setPosition(400, 300);
-		genome.root.addChild(particleSystem.node);
+		particleSystem.node.cameraGroup = 2;
+		container.addChild(particleSystem.node);
     }
 }
