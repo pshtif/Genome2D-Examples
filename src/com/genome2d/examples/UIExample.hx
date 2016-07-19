@@ -11,6 +11,7 @@ package com.genome2d.examples;
 import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.macros.MGDebug;
 import com.genome2d.node.GNode;
+import com.genome2d.proto.parsers.GXmlPrototypeParser;
 import com.genome2d.text.GFontManager;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
@@ -24,6 +25,12 @@ class UIExample extends AbstractExample
     static public function main() {
         var inst = new UIExample();
     }
+	
+	private var prototype:String = '<element anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
+									<element skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="400"><element skin="@fontSkin" anchorY="4" setModel="MENU1" setAlign="5"/></element>
+									<element skin="@textureSkin" setAlign="2" anchorY="200" preferredWidth="400"><element skin="@fontSkin" anchorY="4" setModel="MENU2" setAlign="5"/></element>
+									<element skin="@textureSkin" setAlign="2" anchorY="300" preferredWidth="400"><element skin="@fontSkin" anchorY="4" setModel="MENU3" setAlign="5"/></element>
+									</element>';
 
     /**
         Initialize Example code
@@ -32,29 +39,17 @@ class UIExample extends AbstractExample
 		var gui:GUI = GNode.createWithComponent(GUI);
 		genome.root.addChild(gui.node);
 
-		var textureSkin:GUITextureSkin = new GUITextureSkin("texture", GTextureManager.getTexture("assets/button"));
+		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button"));
 		textureSkin.sliceLeft = 10;
 		textureSkin.sliceRight = 35;
 		textureSkin.sliceTop = 10;
 		textureSkin.sliceBottom = 35;
 		
-		var textureElement:GUIElement = new GUIElement(textureSkin);
-		textureElement.anchorLeft = 0.1;
-		textureElement.anchorRight = .9;
-		textureElement.pivotY = .5;
-		textureElement.anchorTop = .5;
-		textureElement.anchorBottom = .5;
-		
-		gui.root.addChild(textureElement);
-		
-		var fontSkin:GUIFontSkin = new GUIFontSkin("font", GFontManager.getFont("assets/font"));
-		fontSkin.color = 0x000000;
+		var fontSkin:GUIFontSkin = new GUIFontSkin("fontSkin", GFontManager.getFont("assets/font"));
+		fontSkin.color = 0x0;
 		fontSkin.autoSize = true;
 		
-		var fontElement:GUIElement = new GUIElement(fontSkin);
-		fontElement.setModel("JUST UI LABEL");
-		fontElement.setAlign(5);
-		fontElement.anchorY = 4;
-		textureElement.addChild(fontElement);
+		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(prototype);
+		gui.root.addChild(textureElement);
     }
 }
