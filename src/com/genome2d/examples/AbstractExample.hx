@@ -30,13 +30,22 @@ class AbstractExample
 	
 	private var info:GNode;
 	
-	private var labelText:GText;
+	private var titleText:GText;
 	
-	public var label(default, set):String;
+	public var title(default, set):String;
 	
-	private function set_label(p_value:String):String {
-		labelText.text = p_value;
-		return label = p_value;
+	private function set_title(p_value:String):String {
+		titleText.text = p_value;
+		return title = p_value;
+	}
+	
+	private var detailText:GText;
+	
+	public var detail(default, set):String;
+	
+	private function set_detail(p_value:String):String {
+		detailText.text = p_value;
+		return detail = p_value;
 	}
 
     public function new() {
@@ -116,19 +125,28 @@ class AbstractExample
 		infoCamera.contextCamera.mask = 128;
 		genome.root.addChild(infoCamera.node);
 		
-		initLabel();
+		initInfo();
 		
 		initExample();
 	}
 	
-	private function initLabel():Void {
-		labelText = GNode.createWithComponent(GText);
-		labelText.renderer.textureFont = GFontManager.getFont("assets/font");
-		labelText.node.setPosition(0, 500);
-		labelText.width = 800;
-		labelText.hAlign = GHAlignType.CENTER;
-		info.addChild(labelText.node);
-		labelText.text = "ABSTRACT";
+	private function initInfo():Void {
+		titleText = GNode.createWithComponent(GText);
+		titleText.renderer.textureFont = GFontManager.getFont("assets/font");
+		titleText.node.setPosition(5, 450);
+		titleText.width = 790;
+		titleText.hAlign = GHAlignType.LEFT;
+		info.addChild(titleText.node);
+		titleText.text = "ABSTRACT";
+		
+		detailText = GNode.createWithComponent(GText);
+		detailText.renderer.textureFont = GFontManager.getFont("assets/font");
+		detailText.renderer.fontScale = .5;
+		detailText.node.setPosition(5, 480);
+		detailText.width = 790;
+		detailText.hAlign = GHAlignType.LEFT;
+		info.addChild(detailText.node);
+		detailText.text = "ABSTRACT";
 	}
 	
 	private function initExample():Void {

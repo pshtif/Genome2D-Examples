@@ -27,15 +27,18 @@ class UIExample extends AbstractExample
     }
 	
 	private var prototype:String = '<element anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
-									<element skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="400"><element skin="@fontSkin" anchorY="4" setModel="MENU1" setAlign="5"/></element>
-									<element skin="@textureSkin" setAlign="2" anchorY="200" preferredWidth="400"><element skin="@fontSkin" anchorY="4" setModel="MENU2" setAlign="5"/></element>
-									<element skin="@textureSkin" setAlign="2" anchorY="300" preferredWidth="400"><element skin="@fontSkin" anchorY="4" setModel="MENU3" setAlign="5"/></element>
+									<element skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="400"><element skin="@fontSkin" setModel="MENU1" setAlign="5"/></element>
+									<element skin="@textureSkin" setAlign="2" anchorY="200" preferredWidth="400"><element skin="@fontSkin" setModel="MENU2" setAlign="5"/></element>
+									<element skin="@textureSkin" setAlign="2" anchorY="300" preferredWidth="400"><element skin="@fontSkin" setModel="MENU3" setAlign="5"/></element>
 									</element>';
 
     /**
         Initialize Example code
      **/
     override private function initExample():Void {		
+		title = "UI EXAMPLE";
+		detail = "Example showcasing UI elements and skinning.";
+		
 		var gui:GUI = GNode.createWithComponent(GUI);
 		genome.root.addChild(gui.node);
 
