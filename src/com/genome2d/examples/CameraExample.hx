@@ -28,7 +28,7 @@ class CameraExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override private function initExample():Void {		
+    override public function initExample():Void {		
 		title = "MULTI CAMERA EXAMPLE";
 		detail = "Example showcasing multiple instanced cameras with different viewports while rendering the same scene. Cameras can be used with different position, scaling, rotation, viewports to suit your needs. Commonly used  to render split screen or UI elements while maintaining aspect ratios across different devices. Using cameras for scene transformations is in most cases the most optimal solution since it doesn't involve invalidation and is directly updated within projection matrix in shader.";
 		

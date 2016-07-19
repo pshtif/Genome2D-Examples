@@ -11,11 +11,13 @@ package com.genome2d.examples;
 import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.macros.MGDebug;
 import com.genome2d.node.GNode;
+import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.proto.parsers.GXmlPrototypeParser;
 import com.genome2d.text.GFontManager;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.skin.GUIFontSkin;
+import com.genome2d.ui.skin.GUISkinManager;
 import com.genome2d.ui.skin.GUITextureSkin;
 
 
@@ -35,7 +37,7 @@ class UIExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override private function initExample():Void {		
+    override public function initExample():Void {		
 		title = "UI EXAMPLE";
 		detail = "Example showcasing UI elements and skinning.";
 		
@@ -55,4 +57,11 @@ class UIExample extends AbstractExample
 		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(prototype);
 		gui.root.addChild(textureElement);
     }
+	
+	override public function dispose():Void {
+		super.dispose();
+		
+		GUISkinManager.getSkin("textureSkin").dispose();
+		GUISkinManager.getSkin("fontSkin").dispose();
+	}
 }

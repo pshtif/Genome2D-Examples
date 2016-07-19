@@ -23,7 +23,9 @@ class SpriteExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override private function initExample():Void {		
+    override public function initExample():Void {		
+		title = "SPRITE EXAMPLE";
+		
         var sprite:GSprite;
 		
 		// Create a sprite
@@ -83,7 +85,7 @@ class SpriteExample extends AbstractExample
         var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture(p_textureId);
         sprite.node.setPosition(p_x, p_y);
-        genome.root.addChild(sprite.node);
+        container.addChild(sprite.node);
 
         return sprite;
     }
@@ -99,7 +101,7 @@ class SpriteExample extends AbstractExample
         var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.frameAnimation = animation;
         sprite.node.setPosition(p_x, p_y);
-        genome.root.addChild(sprite.node);
+        container.addChild(sprite.node);
 
         return sprite;
     }

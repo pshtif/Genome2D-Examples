@@ -27,8 +27,8 @@ class SimpleParticlesExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override private function initExample():Void {
-		label = "SIMPLE PARTICLES EXAMPLE";
+    override public function initExample():Void {
+		title = "SIMPLE PARTICLES EXAMPLE";
 		
 		// Create a node with simple particle system component
         particleSystem = GNode.createWithComponent(GSimpleParticleSystemD);

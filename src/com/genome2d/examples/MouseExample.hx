@@ -24,8 +24,8 @@ class MouseExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override private function initExample():Void {
-		label = "SPRITE EXAMPLE";
+    override public function initExample():Void {
+		title = "MOUSE EXAMPLE";
 		
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture("assets/atlas_0");

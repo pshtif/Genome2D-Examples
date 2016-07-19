@@ -27,7 +27,7 @@ class G3DExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override private function initExample():Void {
+    override public function initExample():Void {
 		label = "G3D EXAMPLE";
 		
 		scene = G3DFactory.createBox(100, 100, 100, GTextureManager.getTexture("assets/texture"));

@@ -48,18 +48,26 @@ class AbstractExample
 		return detail = p_value;
 	}
 
-    public function new() {
-        initGenome();
+    public function new(?p_init:Int = 0) {
+		genome = Genome2D.getInstance();
+		
+		switch (p_init) {
+			case 0:
+				initGenome();
+			case 1:
+				loadAssets();
+			case 2:
+				init();
+		}
     }
 
     /**
         Initialize Genome2D
      **/
     private function initGenome():Void {
-        genome = Genome2D.getInstance();
 		genome.onFailed.addOnce(genomeFailed_handler);
-        genome.onInitialized.addOnce(genomeInitialized_handler);
-        genome.init(new GContextConfig());
+		genome.onInitialized.addOnce(genomeInitialized_handler);
+		genome.init(new GContextConfig());
     }
 
 	/**
@@ -107,6 +115,11 @@ class AbstractExample
 		
 		GAssetManager.generate();
 		
+		init();
+	}
+	
+	private function init():Void {
+		
 		container = GNode.create();
 		container.cameraGroup = 1;
 		genome.root.addChild(container);
@@ -149,7 +162,11 @@ class AbstractExample
 		detailText.text = "ABSTRACT";
 	}
 	
-	private function initExample():Void {
+	public function initExample():Void {
 		
+	}
+	
+	public function dispose():Void {
+		genome.root.disposeChildren();
 	}
 }

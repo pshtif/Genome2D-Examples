@@ -23,78 +23,18 @@ import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
 
 
-class TextureTextExample
+class TextureTextExample extends AbstractExample
 {
 
     static public function main() {
         var inst = new TextureTextExample();
     }
-
-    /**
-        Genome2D singleton instance
-     **/
-    private var genome:Genome2D;
-
-    public function new() {
-        initGenome();
-    }
-
-    /**
-        Initialize Genome2D
-     **/
-    private function initGenome():Void {
-        genome = Genome2D.getInstance();
-		genome.onFailed.addOnce(genomeFailed_handler);
-        genome.onInitialized.addOnce(genomeInitialized_handler);
-        genome.init(new GContextConfig());
-    }
-
-	/**
-        Genome2D failed handler
-     **/
-    private function genomeFailed_handler(p_msg:String):Void {
-        // Here we can check why Genome2D initialization failed
-    }
 	
-    /**
-        Genome2D initialized handler
-     **/
-    private function genomeInitialized_handler():Void {
-        loadAssets();
-    }
-	
-	/**	
-	 * 	Asset loading
-	 */
-	private function loadAssets():Void {
-		GAssetManager.addFromUrl("assets/font.png");
-        GAssetManager.addFromUrl("assets/font.fnt");
-		GAssetManager.onQueueFailed.add(assetsFailed_handler);
-        GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
-        GAssetManager.loadQueue();
-	}
-	
-	/**
-	 * 	Asset loading failed
-	 */
-	private function assetsFailed_handler(p_asset:GAsset):Void {
-		// Asset loading failed at p_asset
-	}
-
-	/**
-	 * 	Asset loading completed
-	 */
-	private function assetsLoaded_handler():Void {
-		initExample();
-	}
-
     /**
         Initialize Example code
      **/
-    private function initExample():Void {
-		GTextureManager.createTexture("font", GAssetManager.getImageAssetById("assets/font.png"));
-		
-		GFontManager.createTextureFont("font", GTextureManager.getTexture("font"), GAssetManager.getXmlAssetById("assets/font.fnt").xml);
+    override public function initExample():Void {
+		title = "TEXTURE TEXT EXAMPLE";
 		
 		createText(250, 150, "HELLO WORLD.", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }
@@ -102,7 +42,7 @@ class TextureTextExample
     private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
         var text:GText = cast GNode.createWithComponent(GText);
 		
-        text.renderer.textureFont = GFontManager.getFont("font");
+        text.renderer.textureFont = GFontManager.getFont("assets/font");
         text.width = 300;
         text.height = 300;
         text.text = p_text;
@@ -112,7 +52,7 @@ class TextureTextExample
         text.hAlign = p_hAlign;
         text.node.setPosition(p_x, p_y);
 
-        genome.root.addChild(text.node);
+        container.addChild(text.node);
 
         return text;
     }
