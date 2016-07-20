@@ -144,6 +144,7 @@ class AbstractExample
 	}
 	
 	private function initInfo():Void {
+		/*
 		var text:GText = GNode.createWithComponent(GText);
 		text.renderer.textureFont = GFontManager.getFont("assets/font");
 		text.renderer.fontScale = .5;
@@ -153,7 +154,7 @@ class AbstractExample
 		text.node.setPosition(5, 5);
 		info.addChild(text.node);
 		text.text = "PRESS MOUSE OR ANY KEY FOR NEXT EXAMPLE";
-		
+		/**/
 		titleText = GNode.createWithComponent(GText);
 		titleText.renderer.textureFont = GFontManager.getFont("assets/font");
 		titleText.node.setPosition(5, 450);

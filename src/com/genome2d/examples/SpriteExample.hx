@@ -25,6 +25,7 @@ class SpriteExample extends AbstractExample
      **/
     override public function initExample():Void {		
 		title = "SPRITE EXAMPLE";
+		detail = "Sprite component is the most basic renderable component to render static and animated sprites.";
 		
         var sprite:GSprite;
 		

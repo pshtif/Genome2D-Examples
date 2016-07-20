@@ -4,7 +4,7 @@
   <pages>
     <page id="0" file="font.png"/>
   </pages>
-  <chars count="80">
+  <chars count="90">
     <char id="97" x="2" y="2" width="13" height="17" xoffset="0" yoffset="10" xadvance="14" page="0" chnl="15"/>
     <char id="98" x="2" y="21" width="14" height="23" xoffset="0" yoffset="4" xadvance="15" page="0" chnl="15"/>
     <char id="99" x="17" y="2" width="13" height="17" xoffset="0" yoffset="10" xadvance="15" page="0" chnl="15"/>
@@ -85,9 +85,19 @@
     <char id="125" x="23" y="416" width="8" height="26" xoffset="0" yoffset="4" xadvance="9" page="0" chnl="15"/>
     <char id="91" x="25" y="331" width="6" height="26" xoffset="0" yoffset="4" xadvance="7" page="0" chnl="15"/>
     <char id="93" x="54" y="225" width="6" height="26" xoffset="0" yoffset="4" xadvance="7" page="0" chnl="15"/>
+    <char id="48" x="54" y="253" width="18" height="23" xoffset="0" yoffset="4" xadvance="20" page="0" chnl="15"/>
+    <char id="49" x="60" y="190" width="6" height="23" xoffset="0" yoffset="4" xadvance="7" page="0" chnl="15"/>
+    <char id="50" x="62" y="215" width="16" height="23" xoffset="0" yoffset="4" xadvance="17" page="0" chnl="15"/>
+    <char id="51" x="68" y="190" width="15" height="23" xoffset="0" yoffset="4" xadvance="16" page="0" chnl="15"/>
+    <char id="52" x="75" y="165" width="16" height="23" xoffset="0" yoffset="4" xadvance="18" page="0" chnl="15"/>
+    <char id="53" x="79" y="137" width="15" height="23" xoffset="0" yoffset="4" xadvance="16" page="0" chnl="15"/>
+    <char id="54" x="83" y="107" width="16" height="23" xoffset="0" yoffset="4" xadvance="17" page="0" chnl="15"/>
+    <char id="55" x="91" y="72" width="14" height="23" xoffset="0" yoffset="4" xadvance="15" page="0" chnl="15"/>
+    <char id="56" x="92" y="45" width="16" height="23" xoffset="-1" yoffset="4" xadvance="16" page="0" chnl="15"/>
+    <char id="57" x="97" y="19" width="16" height="23" xoffset="0" yoffset="4" xadvance="17" page="0" chnl="15"/>
     <char id="32" x="0" y="0" width="0" height="0" xoffset="0" yoffset="4" xadvance="14" page="0" chnl="15"/>
   </chars>
-  <kernings count="634">
+  <kernings count="660">
     <kerning first="32" second="99" amount="-1"/>
     <kerning first="32" second="100" amount="-1"/>
     <kerning first="32" second="101" amount="-1"/>
@@ -125,6 +135,7 @@
     <kerning first="69" second="111" amount="-1"/>
     <kerning first="69" second="113" amount="-1"/>
     <kerning first="69" second="79" amount="-1"/>
+    <kerning first="69" second="48" amount="-1"/>
     <kerning first="69" second="67" amount="-1"/>
     <kerning first="70" second="71" amount="-1"/>
     <kerning first="70" second="74" amount="-2"/>
@@ -153,6 +164,7 @@
     <kerning first="70" second="79" amount="-1"/>
     <kerning first="70" second="46" amount="-3"/>
     <kerning first="70" second="47" amount="-3"/>
+    <kerning first="70" second="48" amount="-1"/>
     <kerning first="70" second="44" amount="-3"/>
     <kerning first="70" second="36" amount="-1"/>
     <kerning first="70" second="67" amount="-1"/>
@@ -165,6 +177,7 @@
     <kerning first="75" second="118" amount="-2"/>
     <kerning first="75" second="119" amount="-2"/>
     <kerning first="75" second="79" amount="-2"/>
+    <kerning first="75" second="48" amount="-2"/>
     <kerning first="75" second="67" amount="-2"/>
     <kerning first="76" second="32" amount="-1"/>
     <kerning first="76" second="71" amount="-2"/>
@@ -187,6 +200,7 @@
     <kerning first="76" second="119" amount="-3"/>
     <kerning first="76" second="121" amount="-3"/>
     <kerning first="76" second="79" amount="-2"/>
+    <kerning first="76" second="48" amount="-2"/>
     <kerning first="76" second="67" amount="-2"/>
     <kerning first="80" second="71" amount="-1"/>
     <kerning first="80" second="74" amount="-3"/>
@@ -211,6 +225,7 @@
     <kerning first="80" second="79" amount="-1"/>
     <kerning first="80" second="46" amount="-3"/>
     <kerning first="80" second="47" amount="-2"/>
+    <kerning first="80" second="48" amount="-1"/>
     <kerning first="80" second="44" amount="-3"/>
     <kerning first="80" second="36" amount="-1"/>
     <kerning first="80" second="67" amount="-1"/>
@@ -287,6 +302,7 @@
     <kerning first="82" second="118" amount="-1"/>
     <kerning first="82" second="119" amount="-1"/>
     <kerning first="82" second="79" amount="-1"/>
+    <kerning first="82" second="48" amount="-1"/>
     <kerning first="82" second="67" amount="-1"/>
     <kerning first="83" second="32" amount="-1"/>
     <kerning first="83" second="83" amount="0"/>
@@ -324,6 +340,7 @@
     <kerning first="84" second="65" amount="-3"/>
     <kerning first="84" second="79" amount="-2"/>
     <kerning first="84" second="46" amount="-3"/>
+    <kerning first="84" second="48" amount="-2"/>
     <kerning first="84" second="44" amount="-3"/>
     <kerning first="84" second="36" amount="-1"/>
     <kerning first="84" second="67" amount="-2"/>
@@ -352,6 +369,7 @@
     <kerning first="86" second="65" amount="-4"/>
     <kerning first="86" second="79" amount="-2"/>
     <kerning first="86" second="46" amount="-2"/>
+    <kerning first="86" second="48" amount="-2"/>
     <kerning first="86" second="44" amount="-2"/>
     <kerning first="86" second="36" amount="-2"/>
     <kerning first="86" second="67" amount="-2"/>
@@ -380,6 +398,7 @@
     <kerning first="87" second="65" amount="-4"/>
     <kerning first="87" second="79" amount="-2"/>
     <kerning first="87" second="46" amount="-2"/>
+    <kerning first="87" second="48" amount="-2"/>
     <kerning first="87" second="44" amount="-2"/>
     <kerning first="87" second="36" amount="-2"/>
     <kerning first="87" second="67" amount="-2"/>
@@ -397,6 +416,7 @@
     <kerning first="88" second="118" amount="-2"/>
     <kerning first="88" second="119" amount="-2"/>
     <kerning first="88" second="79" amount="-1"/>
+    <kerning first="88" second="48" amount="-1"/>
     <kerning first="88" second="67" amount="-1"/>
     <kerning first="89" second="32" amount="-1"/>
     <kerning first="89" second="71" amount="-1"/>
@@ -425,12 +445,14 @@
     <kerning first="89" second="65" amount="-3"/>
     <kerning first="89" second="79" amount="-1"/>
     <kerning first="89" second="46" amount="-3"/>
+    <kerning first="89" second="48" amount="-1"/>
     <kerning first="89" second="44" amount="-3"/>
     <kerning first="89" second="67" amount="-1"/>
     <kerning first="90" second="71" amount="-1"/>
     <kerning first="90" second="81" amount="-1"/>
     <kerning first="90" second="106" amount="-2"/>
     <kerning first="90" second="79" amount="-1"/>
+    <kerning first="90" second="48" amount="-1"/>
     <kerning first="90" second="67" amount="-1"/>
     <kerning first="102" second="32" amount="-1"/>
     <kerning first="102" second="74" amount="-2"/>
@@ -662,6 +684,7 @@
     <kerning first="65" second="119" amount="-2"/>
     <kerning first="65" second="121" amount="-2"/>
     <kerning first="65" second="79" amount="-2"/>
+    <kerning first="65" second="48" amount="-2"/>
     <kerning first="65" second="36" amount="0"/>
     <kerning first="65" second="67" amount="-2"/>
     <kerning first="79" second="74" amount="-2"/>
@@ -688,7 +711,19 @@
     <kerning first="47" second="121" amount="-1"/>
     <kerning first="47" second="65" amount="-3"/>
     <kerning first="47" second="79" amount="-1"/>
+    <kerning first="47" second="48" amount="-1"/>
     <kerning first="47" second="67" amount="-1"/>
+    <kerning first="48" second="74" amount="-2"/>
+    <kerning first="48" second="83" amount="-1"/>
+    <kerning first="48" second="84" amount="-2"/>
+    <kerning first="48" second="86" amount="-2"/>
+    <kerning first="48" second="87" amount="-2"/>
+    <kerning first="48" second="88" amount="-1"/>
+    <kerning first="48" second="89" amount="-2"/>
+    <kerning first="48" second="90" amount="-1"/>
+    <kerning first="48" second="65" amount="-2"/>
+    <kerning first="48" second="47" amount="-1"/>
+    <kerning first="48" second="36" amount="-1"/>
     <kerning first="44" second="32" amount="-1"/>
     <kerning first="36" second="32" amount="-1"/>
     <kerning first="36" second="83" amount="0"/>
@@ -721,6 +756,7 @@
     <kerning first="67" second="106" amount="-2"/>
     <kerning first="67" second="65" amount="-1"/>
     <kerning first="67" second="79" amount="-1"/>
+    <kerning first="67" second="48" amount="-1"/>
     <kerning first="67" second="67" amount="-1"/>
   </kernings>
 </font>

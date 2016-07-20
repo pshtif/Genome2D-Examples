@@ -29,6 +29,7 @@ class SimpleParticlesExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "SIMPLE PARTICLES EXAMPLE";
+		detail = "Simple particle systems offer the most common functionality used for particle systems to achieve best performance.";
 		
 		// Create a node with simple particle system component
         particleSystem = GNode.createWithComponent(GSimpleParticleSystemD);

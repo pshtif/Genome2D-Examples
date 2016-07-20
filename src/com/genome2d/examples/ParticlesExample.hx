@@ -31,7 +31,7 @@ class ParticlesExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "PARTICLES EXAMPLE";
-		detail = "To achieve more complex particle systems ";
+		detail = "To achieve more complex particle systems Genome2D offers fully customizable particle systems using both spawn and update modules.";
 		
 		var emitter:GParticleEmitter = new GParticleEmitter();
 		emitter.texture = GTextureManager.getTexture("assets/atlas_particle");

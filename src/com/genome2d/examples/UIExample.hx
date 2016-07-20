@@ -16,6 +16,7 @@ import com.genome2d.proto.parsers.GXmlPrototypeParser;
 import com.genome2d.text.GFontManager;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
+import com.genome2d.ui.layout.GUIHorizontalLayout;
 import com.genome2d.ui.skin.GUIFontSkin;
 import com.genome2d.ui.skin.GUISkinManager;
 import com.genome2d.ui.skin.GUITextureSkin;
@@ -29,9 +30,27 @@ class UIExample extends AbstractExample
     }
 	
 	private var prototype:String = '<element anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
-									<element skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="400"><element skin="@fontSkin" setModel="MENU1" setAlign="5"/></element>
-									<element skin="@textureSkin" setAlign="2" anchorY="200" preferredWidth="400"><element skin="@fontSkin" setModel="MENU2" setAlign="5"/></element>
-									<element skin="@textureSkin" setAlign="2" anchorY="300" preferredWidth="400"><element skin="@fontSkin" setModel="MENU3" setAlign="5"/></element>
+										<element skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="200">
+											<element skin="@fontSkin" setModel="TITLE" setAlign="5"/>
+										</element>
+										<element skin="@textureSkin" color="0xBBBBBB" setAlign="2" anchorY="180" preferredWidth="512" preferredHeight="100">
+											<element skin="@fontSkin" setModel="LAYOUT" setAlign="2" anchorY="5"/>
+											<element anchorY="40" setAlign="2">
+												<p:layout><horizontal gap="5"/></p:layout>
+												<element skin="@textureSkin" color="0xFFBBBB" preferredWidth="140">
+													<element skin="@fontSkin" setModel="BUTTON" setAlign="2" anchorY="5"/>
+												</element>
+												<element skin="@textureSkin" color="0xBBFFBB" preferredWidth="140">
+													<element skin="@fontSkin" setModel="BUTTON" setAlign="2" anchorY="5"/>
+												</element>
+												<element skin="@textureSkin" color="0xDDDDFF" preferredWidth="140">
+													<element skin="@fontSkin" setModel="BUTTON" setAlign="2" anchorY="5"/>
+												</element>
+											</element>
+										</element>
+										<element skin="@textureSkin" setAlign="2" anchorY="320" preferredWidth="300">
+											<element skin="@fontSkin" setModel="SETTINGS" setAlign="5"/>
+										</element>
 									</element>';
 
     /**
@@ -39,7 +58,7 @@ class UIExample extends AbstractExample
      **/
     override public function initExample():Void {		
 		title = "UI EXAMPLE";
-		detail = "Example showcasing UI elements and skinning.";
+		detail = "Example showcasing UI elements, layouts and skinning.";
 		
 		var gui:GUI = GNode.createWithComponent(GUI);
 		genome.root.addChild(gui.node);

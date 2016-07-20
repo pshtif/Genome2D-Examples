@@ -35,6 +35,7 @@ class TextureTextExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "TEXTURE TEXT EXAMPLE";
+		detail = "The most common way to render text in GPU renderers is to use textured text composed of sprites.";
 		
 		createText(250, 150, "HELLO WORLD.", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }

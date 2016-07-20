@@ -29,6 +29,7 @@ class G3DExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "G3D EXAMPLE";
+		detail = "Example showcasing 3D rendering capabilities inside Genome2D using custom overridable and extendable renderer.";
 		
 		scene = G3DFactory.createBox(100, 100, 100, GTextureManager.getTexture("assets/texture"));
 		scene.invalidate();
