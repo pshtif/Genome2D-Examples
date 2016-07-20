@@ -28,7 +28,7 @@ class G3DExample extends AbstractExample
         Initialize Example code
      **/
     override public function initExample():Void {
-		label = "G3D EXAMPLE";
+		title = "G3D EXAMPLE";
 		
 		scene = G3DFactory.createBox(100, 100, 100, GTextureManager.getTexture("assets/texture"));
 		scene.invalidate();
@@ -49,5 +49,13 @@ class G3DExample extends AbstractExample
 		scene.getSceneMatrix().appendTranslation(400, 300, 100);
 		
 		scene.render(cameraMatrix, 0);
+	}
+	
+	override public function dispose():Void {
+		super.dispose();
+		
+		genome.onPostRender.remove(postRender_handler);
+		
+		scene.dispose();
 	}
 }

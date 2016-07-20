@@ -46,6 +46,7 @@ class ExampleWrapper
 		exampleClasses.push(ParticlesExample);
 		exampleClasses.push(CameraExample);
 		exampleClasses.push(UIExample);
+		exampleClasses.push(G3DExample);
 		
 		example = Type.createInstance(exampleClasses[0], [1]);
 		

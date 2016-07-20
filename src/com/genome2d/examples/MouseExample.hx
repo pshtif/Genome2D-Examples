@@ -26,9 +26,10 @@ class MouseExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "MOUSE EXAMPLE";
+		detail = "Example showcasing mouse interaction with Genome2D elements.";
 		
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTexture("assets/atlas_0");
+        sprite.texture = GTextureManager.getTexture("assets/atlas_1");
         sprite.node.setPosition(400, 300);
         sprite.node.mouseEnabled = true;
         sprite.node.onMouseClick.add(mouseClickHandler);
@@ -51,6 +52,10 @@ class MouseExample extends AbstractExample
         Mouse over handler
      **/
     private function mouseOverHandler(signal:GMouseInput):Void {
+		var node:GNode = cast signal.target;
+		node.setScale(2, 2);
+		node.rotation = Math.PI / 4;
+		node.color = 0x00FF00;
 		MGDebug.INFO();
     }
 
@@ -58,6 +63,10 @@ class MouseExample extends AbstractExample
         Mouse out handler
      **/
     private function mouseOutHandler(signal:GMouseInput):Void {
+		var node:GNode = cast signal.target;
+		node.setScale(1, 1);
+		node.rotation = 0;
+		node.color = 0xFFFFFF;
 		MGDebug.INFO();
     }
 

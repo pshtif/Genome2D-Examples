@@ -31,6 +31,7 @@ class ParticlesExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "PARTICLES EXAMPLE";
+		detail = "To achieve more complex particle systems ";
 		
 		var emitter:GParticleEmitter = new GParticleEmitter();
 		emitter.texture = GTextureManager.getTexture("assets/atlas_particle");
