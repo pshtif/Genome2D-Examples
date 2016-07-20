@@ -1,3 +1,5 @@
+# DO NOT BUILD THIS HXML DIRECTLY IT SHOULD BE CALLED WITHIN build.swc IN THE ROOT DIRECTORY
+
 # Examples JavaScript Target
 Genome2D-Examples/build_js.hxml
 
