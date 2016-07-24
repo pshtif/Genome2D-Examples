@@ -4,9 +4,6 @@
 -cp Genome2D-Core/src
 -cp Genome2D-Examples/src
 
-# Include libraries
--lib Actuate
-
 # Genome2D flags
 -D genome_webglonly
 

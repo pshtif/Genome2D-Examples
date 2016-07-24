@@ -29,7 +29,7 @@ class MouseExample extends AbstractExample
 		detail = "Example showcasing mouse interaction with Genome2D elements.";
 		
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
-        sprite.texture = GTextureManager.getTexture("assets/atlas_1");
+        sprite.texture = GTextureManager.getTexture("assets/atlas.png_1");
         sprite.node.setPosition(400, 300);
         sprite.node.mouseEnabled = true;
         sprite.node.onMouseClick.add(mouseClickHandler);

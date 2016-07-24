@@ -10,6 +10,7 @@ package com.genome2d.examples;
 
 import com.genome2d.assets.GAsset;
 import com.genome2d.assets.GAssetManager;
+import com.genome2d.assets.GStaticAssetManager;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.text.GText;
 import com.genome2d.context.GContextConfig;
@@ -88,23 +89,27 @@ class AbstractExample
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {		
-		GAssetManager.addFromUrl("assets/logo_white.png");
-		GAssetManager.addFromUrl("assets/atlas.png");
-        GAssetManager.addFromUrl("assets/atlas.xml");
-		GAssetManager.addFromUrl("assets/texture.png");
-		GAssetManager.addFromUrl("assets/font.png");
-        GAssetManager.addFromUrl("assets/font.fnt");
-		GAssetManager.addFromUrl("assets/button.png");
-		GAssetManager.onQueueFailed.add(assetsFailed_handler);
-        GAssetManager.onQueueLoaded.addOnce(assetsLoaded_handler);
-        GAssetManager.loadQueue();
+		//Spine
+		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.atlas");
+		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.json");
+		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.png", "spineboy");
+		
+		
+		GStaticAssetManager.addFromUrl("assets/logo_white.png");
+		GStaticAssetManager.addFromUrl("assets/atlas.png");
+        GStaticAssetManager.addFromUrl("assets/atlas.xml");
+		GStaticAssetManager.addFromUrl("assets/texture.png");
+		GStaticAssetManager.addFromUrl("assets/font.png");
+        GStaticAssetManager.addFromUrl("assets/font.fnt");
+		GStaticAssetManager.addFromUrl("assets/button.png");
+        GStaticAssetManager.loadQueue(assetsLoaded_handler, assetsFailed_handler);
 	}
 	
 	/**
 	 * 	Asset loading failed
 	 */
 	private function assetsFailed_handler(p_asset:GAsset):Void {
-		MGDebug.ERROR();
+		MGDebug.ERROR(p_asset.id);
 	}
 	
 	/**
@@ -113,7 +118,7 @@ class AbstractExample
 	private function assetsLoaded_handler():Void {
 		MGDebug.INFO();
 		
-		GAssetManager.generate();
+		GStaticAssetManager.generate();
 		
 		init();
 	}
@@ -156,7 +161,7 @@ class AbstractExample
 		text.text = "PRESS MOUSE OR ANY KEY FOR NEXT EXAMPLE";
 		/**/
 		titleText = GNode.createWithComponent(GText);
-		titleText.renderer.textureFont = GFontManager.getFont("assets/font");
+		titleText.renderer.textureFont = GFontManager.getFont("assets/font.fnt");
 		titleText.node.setPosition(5, 450);
 		titleText.node.color = 0xFFFF00;
 		titleText.width = 790;
@@ -165,7 +170,7 @@ class AbstractExample
 		titleText.text = "ABSTRACT";
 		
 		detailText = GNode.createWithComponent(GText);
-		detailText.renderer.textureFont = GFontManager.getFont("assets/font");
+		detailText.renderer.textureFont = GFontManager.getFont("assets/font.fnt");
 		detailText.renderer.fontScale = .5;
 		detailText.node.setPosition(5, 480);
 		detailText.width = 790;

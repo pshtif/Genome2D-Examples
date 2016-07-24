@@ -43,7 +43,7 @@ class TextureTextExample extends AbstractExample
     private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
         var text:GText = cast GNode.createWithComponent(GText);
 		
-        text.renderer.textureFont = GFontManager.getFont("assets/font");
+        text.renderer.textureFont = GFontManager.getFont("assets/font.fnt");
         text.width = 300;
         text.height = 300;
         text.text = p_text;

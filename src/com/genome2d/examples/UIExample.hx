@@ -63,13 +63,13 @@ class UIExample extends AbstractExample
 		var gui:GUI = GNode.createWithComponent(GUI);
 		genome.root.addChild(gui.node);
 
-		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button"));
+		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button.png"));
 		textureSkin.sliceLeft = 10;
 		textureSkin.sliceRight = 35;
 		textureSkin.sliceTop = 10;
 		textureSkin.sliceBottom = 35;
 		
-		var fontSkin:GUIFontSkin = new GUIFontSkin("fontSkin", GFontManager.getFont("assets/font"));
+		var fontSkin:GUIFontSkin = new GUIFontSkin("fontSkin", GFontManager.getFont("assets/font.fnt"));
 		fontSkin.color = 0x0;
 		fontSkin.autoSize = true;
 		

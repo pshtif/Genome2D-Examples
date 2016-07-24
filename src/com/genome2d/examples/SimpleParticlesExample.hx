@@ -33,7 +33,7 @@ class SimpleParticlesExample extends AbstractExample
 		
 		// Create a node with simple particle system component
         particleSystem = GNode.createWithComponent(GSimpleParticleSystemD);
-        particleSystem.texture = GTextureManager.getTexture("assets/atlas_particle");
+        particleSystem.texture = GTextureManager.getTexture("assets/atlas.png_particle");
         particleSystem.emission = 128;
 		particleSystem.emissionTime = 1;
         particleSystem.emit = true;

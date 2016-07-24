@@ -47,7 +47,7 @@ class CameraExample extends AbstractExample
 		genome.root.addChild(camera2.node);
 
 		var emitter:GParticleEmitter = new GParticleEmitter();
-		emitter.texture = GTextureManager.getTexture("assets/atlas_particle");
+		emitter.texture = GTextureManager.getTexture("assets/atlas.png_particle");
 		emitter.rate = new GCurve(50);
 		emitter.duration = 10;
 		emitter.loop = true;

@@ -30,27 +30,27 @@ class SpriteExample extends AbstractExample
         var sprite:GSprite;
 		
 		// Create a sprite
-        sprite = createSprite(100, 200, "assets/atlas_0");
+        sprite = createSprite(100, 200, "assets/atlas.png_0");
 
 		// Create a sprite with scaling
-        sprite = createSprite(300, 200, "assets/atlas_0");
+        sprite = createSprite(300, 200, "assets/atlas.png_0");
         sprite.node.setScale(2,2);
 
 		// Create a sprite with rotation
-        sprite = createSprite(100, 400, "assets/atlas_0");
+        sprite = createSprite(100, 400, "assets/atlas.png_0");
         sprite.node.rotation = 0.753;
 
 		// Create a sprite with rotation and scaling
-        sprite = createSprite(300, 400, "assets/atlas_0");
+        sprite = createSprite(300, 400, "assets/atlas.png_0");
         sprite.node.rotation = 0.753;
         sprite.node.setScale(2,2);
 
 		// Create a sprite with alpha
-        sprite = createSprite(100, 300, "assets/atlas_0");
+        sprite = createSprite(100, 300, "assets/atlas.png_0");
         sprite.node.alpha = .5;
 
 		// Create a sprite with tint
-        sprite = createSprite(300, 300, "assets/atlas_0");
+        sprite = createSprite(300, 300, "assets/atlas.png_0");
         sprite.node.color = 0x00FF00;
 		
 		// Create an animated sprite
@@ -96,7 +96,7 @@ class SpriteExample extends AbstractExample
      **/
     private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
 		// To animate a sprite we need a frame animation instance with defined texture frames
-		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["assets/atlas_1", "assets/atlas_2", "assets/atlas_3", "assets/atlas_4", "assets/atlas_5", "assets/atlas_6", "assets/atlas_7"]));
+		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["assets/atlas.png_1", "assets/atlas.png_2", "assets/atlas.png_3", "assets/atlas.png_4", "assets/atlas.png_5", "assets/atlas.png_6", "assets/atlas.png_7"]));
 		animation.frameRate = 10;
 		
         var sprite:GSprite = GNode.createWithComponent(GSprite);
