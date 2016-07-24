@@ -1,8 +1,5 @@
 # Include sources
 -cp Genome2D-ContextFlash/src
--cp Genome2D-ContextCommon/src
--cp Genome2D-Core/src
--cp Genome2D-Examples/src
 
 # Include libraries
 -swf-lib Genome2D-ContextFlash/lib/AGAL.swc

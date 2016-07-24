@@ -1,5 +1,11 @@
 # DO NOT BUILD THIS HXML DIRECTLY IT SHOULD BE CALLED WITHIN build.swc IN THE ROOT DIRECTORY
 
+# Include sources
+-cp Genome2D-ContextCommon/src
+-cp Genome2D-Core/src
+-cp Genome2D-Spine/src
+-cp Genome2D-Examples/src
+
 # Include libraries
 -lib hscript
 -lib Actuate

@@ -1,8 +1,5 @@
 # Include sources
 -cp Genome2D-ContextHTML/src
--cp Genome2D-ContextCommon/src
--cp Genome2D-Core/src
--cp Genome2D-Examples/src
 
 # Genome2D flags
 -D genome_webglonly
