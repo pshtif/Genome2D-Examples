@@ -82,6 +82,7 @@ class AbstractExample
         Genome2D initialized handler
      **/
     private function genomeInitialized_handler():Void {
+		MGDebug.INFO();
         loadAssets();
     }
 	
@@ -89,6 +90,7 @@ class AbstractExample
 	 * 	Asset loading
 	 */
 	private function loadAssets():Void {		
+		MGDebug.INFO();
 		//Spine
 		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.atlas");
 		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.json");

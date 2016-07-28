@@ -42,7 +42,7 @@ class PhysicsExample extends AbstractExample
 	
 	#if nape
 	private var space:Space;
-	private var floor:Body;
+	private var walls:Body;
 	#elseif box2d
 	private var world:B2World;
 	private var floor:B2Body;
@@ -50,6 +50,7 @@ class PhysicsExample extends AbstractExample
 	#end
 	
 	private var objects:Array<GNode>;
+	private var accumulatedTime:Float = 0;
 	
     /**
         Initialize Example code
@@ -60,12 +61,14 @@ class PhysicsExample extends AbstractExample
 		
 		
 		#if nape
-		var gravity:Vec2 = Vec2.weak(0, 600);
-		space = new Space(gravity);
+		space = new Space(Vec2.weak(800, 600));
 		
-		floor = new Body(BodyType.STATIC);
-		floor.shapes.add(new Polygon(Polygon.rect(50, 450, 700, 1)));
-		floor.space = space;
+		walls = new Body(BodyType.STATIC);
+		walls.shapes.add(new Polygon(Polygon.rect(0, 450, 800, 1)));
+		walls.shapes.add(new Polygon(Polygon.rect(0, 0, 800, 1)));
+		walls.shapes.add(new Polygon(Polygon.rect(0, 0, 1, 450)));
+		walls.shapes.add(new Polygon(Polygon.rect(800, 0, 1, 450)));
+		walls.space = space;
 		#elseif box2d
 		var gravity:B2Vec2 = new B2Vec2(0.0, 60.0);
 		world = new B2World(gravity, true);
@@ -76,8 +79,8 @@ class PhysicsExample extends AbstractExample
 		var floorFix:B2PolygonShape = new B2PolygonShape();
 		floorFix.setAsBox(350 / physScale, 25 / physScale);
 		
-		floor = world.createBody(floorDef);
-		floor.createFixture2(floorFix);
+		walls = world.createBody(floorDef);
+		walls.createFixture2(floorFix);
 		#end
 		
 		objects = new Array<GNode>();
@@ -94,7 +97,14 @@ class PhysicsExample extends AbstractExample
 	
 	#if nape
 	private function update_handler(p_deltaTime:Float):Void {
-		if (p_deltaTime>0) space.step(p_deltaTime / 1000);
+		if (p_deltaTime > 0) space.step(p_deltaTime / 1000);
+		accumulatedTime+= p_deltaTime;
+		if (accumulatedTime > 1500) {
+			accumulatedTime = 0;
+			space.gravity.x = -space.gravity.x;
+			space.gravity.y = -space.gravity.y;
+		}
+		
 		
 		for (node in objects) {
 			var body:Body = cast node.userData;
@@ -164,7 +174,7 @@ class PhysicsExample extends AbstractExample
 			body.space = null;
 		}
 		
-		floor.space = null;
+		walls.space = null;
 		space.clear();	
 		#elseif box2d
 		// TODO dispose box2d stuff
