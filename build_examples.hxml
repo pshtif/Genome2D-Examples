@@ -13,10 +13,10 @@
 #-lib box2d
 
 # Examples JavaScript Target
-Genome2D-Examples/build_js.hxml
+#Genome2D-Examples/build_js.hxml
 
 # Examples Flash Target
-#Genome2D-Examples/build_flash.hxml
+Genome2D-Examples/build_flash.hxml
 
 # Main class
 #-main com.genome2d.examples.SpriteExample
@@ -24,11 +24,11 @@ Genome2D-Examples/build_js.hxml
 #-main com.genome2d.examples.SimpleParticlesExample
 #-main com.genome2d.examples.TextureTextExample
 #-main com.genome2d.examples.UIExample
-#-main com.genome2d.examples.G3DExample
+-main com.genome2d.examples.G3DExample
 #-main com.genome2d.examples.CameraExample
 #-main com.genome2d.examples.ParticlesExample
 #-main com.genome2d.examples.SpineExample
--main com.genome2d.examples.PhysicsExample
+#-main com.genome2d.examples.PhysicsExample
 
 #WIP
 #-main com.genome2d.examples.ContextExample

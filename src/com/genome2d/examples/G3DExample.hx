@@ -5,6 +5,7 @@ import com.genome2d.context.stats.GStats;
 import com.genome2d.examples.AbstractExample;
 import com.genome2d.g3d.G3DFactory;
 import com.genome2d.g3d.G3DScene;
+import com.genome2d.geom.GFloat4;
 import com.genome2d.geom.GMatrix3D;
 import com.genome2d.geom.GVector3D;
 import com.genome2d.textures.GTexture;
@@ -35,8 +36,13 @@ class G3DExample extends AbstractExample
 		scene.invalidate();
 		
 		cameraMatrix = new GMatrix3D();
+		cameraMatrix.appendRotation(120, GVector3D.X_AXIS);
+		cameraMatrix.appendTranslation(400, 300, 500);
 		
-		genome.onPostRender.add(postRender_handler);
+		genome.getContext().setBackgroundColor(0x0000FF);
+		
+		scene.dispose();
+		//genome.onPostRender.add(postRender_handler);
 	}
 
 	private var rotation:Float = 0;
@@ -45,11 +51,15 @@ class G3DExample extends AbstractExample
 		rotation++;
 		
 		scene.getSceneMatrix().identity();
-		scene.getSceneMatrix().appendRotation(rotation, GVector3D.Y_AXIS);
-		scene.getSceneMatrix().appendRotation(-rotation, GVector3D.X_AXIS);
-		scene.getSceneMatrix().appendTranslation(400, 300, 100);
+		scene.getSceneMatrix().appendRotation(rotation, GVector3D.Z_AXIS);
 		
-		scene.render(cameraMatrix, 0);
+		scene.ambientColor = new GFloat4(0.25, 0.25, 0.25, 0);
+		scene.lightDirection = new GFloat4(1, 1, -1);
+		
+		scene.render(cameraMatrix, 1);
+		var reflection:GMatrix3D = cameraMatrix.clone();
+		reflection.prependScale(1, 1, -1);
+		scene.render(reflection, 2);
 	}
 	
 	override public function dispose():Void {
