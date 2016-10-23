@@ -40,7 +40,7 @@ class TextureTextExample extends AbstractExample
 		createText(250, 150, "HELLO WORLD.", GVAlignType.MIDDLE, GHAlignType.CENTER);
     }
 	
-    private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:Int, p_hAlign:Int, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
+    private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:GVAlignType, p_hAlign:GHAlignType, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
         var text:GText = cast GNode.createWithComponent(GText);
 		
         text.renderer.textureFont = GFontManager.getFont("assets/font.fnt");
