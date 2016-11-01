@@ -28,6 +28,7 @@ class AbstractExample
     private var genome:Genome2D;
 	
 	private var container:GNode;
+	private var containerCamera:GCameraController;
 	
 	private var info:GNode;
 	
@@ -135,15 +136,15 @@ class AbstractExample
 		info.cameraGroup = 128;
 		genome.root.addChild(info);
 		
-		var containerCamera:GCameraController = GNode.createWithComponent(GCameraController);
+		containerCamera = GNode.createWithComponent(GCameraController);
 		containerCamera.node.setPosition(400, 300);
-		containerCamera.contextCamera.mask = 1;
+		containerCamera.contextCamera.group = 1;
 		genome.root.addChild(containerCamera.node);
 		
 		var infoCamera:GCameraController = GNode.createWithComponent(GCameraController);
 		infoCamera.node.setPosition(400, 300);
-		infoCamera.contextCamera.mask = 128;
-		genome.root.addChild(infoCamera.node);
+		infoCamera.contextCamera.group = 128;
+		//genome.root.addChild(infoCamera.node);
 		
 		initInfo();
 		

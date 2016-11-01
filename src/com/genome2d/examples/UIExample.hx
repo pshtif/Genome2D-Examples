@@ -8,6 +8,12 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.utils.GHAlignType;
+import com.genome2d.ui.skin.GUISkin;
+import com.genome2d.geom.GRectangle;
+import flash.display.StageScaleMode;
+import flash.events.Event;
+import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.macros.MGDebug;
 import com.genome2d.node.GNode;
@@ -53,34 +59,54 @@ class UIExample extends AbstractExample
 										</element>
 									</element>';
 
+	private var camera:GCameraController;
+	private var gui:GUI;
+
     /**
         Initialize Example code
      **/
     override public function initExample():Void {		
 		title = "UI EXAMPLE";
 		detail = "Example showcasing UI elements, layouts and skinning.";
-		
-		var gui:GUI = GNode.createWithComponent(GUI);
-		genome.root.addChild(gui.node);
 
 		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button.png"));
 		textureSkin.sliceLeft = 10;
 		textureSkin.sliceRight = 35;
 		textureSkin.sliceTop = 10;
 		textureSkin.sliceBottom = 35;
-		
+
 		var fontSkin:GUIFontSkin = new GUIFontSkin("fontSkin", GFontManager.getFont("assets/font.fnt"));
 		fontSkin.color = 0x0;
 		fontSkin.autoSize = true;
-		
+
+
+		gui = GNode.createWithComponent(GUI);
+		gui.node.cameraGroup = 2;
+		gui.setBounds(new GRectangle(0,0,2048,1536));
+		genome.root.addChild(gui.node);
+
 		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(prototype);
 		gui.root.addChild(textureElement);
+
+		camera = GNode.createWithComponent(GCameraController);
+		camera.setViewport(2048,1536);
+		camera.contextCamera.group = 2;
+		genome.root.addChild(camera.node);
+
+		info.visible = false;
+
+		genome.getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
+		genome.getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);
     }
+
+	private function resize_handler(event:Event):Void {
+		genome.getContext().resize(new GRectangle(0,0,genome.getContext().getNativeStage().stageWidth, genome.getContext().getNativeStage().stageHeight));
+	}
 	
 	override public function dispose():Void {
 		super.dispose();
 		
-		GUISkinManager.getSkin("textureSkin").dispose();
-		GUISkinManager.getSkin("fontSkin").dispose();
+		cast (GUISkinManager.getSkin("textureSkin"),GUISkin).dispose();
+		cast (GUISkinManager.getSkin("fontSkin"),GUISkin).dispose();
 	}
 }

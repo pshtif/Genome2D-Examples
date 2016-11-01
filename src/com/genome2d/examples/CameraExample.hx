@@ -36,14 +36,14 @@ class CameraExample extends AbstractExample
 		var camera1:GCameraController = GNode.createWithComponent(GCameraController);
 		camera1.node.setPosition(400, 300);
 		camera1.setView(0, 0, .5, 1);
-		camera1.contextCamera.mask = 3;
+		camera1.contextCamera.group = 3;
 		genome.root.addChild(camera1.node);
 		
 		var camera2:GCameraController = GNode.createWithComponent(GCameraController);
 		camera2.node.setPosition(400, 300);
 		camera2.setView(0.5, 0, .5, 1);
 		camera2.zoom = 4;
-		camera2.contextCamera.mask = 3;
+		camera2.contextCamera.group = 3;
 		genome.root.addChild(camera2.node);
 
 		var emitter:GParticleEmitter = new GParticleEmitter();
