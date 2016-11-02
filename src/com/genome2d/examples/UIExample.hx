@@ -39,7 +39,7 @@ class UIExample extends AbstractExample
 										<element skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="200">
 											<element skin="@fontSkin" setModel="TITLE" setAlign="5"/>
 										</element>
-										<element skin="@textureSkin" color="0xBBBBBB" setAlign="2" anchorY="180" preferredWidth="312" preferredHeight="100" useMask="true">
+										<element skin="@textureSkin" color="0xBBBBBB" setAlign="2" anchorY="180" preferredWidth="512" preferredHeight="100">
 											<element skin="@fontSkin" setModel="LAYOUT" setAlign="2" anchorY="5"/>
 											<element anchorY="40" setAlign="2">
 												<p:layout><horizontal gap="5"/></p:layout>
@@ -49,7 +49,7 @@ class UIExample extends AbstractExample
 												<element skin="@textureSkin" color="0xBBFFBB" preferredWidth="140">
 													<element skin="@fontSkin" setModel="BUTTON" setAlign="2" anchorY="5"/>
 												</element>
-												<element skin="@textureSkin" color="0xDDDDFF" preferredWidth="140">
+												<element skin="@textureSkin" preferredWidth="140" color.default-mouseOut="0x0" color.mouseOver="0xFFFFFF">
 													<element skin="@fontSkin" setModel="BUTTON" setAlign="2" anchorY="5"/>
 												</element>
 											</element>
@@ -81,6 +81,7 @@ class UIExample extends AbstractExample
 
 
 		gui = GNode.createWithComponent(GUI);
+		gui.node.mouseEnabled = true;
 		gui.node.cameraGroup = 2;
 		gui.setBounds(new GRectangle(0,0,800,600));
 		genome.root.addChild(gui.node);
@@ -91,7 +92,7 @@ class UIExample extends AbstractExample
 		camera = GNode.createWithComponent(GCameraController);
 		camera.setViewport(2048,1536);
 		camera.contextCamera.group = 2;
-		//genome.root.addChild(camera.node);
+		genome.root.addChild(camera.node);
 
 		info.visible = false;
 
