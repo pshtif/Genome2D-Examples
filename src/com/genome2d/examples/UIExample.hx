@@ -8,6 +8,7 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.examples.custom.CustomComponent;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.ui.skin.GUISkin;
 import com.genome2d.geom.GRectangle;
@@ -32,7 +33,7 @@ class UIExample extends AbstractExample
 {
 
     static public function main() {
-        var inst = new UIExample();
+        //var inst = new UIExample();
     }
 	
 	private var prototype:String = '<element anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
@@ -68,6 +69,7 @@ class UIExample extends AbstractExample
     override public function initExample():Void {		
 		title = "UI EXAMPLE";
 		detail = "Example showcasing UI elements, layouts and skinning.";
+		var a:CustomComponent;
 
 		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button.png"));
 		textureSkin.sliceLeft = 10;
