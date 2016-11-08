@@ -105,6 +105,8 @@ class AbstractExample
 		GStaticAssetManager.addFromUrl("assets/font.png");
         GStaticAssetManager.addFromUrl("assets/font.fnt");
 		GStaticAssetManager.addFromUrl("assets/button.png");
+		GStaticAssetManager.addFromUrl("assets/white.png");
+		GStaticAssetManager.addFromUrl("assets/script.hxs");
         GStaticAssetManager.loadQueue(assetsLoaded_handler, assetsFailed_handler);
 	}
 	
