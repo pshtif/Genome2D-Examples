@@ -46,12 +46,9 @@ class ParticlesExample extends AbstractExample
 		/**/
 		var emitter:GParticleEmitter = new GParticleEmitter();
 		emitter.texture = GTextureManager.getTexture("assets/atlas.png_particle");
-		emitter.rate = new GCurve(50).line(0);
+		emitter.rate = new GCurve(200);
 		emitter.duration = 10;
 		emitter.loop = true;
-		var curveX:GCurve = GCurve.createLine(100).line(200);
-		var curveY:GCurve = GCurve.createLine(100).line(100);
-		//emitter.addModule(new ParticleModule(curveX, curveY));
 		var script:GScript = GScriptManager.createScript("script", GStaticAssetManager.getTextAssetById("assets/script.hxs").text);
 		var module:GScriptModule = new GScriptModule();
 		module.script = script;
@@ -67,6 +64,6 @@ class ParticlesExample extends AbstractExample
 		//container.postProcess = new GBlurPP();
 		//container.postProcess.setBounds(new GRectangle(0,0,800,600));
 
-		trace(GXmlPrototypeParser.toXml(container.getPrototype()));
+		//trace(GXmlPrototypeParser.toXml(container.getPrototype()));
     }
 }

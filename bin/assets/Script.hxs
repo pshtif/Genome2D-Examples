@@ -1,10 +1,23 @@
-var speed:Float = speed;
+import com.genome2d.geom.GCurve;
+
+var speed:Float = 1;
+var curveX:GCurve;
+var curveY:GCurve;
 
 function spawn(p_emitter, p_particle) {
-    p_particle.x = Math.random() * genome.getContext().getStageViewRect().width;
-    p_particle.y = Math.random() * genome.getContext().getStageViewRect().height;
+    if (curveX == null) curveX = GCurve.createLine(100).line(200).line(300).line(400).line(500).line(600).line(700).line(800);
+    if (curveY == null) curveY = GCurve.createLine(100).line(200).line(100).line(300).line(100).line(200).line(100).line(100);
+    curveY.start = 100;
+
+    var d:Float = Math.random();
+    p_particle.x = curveX.calculate(d);
+    p_particle.y = curveY.calculate(d);
+    p_particle.scaleX = p_particle.scaleY = Math.random()*2+1;
 }
 
 function update(p_emitter, p_particle, p_deltaTime) {
+    p_particle.accumulatedTime += p_deltaTime;
+    if (p_particle.accumulatedTime>1000) p_particle.die = true;
+    p_particle.alpha = 1-p_particle.accumulatedTime/1000;
     p_particle.y += speed;
 }
