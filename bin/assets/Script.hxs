@@ -1,8 +1,10 @@
+var speed:Float = speed;
+
 function spawn(p_emitter, p_particle) {
-    p_particle.x = Math.random()*genome.getContext().getStageViewRect().width;
-    p_particle.y = Math.random()*genome.getContext().getStageViewRect().height;
+    p_particle.x = Math.random() * genome.getContext().getStageViewRect().width;
+    p_particle.y = Math.random() * genome.getContext().getStageViewRect().height;
 }
 
 function update(p_emitter, p_particle, p_deltaTime) {
-    p_particle.y -= 1;
+    p_particle.y += speed;
 }

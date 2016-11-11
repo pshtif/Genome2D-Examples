@@ -8,6 +8,10 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.scripts.GScriptManager;
+import com.genome2d.scripts.GScript;
+import com.genome2d.geom.GRectangle;
+import com.genome2d.postprocess.GBlurPP;
 import com.genome2d.assets.GStaticAssetManager;
 import com.genome2d.particles.modules.GScriptModule;
 import com.genome2d.proto.GPrototypeFactory;
@@ -42,22 +46,27 @@ class ParticlesExample extends AbstractExample
 		/**/
 		var emitter:GParticleEmitter = new GParticleEmitter();
 		emitter.texture = GTextureManager.getTexture("assets/atlas.png_particle");
-		emitter.rate = new GCurve(50);
+		emitter.rate = new GCurve(50).line(0);
 		emitter.duration = 10;
 		emitter.loop = true;
-		//emitter.addModule(new ParticleModule());
-		var module:GScriptModule = new GScriptModule(GStaticAssetManager.getTextAssetById("assets/script.hxs").text);
+		var curveX:GCurve = GCurve.createLine(100).line(200);
+		var curveY:GCurve = GCurve.createLine(100).line(100);
+		//emitter.addModule(new ParticleModule(curveX, curveY));
+		var script:GScript = GScriptManager.createScript("script", GStaticAssetManager.getTextAssetById("assets/script.hxs").text);
+		var module:GScriptModule = new GScriptModule();
+		module.script = script;
 		emitter.addModule(module);
 
-		/**/
-		trace(emitter.texture);
-		
 		// Create a node with simple particle system component
         var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
 		particleSystem.addEmitter(emitter);
 		particleSystem.node.setPosition(400, 300);
 		container.addChild(particleSystem.node);
 
-		trace(GXmlPrototypeParser.toXml(emitter.getPrototype()));
+		//container.postProcess = cast GXmlPrototypeParser.createPrototypeFromXmlString('<GBlurPP blurY="8" blurX="8"><p:bounds><GRectangle width="800" x="0" height="600" y="0"/></p:bounds></GBlurPP>');
+		//container.postProcess = new GBlurPP();
+		//container.postProcess.setBounds(new GRectangle(0,0,800,600));
+
+		trace(GXmlPrototypeParser.toXml(container.getPrototype()));
     }
 }

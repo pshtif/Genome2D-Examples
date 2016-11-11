@@ -33,7 +33,7 @@ class UIExample extends AbstractExample
 {
 
     static public function main() {
-        //var inst = new UIExample();
+        var inst = new UIExample();
     }
 	
 	private var prototype:String = '<element anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
@@ -68,7 +68,7 @@ class UIExample extends AbstractExample
      **/
     override public function initExample():Void {		
 		title = "UI EXAMPLE";
-		detail = "Example showcasing UI elements, layouts and skinning.";
+		detail = "\nExample showcasing UI\n\n elements, layouts and skinning.\n";
 		var a:CustomComponent;
 
 		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button.png"));
@@ -95,8 +95,6 @@ class UIExample extends AbstractExample
 		camera.setViewport(2048,1536);
 		camera.contextCamera.group = 2;
 		genome.root.addChild(camera.node);
-
-		info.visible = false;
 
 		genome.getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
 		genome.getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);

@@ -1,4 +1,5 @@
 package com.genome2d.examples.custom;
+import com.genome2d.geom.GCurve;
 import com.genome2d.particles.modules.GParticleEmitterModule;
 import com.genome2d.context.GBlendMode;
 import com.genome2d.particles.GParticle;
@@ -12,56 +13,31 @@ import com.genome2d.textures.GTexture;
  */
 class ParticleModule extends GParticleEmitterModule
 {
-	private var g2d_gravity:Float;
-	
-	public function new(p_gravity:Float = 0) {
+	private var g2d_offset:Float = 0;
+	private var g2d_curveX:GCurve;
+	private var g2d_curveY:GCurve;
+
+	public var distribution:Float = .1;
+
+	public function new(p_curveX:GCurve, p_curveY:GCurve) {
 		super();
-		
-		g2d_gravity = p_gravity;
-		
+
+		g2d_curveX = p_curveX;
+		g2d_curveY = p_curveY;
+
 		spawnModule = true;
-		updateModule = true;
+		//updateModule = true;
 	}
 	
 	override public function spawn(p_emitter:GParticleEmitter, p_particle:GParticle):Void {
-		var pos:Int = Std.int(Math.random()*4);
-		switch (pos) {
-			case 0:
-				p_particle.x = Math.random()*Genome2D.getInstance().getContext().getStageViewRect().width;
-				p_particle.y = 0;
-				p_particle.velocityY = -Math.random() * 40 - 10;
-			case 1:
-				p_particle.x = Math.random()*Genome2D.getInstance().getContext().getStageViewRect().width;
-				p_particle.y = Genome2D.getInstance().getContext().getStageViewRect().height;
-				p_particle.velocityY = Math.random() * 40 + 10;
-			case 2:
-				p_particle.x = 0;
-				p_particle.y = Math.random()*Genome2D.getInstance().getContext().getStageViewRect().height;
-				p_particle.velocityX = Math.random() * 40 + 10;
-			case 3:
-				p_particle.x = Genome2D.getInstance().getContext().getStageViewRect().width;
-				p_particle.y = Math.random()*Genome2D.getInstance().getContext().getStageViewRect().height;
-				p_particle.velocityX = -Math.random() * 40 - 10;
+		p_particle.x = g2d_curveX.calculate(g2d_offset);
+		p_particle.y = g2d_curveY.calculate(g2d_offset);
 
-		}
-		p_particle.scaleX = p_particle.scaleY = Math.random() * 10 + 5;
-		p_particle.green = .4;
-		//p_particle.blue = 0.1;
-		p_particle.red = 0.1;
-		p_particle.blendMode = GBlendMode.ADD;
-		
-		p_particle.totalEnergy = 2000;
+		g2d_offset += distribution;
+		g2d_offset %= 1;
 	}
 	
 	override public function update(p_emitter:GParticleEmitter, p_particle:GParticle, p_deltaTime:Float):Void {
-		p_particle.x += p_particle.velocityX * p_deltaTime / 1000;
-		p_particle.y -= p_particle.velocityY * p_deltaTime / 1000;
-		
-		p_particle.accumulatedEnergy += p_deltaTime;
-		
-		p_particle.scaleX -= p_deltaTime / 1000;
-		p_particle.scaleY -= p_deltaTime / 1000;
-		p_particle.alpha = 1 - p_particle.accumulatedEnergy/p_particle.totalEnergy;
-		if (p_particle.accumulatedEnergy >= p_particle.totalEnergy) p_particle.die = true;
+
 	}
 }

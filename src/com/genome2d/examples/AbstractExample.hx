@@ -47,6 +47,8 @@ class AbstractExample
 	
 	private function set_detail(p_value:String):String {
 		detailText.text = p_value;
+		detailText.renderer.invalidate();
+		trace(detailText.renderer.width);
 		return detail = p_value;
 	}
 
@@ -146,13 +148,13 @@ class AbstractExample
 		var infoCamera:GCameraController = GNode.createWithComponent(GCameraController);
 		infoCamera.node.setPosition(400, 300);
 		infoCamera.contextCamera.group = 128;
-		//genome.root.addChild(infoCamera.node);
+		genome.root.addChild(infoCamera.node);
 		
 		initInfo();
 		
 		initExample();
 	}
-	
+
 	private function initInfo():Void {
 		/*
 		var text:GText = GNode.createWithComponent(GText);
@@ -179,7 +181,8 @@ class AbstractExample
 		detailText.renderer.fontScale = .5;
 		detailText.node.setPosition(5, 480);
 		detailText.width = 790;
-		detailText.hAlign = GHAlignType.LEFT;
+		//detailText.hAlign = GHAlignType.LEFT;
+		detailText.autoSize = true;
 		info.addChild(detailText.node);
 		detailText.text = "ABSTRACT";
 	}
