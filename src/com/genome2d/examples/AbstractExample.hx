@@ -71,14 +71,17 @@ class AbstractExample
     private function initGenome():Void {
 		genome.onFailed.addOnce(genomeFailed_handler);
 		genome.onInitialized.addOnce(genomeInitialized_handler);
-		genome.init(new GContextConfig());
+
+		var config:GContextConfig = new GContextConfig();
+		//config.profile = "baseline";
+		genome.init(config);
     }
 
 	/**
         Genome2D failed handler
      **/
     private function genomeFailed_handler(p_msg:String):Void {
-        // Here we can check why Genome2D initialization failed
+        trace("Genome2D initialization failed", p_msg);
     }
 	
     /**
