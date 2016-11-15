@@ -135,11 +135,11 @@ class AbstractExample
 	
 	private function init():Void {
 		
-		container = GNode.create();
+		container = new GNode();
 		container.cameraGroup = 1;
 		genome.root.addChild(container);
 		
-		info = GNode.create();
+		info = new GNode();
 		info.cameraGroup = 128;
 		genome.root.addChild(info);
 		
