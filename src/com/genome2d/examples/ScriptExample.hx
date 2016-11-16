@@ -8,6 +8,8 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.assets.GStaticAssetManager;
+import com.genome2d.scripts.GScript;
 import com.genome2d.components.GScriptComponent;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.renderable.GSprite;
@@ -29,7 +31,13 @@ class ScriptExample extends AbstractExample
 		detail = "Script component is run by h-script scripting language interpreted at runtime.";
 		
         var sc:GScriptComponent = GNode.createWithComponent(GScriptComponent);
+        sc.node.addComponent(GSprite);
+        cast (sc.node.getComponent(GSprite),GSprite).texture = GTextureManager.getTexture("assets/atlas.png_0");
+        sc.node.setPosition(400,300);
 		container.addChild(sc.node);
 
+        var script:GScript = new GScript();
+        script.setSource(GStaticAssetManager.getTextAssetById("assets/script.hxs").text);
+        sc.script = script;
     }
 }
