@@ -37,7 +37,7 @@ class AbstractExample
 	public var title(default, set):String;
 	
 	private function set_title(p_value:String):String {
-		titleText.text = p_value;
+		if (titleText != null) titleText.text = p_value;
 		return title = p_value;
 	}
 	
@@ -46,9 +46,10 @@ class AbstractExample
 	public var detail(default, set):String;
 	
 	private function set_detail(p_value:String):String {
-		detailText.text = p_value;
-		detailText.renderer.invalidate();
-		trace(detailText.renderer.width);
+		if (detailText != null) {
+			detailText.text = p_value;
+			detailText.renderer.invalidate();
+		}
 		return detail = p_value;
 	}
 
@@ -111,6 +112,7 @@ class AbstractExample
         GStaticAssetManager.addFromUrl("assets/font.fnt");
 		GStaticAssetManager.addFromUrl("assets/button.png");
 		GStaticAssetManager.addFromUrl("assets/white.png");
+		GStaticAssetManager.addFromUrl("assets/water.png");
 		GStaticAssetManager.addFromUrl("assets/script.hxs");
         GStaticAssetManager.loadQueue(assetsLoaded_handler, assetsFailed_handler);
 	}
@@ -153,7 +155,7 @@ class AbstractExample
 		infoCamera.contextCamera.group = 128;
 		genome.root.addChild(infoCamera.node);
 		
-		initInfo();
+		//initInfo();
 		
 		initExample();
 	}

@@ -1,4 +1,5 @@
 package com.genome2d.examples.custom;
+import tween.Delta;
 import flash.geom.Point;
 import flash.display.BitmapData;
 import com.genome2d.geom.GCurve;
@@ -15,6 +16,9 @@ import com.genome2d.textures.GTexture;
  */
 class ParticleModule extends GParticleEmitterModule
 {
+	public var upVelocity:Float = 0;
+	public var gravity:Float = 258.1;
+
 	private var g2d_bitmapData:BitmapData;
 	private var g2d_texture:GTexture;
 	public var texture(default,set):GTexture;
@@ -31,7 +35,9 @@ class ParticleModule extends GParticleEmitterModule
 	private var g2d_offset:Int = 0;
 	public var treshold:Float = 0;
 	public var gridSize:Int = 4;
-	public var fixed:Bool = true;
+	public var fixed:Bool = false;
+	public var ox:Float = 0;
+	public var oy:Float = 0;
 
 	public function new() {
 		super();
@@ -64,21 +70,30 @@ class ParticleModule extends GParticleEmitterModule
 			alpha = (color >> 24 & 0xFF) / 0xFF;
 		}
 
-		p_particle.x = p_emitter.x + (g2d_offset*gridSize)%g2d_bitmapData.width - g2d_bitmapData.width/2;
-		p_particle.y = p_emitter.y + Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize - g2d_bitmapData.height/2;
+		p_particle.x = p_emitter.x + Math.random()*12-6;// + (g2d_offset*gridSize)%g2d_bitmapData.width - g2d_bitmapData.width/2;
+		p_particle.y = p_emitter.y + Math.random()*12-6;// + Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize - g2d_bitmapData.height/2;
+		p_particle.scaleX = p_particle.scaleY = (Math.random()+1);
+		p_particle.red = p_particle.green = .6 + Math.random()*.2;
 		p_particle.fixed = fixed;
+		p_particle.blendMode = GBlendMode.ADD;
 
 		g2d_offset++;
 		if (Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize > g2d_bitmapData.height) g2d_offset = 0;
 	}
-	
-	override public function update(p_emitter:GParticleEmitter, p_particle:GParticle, p_deltaTime:Float):Void {
-		p_particle.x += p_deltaTime/1000*p_particle.velocityX;
-		p_particle.y += p_deltaTime/1000*p_particle.velocityY;
 
-		if (!p_particle.fixed) p_particle.velocityY += 9;
+	private var g2d_life:Float = 2000;
+	override public function update(p_emitter:GParticleEmitter, p_particle:GParticle, p_deltaTime:Float):Void {
+		if (!p_particle.fixed) {
+			p_particle.x += p_particle.velocityX * p_deltaTime/1000;
+			p_particle.y += p_particle.velocityY * p_deltaTime/1000;
+			p_particle.rotation += .01;
+
+			p_particle.velocityY += gravity * p_deltaTime/1000;
+		}
 
 		p_particle.accumulatedTime += p_deltaTime;
-		if (p_particle.accumulatedTime > 15000) p_particle.die = true;
+		p_particle.alpha = 1-p_particle.accumulatedTime/g2d_life;
+		//p_particle.scaleX = p_particle.scaleY = 2-2*p_particle.accumulatedTime/g2d_life;
+		if (p_particle.accumulatedTime > g2d_life) p_particle.die = true;
 	}
 }
