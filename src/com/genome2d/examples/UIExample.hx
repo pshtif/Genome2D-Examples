@@ -8,6 +8,9 @@
  */
 package com.genome2d.examples;
 
+import flash.display.BitmapData;
+import com.genome2d.textures.GTexture;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.examples.custom.CustomComponent;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.ui.skin.GUISkin;
@@ -66,7 +69,66 @@ class UIExample extends AbstractExample
     /**
         Initialize Example code
      **/
-    override public function initExample():Void {		
+    override public function initExample():Void {
+		var greenTexture:GTexture = GTextureManager.createTexture("greenTexture", new BitmapData(50, 50, true, 0xff00ff00));
+		var redTexture:GTexture = GTextureManager.createTexture("redTexture", new BitmapData(50, 50, true, 0xffff0000));
+		var blueTexture:GTexture = GTextureManager.createTexture("blueTexture", new BitmapData(50, 50, true, 0xff0000ff));
+		var camera:GCameraController = GNode.createWithComponent(GCameraController);
+
+		var gui:GUI = GNode.createWithComponent(GUI);
+		var green:GUIElement = new GUIElement(new GUITextureSkin("green", greenTexture));
+		var red:GUIElement = new GUIElement(new GUITextureSkin("red", redTexture));
+		var blue:GUIElement = new GUIElement(new GUITextureSkin("blue", blueTexture));
+		gui.root.addChild(red);
+		red.addChild(green);
+		green.addChild(blue);
+		gui.root.mouseEnabled = true;
+		gui.root.mouseChildren = true;
+
+		red.anchorX = red.anchorY = 0;
+		green.anchorX = 25;
+		blue.anchorY = 25;
+		green.preferredWidth = red.preferredWidth = blue.preferredWidth = 100;
+		green.preferredHeight = red.preferredHeight = blue.preferredHeight = 100;
+
+		camera.contextCamera.group = gui.node.cameraGroup = 8;
+
+		Genome2D.getInstance().root.addChild(camera.node);
+		Genome2D.getInstance().root.addChild(gui.node);
+
+//        camera.setViewport(100, 100);
+//        camera.viewport.vAlign = GVAlignType.TOP;
+//        camera.viewport.hAlign = GHAlignType.LEFT;
+
+		// INTERACTION
+		red.onMouseOver.add(function (input:GMouseInput):Void {
+//            if(input.dispatcher != green) return;
+			trace("OVER", cast (input.dispatcher,GUIElement).skin.id);
+		});
+		red.onMouseOut.add(function (input:GMouseInput):Void {
+//            if(input.dispatcher != green) return;
+			trace("OUT", cast (input.dispatcher,GUIElement).skin.id);
+		});
+		red.onMouseDown.add(function (input:GMouseInput):Void {
+//            if(input.dispatcher != green) return;
+			trace("DOWN", cast (input.dispatcher,GUIElement).skin.id);
+		});
+		red.onMouseUp.add(function (input:GMouseInput):Void {
+//            if(input.dispatcher != green) return;
+			trace("UP", cast (input.dispatcher,GUIElement).skin.id);
+		});
+		red.onMouseClick.add(function (input:GMouseInput):Void {
+//            if(input.dispatcher != green) return;
+			trace("CLICK", cast (input.dispatcher,GUIElement).skin.id);
+		});
+		gui.node.mouseEnabled = true;
+		gui.node.mouseChildren = true;
+
+		red.mouseEnabled = true;   red.mouseCapture = true; red.mouseChildren = true;
+		green.mouseEnabled = true; green.mouseCapture = false; green.mouseChildren = true;
+		blue.mouseEnabled = true;  blue.mouseCapture = false; blue.mouseChildren = true;
+
+		return;
 		title = "UI EXAMPLE";
 		detail = "\nExample showcasing UI\n\n elements, layouts and skinning.\n";
 		var a:CustomComponent;

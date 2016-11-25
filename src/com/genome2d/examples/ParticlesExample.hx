@@ -8,28 +8,14 @@
  */
 package com.genome2d.examples;
 
-import com.genome2d.components.renderable.GSprite;
-import com.genome2d.components.GCameraController;
-import com.genome2d.textures.GTexture;
-import com.genome2d.input.GKeyboardInputType;
-import com.genome2d.input.GKeyboardInput;
-import tween.Delta;
-import com.genome2d.particles.modules.GSPHVelocityModule;
-import com.genome2d.scripts.GScriptManager;
-import com.genome2d.scripts.GScript;
-import com.genome2d.geom.GRectangle;
-import com.genome2d.postprocess.GBlurPP;
-import com.genome2d.assets.GStaticAssetManager;
-import com.genome2d.particles.modules.GScriptModule;
 import com.genome2d.proto.GPrototypeFactory;
+import com.genome2d.textures.GTexture;
+import com.genome2d.particles.modules.GSPHVelocityModule;
+import com.genome2d.geom.GRectangle;
 import com.genome2d.proto.parsers.GXmlPrototypeParser;
 import com.genome2d.examples.custom.ParticleModule;
-import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.renderable.particles.GParticleSystemComponent;
-import com.genome2d.deprecated.components.renderable.particles.GSimpleParticleSystemD;
 import com.genome2d.geom.GCurve;
-import com.genome2d.input.GMouseInput;
-import com.genome2d.input.GMouseInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.particles.GParticleEmitter;
 import com.genome2d.textures.GTextureManager;
@@ -66,58 +52,25 @@ class ParticlesExample extends AbstractExample
 		emitter.addModule(module);
 		emitter.addModule(new GSPHVelocityModule());
 
-		var renderTarget:GTexture = GTextureManager.createRenderTexture("render",800,600);
-		renderTarget.pivotX = -400;
-		renderTarget.pivotY = -300;
-
-		var particleCamera:GCameraController = GNode.createWithComponent(GCameraController);
-		particleCamera.contextCamera.group = 513;
-		container.addChild(particleCamera.node);
-
+		/*
 		// Create a node with simple particle system component
         var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
-		particleSystem.getParticleSystem().enableSph = true;
-		particleSystem.getParticleSystem().setupGrid(new GRectangle(0,0,800,600),20);
-		particleSystem.addEmitter(emitter);
+		particleSystem.particleSystem.enableSph = true;
+		particleSystem.particleSystem.setupGrid(new GRectangle(0,0,800,600),20);
+		particleSystem.particleSystem.addEmitter(emitter);
 		particleSystem.node.setPosition(400, 300);
-		particleSystem.node.cameraGroup = 512;
 		particleSystem.node.name = "particleSystem";
-		container.addChild(particleSystem.node);
+		/**/
+		var xml:Xml = Xml.parse('<GParticleSystemComponent><p:particleSystem><particle_system timeDilation="1" x="0" y="0" enableSph="true" enabled="true" scaleX="1" scaleY="1"><particle_emitter enableSph="true" useWorldSpace="true" emit="true" loop="true" delay="0" duration="1" durationVariance="0" burstDistribution="null" texture="@assets/atlas.png_particle" delayVariance="0"><p:rate><GCurve path="[500.0,1,250,1]"/></p:rate><ParticleModule enabled="true" spawnModule="true" updateModule="true"/><GSPHVelocityModule enabled="true" spawnModule="false" updateModule="true"/></particle_emitter></particle_system></p:particleSystem></GParticleSystemComponent>');
+		var pn:GNode = new GNode();
+		pn.addComponentPrototype(GXmlPrototypeParser.fromXml(xml));
+		container.addChild(pn);
 
-		var sprite:GSprite = GNode.createWithComponent(GSprite);
-		sprite.texture = renderTarget;
-		container.addChild(sprite.node);
-
-		particleCamera.renderTarget = renderTarget;
-
-		emitter.x = 400;
-		emitter.y = 300;
-		emitter.rate = new GCurve(500).line(250);
+		//emitter.x = 400;
+		//emitter.y = 300;
+		//emitter.rate = new GCurve(500).line(250);
 		//emitter.burst(module.getParticleCount());
 
-		//container.postProcess = cast GXmlPrototypeParser.createPrototypeFromXmlString('<GBlurPP blurY="8" blurX="8"><p:bounds><GRectangle width="800" x="0" height="600" y="0"/></p:bounds></GBlurPP>');
-		//container.postProcess = new GBlurPP();
-		//container.postProcess.setBounds(new GRectangle(0,0,800,600));
-
-		trace(GXmlPrototypeParser.toXml(container.getPrototype()));
-		genome.onUpdate.add(update_handler);
-		genome.onKeyboardInput.add(keyboard_handler);
+		//trace(GXmlPrototypeParser.toXml(particleSystem.getPrototype()));
     }
-
-	private function keyboard_handler(p_input:GKeyboardInput):Void {
-		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
-			switch (p_input.keyCode) {
-				case 32:
-					module.upVelocity += 200;
-				case _:
-			}
-		}
-	}
-
-	private function update_handler(p_deltaTime:Float):Void {
-		emitter.y -= module.upVelocity * p_deltaTime/1000;
-		emitter.y += module.gravity * p_deltaTime/1000;
-		module.upVelocity *= .98;
-		Delta.step(p_deltaTime);
-	}
 }

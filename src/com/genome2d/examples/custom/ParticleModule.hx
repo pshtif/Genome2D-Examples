@@ -60,6 +60,7 @@ class ParticleModule extends GParticleEmitterModule
 	}
 	
 	override public function spawn(p_emitter:GParticleEmitter, p_particle:GParticle):Void {
+		/*
 		var color:UInt = g2d_bitmapData.getPixel32(Std.int(g2d_offset*gridSize)%g2d_bitmapData.width,Std.int(Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize));
 		var alpha:Float = (color >> 24 & 0xFF) / 0xFF;
 
@@ -69,7 +70,7 @@ class ParticleModule extends GParticleEmitterModule
 			color = g2d_bitmapData.getPixel32(Std.int(g2d_offset*gridSize)%g2d_bitmapData.width,Std.int(Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize));
 			alpha = (color >> 24 & 0xFF) / 0xFF;
 		}
-
+		/**/
 		p_particle.x = p_emitter.x + Math.random()*12-6;// + (g2d_offset*gridSize)%g2d_bitmapData.width - g2d_bitmapData.width/2;
 		p_particle.y = p_emitter.y + Math.random()*12-6;// + Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize - g2d_bitmapData.height/2;
 		p_particle.scaleX = p_particle.scaleY = (Math.random()+1);
@@ -78,7 +79,7 @@ class ParticleModule extends GParticleEmitterModule
 		p_particle.blendMode = GBlendMode.ADD;
 
 		g2d_offset++;
-		if (Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize > g2d_bitmapData.height) g2d_offset = 0;
+		//if (Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize > g2d_bitmapData.height) g2d_offset = 0;
 	}
 
 	private var g2d_life:Float = 2000;
