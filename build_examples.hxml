@@ -9,6 +9,7 @@
 # Include libraries
 -lib hscript
 -lib nape
+-lib actuate
 #-lib box2d
 
 # Examples JavaScript Target
