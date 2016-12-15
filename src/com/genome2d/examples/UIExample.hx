@@ -84,7 +84,6 @@ class UIExample extends AbstractExample
 
 		var fontSkin:GUIFontSkin = new GUIFontSkin("fontSkin", GFontManager.getFont("assets/font.fnt"));
 		fontSkin.color = 0x0;
-		fontSkin.rotation = 1;
 		fontSkin.autoSize = true;
 
 		gui = GNode.createWithComponent(GUI);
@@ -93,11 +92,17 @@ class UIExample extends AbstractExample
 		container.addChild(gui.node);
 
 		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(prototype);
+		textureElement.getChildByName("C4",true).onMouseClick.add(mouseClick_handler);
+		textureElement.getChildByName("C4",true).onRightMouseClick.add(mouseClick_handler);
 		gui.root.addChild(textureElement);
 
 		genome.getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
 		genome.getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);
     }
+
+	private function mouseClick_handler(p_input:GMouseInput):Void {
+		trace(p_input.dispatcher);
+	}
 
 	private function resize_handler(event:Event):Void {
 		genome.getContext().resize(new GRectangle(0,0,genome.getContext().getNativeStage().stageWidth, genome.getContext().getNativeStage().stageHeight));

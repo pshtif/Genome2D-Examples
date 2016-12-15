@@ -75,6 +75,7 @@ class AbstractExample
 
 		var config:GContextConfig = new GContextConfig();
 		//config.profile = "baseline";
+		config.useRightClick = true;
 		genome.init(config);
     }
 
