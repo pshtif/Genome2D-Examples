@@ -8,6 +8,7 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.ui.skin.GUISkinSheet;
 import tween.Delta;
 import flash.display.BitmapData;
 import com.genome2d.textures.GTexture;
@@ -40,8 +41,13 @@ class UIExample extends AbstractExample
     static public function main() {
         var inst = new UIExample();
     }
-	
-	private var prototype:String = '<element name="A1" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
+
+	private	var skinPrototype:String = '<skinSheet>
+											<textureSkin id="textureSkin" texture="@assets/button.png" sliceLeft="10" sliceTop="10" sliceRight="35" sliceBottom="35"/>
+											<fontSkin id="fontSkin" font="@assets/font.fnt" color="0x0" autoSize="true"/>
+										</skinSheet>';
+
+	private var elementPrototype:String = '<element name="A1" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
 										<element name="A2" skin="@textureSkin" setAlign="2" anchorY="100" preferredWidth="200">
 											<element skin="@fontSkin" setModel="TITLE" setAlign="5"/>
 										</element>
@@ -76,22 +82,15 @@ class UIExample extends AbstractExample
 		detail = "\nExample showcasing UI\n\n elements, layouts and skinning.\n";
 		var a:CustomComponent;
 
-		var textureSkin:GUITextureSkin = new GUITextureSkin("textureSkin", GTextureManager.getTexture("assets/button.png"));
-		textureSkin.sliceLeft = 10;
-		textureSkin.sliceRight = 35;
-		textureSkin.sliceTop = 10;
-		textureSkin.sliceBottom = 35;
-
-		var fontSkin:GUIFontSkin = new GUIFontSkin("fontSkin", GFontManager.getFont("assets/font.fnt"));
-		fontSkin.color = 0x0;
-		fontSkin.autoSize = true;
+		var skinSheet:GUISkinSheet;
+		GXmlPrototypeParser.createPrototypeFromXmlString(skinPrototype);
 
 		gui = GNode.createWithComponent(GUI);
 		gui.node.mouseEnabled = true;
 		gui.setBounds(new GRectangle(0,0,800,600));
 		container.addChild(gui.node);
 
-		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(prototype);
+		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(elementPrototype);
 		textureElement.getChildByName("C4",true).onMouseClick.add(mouseClick_handler);
 		textureElement.getChildByName("C4",true).onRightMouseClick.add(mouseClick_handler);
 		gui.root.addChild(textureElement);
