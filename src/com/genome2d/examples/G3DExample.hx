@@ -38,11 +38,8 @@ class G3DExample extends AbstractExample
 		cameraMatrix = new GMatrix3D();
 		cameraMatrix.appendRotation(120, GVector3D.X_AXIS);
 		cameraMatrix.appendTranslation(400, 300, 500);
-		
-		genome.getContext().setBackgroundColor(0x0000FF);
-		
-		scene.dispose();
-		//genome.onPostRender.add(postRender_handler);
+
+		genome.onPostRender.add(postRender_handler);
 	}
 
 	private var rotation:Float = 0;
