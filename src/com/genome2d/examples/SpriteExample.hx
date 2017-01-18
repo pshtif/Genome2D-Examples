@@ -8,6 +8,11 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.tween.GTweenSequence;
+import com.genome2d.proto.parsers.GXmlPrototypeParser;
+import com.genome2d.tween.GTweenStep;
+import com.genome2d.geom.GCurve;
+import com.genome2d.tween.GTween;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.examples.AbstractExample;
