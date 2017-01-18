@@ -23,8 +23,8 @@ Genome2D-Examples/build_flash.hxml
 #-main com.genome2d.examples.MouseExample
 #-main com.genome2d.examples.SimpleParticlesExample
 #-main com.genome2d.examples.TextureTextExample
-#-main com.genome2d.examples.UIExample
--main com.genome2d.examples.G3DExample
+-main com.genome2d.examples.UIExample
+#-main com.genome2d.examples.G3DExample
 #-main com.genome2d.examples.CameraExample
 #-main com.genome2d.examples.ParticlesExample
 #-main com.genome2d.examples.SpineExample
