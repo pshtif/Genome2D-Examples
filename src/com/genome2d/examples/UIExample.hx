@@ -49,26 +49,26 @@ class UIExample extends AbstractExample
 										</skinSheet>';
 
 	private var elementPrototype:String = '<element name="A1" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
-										<element name="A2" skin="@textureSkin" anchorAlign="2" pivotAlign="2" anchorY="100" preferredWidth="200">
-											<element skin="@fontSkin" model="TITLE" anchorAlign="5" pivotAlign="5"/>
+										<element name="A2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="100" preferredWidth="200">
+											<element skin="@fontSkin" model="TITLE" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
 										</element>
-										<element name="B2" skin="@textureSkin" color="0xBBBBBB" anchorAlign="2" pivotAlign="2" anchorY="180" preferredWidth="512" preferredHeight="150">
-											<element name="A3" skin="@fontSkin" model="LAYOUT" anchorAlign="2" pivotAlign="2" anchorY="5"/>
-											<element name="B3" anchorY="90" anchorAlign="2" pivotAlign="2">
+										<element name="B2" skin="@textureSkin" color="0xBBBBBB" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="180" preferredWidth="512" preferredHeight="150">
+											<element name="A3" skin="@fontSkin" model="LAYOUT" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="5"/>
+											<element name="B3" anchorY="90" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER">
 												<p:layout><horizontal gap="5"/></p:layout>
 												<element name="A4" skin="@textureSkin" color="0xFFBBBB" preferredWidth="140">
-													<element name="A5" skin="@fontSkin" model="BUTTON" anchorAlign="2" pivotAlign="2" anchorY="5"/>
+													<element name="A5" skin="@fontSkin" model="BUTTON" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="5"/>
 												</element>
 												<element name="B4" skin="@textureSkin" color="0xBBFFBB" preferredWidth="140">
-													<element name="B5" skin="@fontSkin" model="BUTTON" anchorAlign="2" pivotAlign="2" anchorY="5"/>
+													<element name="B5" skin="@fontSkin" model="BUTTON" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="5"/>
 												</element>
 												<element name="C4" skin="@textureSkin" preferredWidth="140" color.default-mouseOut="0xFF0000" color.mouseOver="0xFFFFFF">
-													<element name="C5" skin="@fontSkin" model="BUTTON" anchorAlign="2" pivotAlign="2" anchorY="5"/>
+													<element name="C5" skin="@fontSkin" model="BUTTON" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="5"/>
 												</element>
 											</element>
 										</element>
-										<element name="C2" skin="@textureSkin" anchorAlign="2" pivotAlign="2" anchorY="420" preferredWidth="300">
-											<element name="C3" skin="@fontSkin" model="SETTINGS" anchorAlign="5" pivotAlign="5"/>
+										<element name="C2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="420" preferredWidth="300">
+											<element name="C3" skin="@fontSkin" model="SETTINGS" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
 										</element>
 									</element>';
 
@@ -81,9 +81,7 @@ class UIExample extends AbstractExample
     override public function initExample():Void {
 		title = "UI EXAMPLE";
 		detail = "\nExample showcasing UI\n\n elements, layouts and skinning.\n";
-		var a:CustomComponent;
 
-		var skinSheet:GUISkinSheet;
 		GXmlPrototypeParser.createPrototypeFromXmlString(skinPrototype);
 
 		gui = GNode.createWithComponent(GUI);
@@ -98,20 +96,6 @@ class UIExample extends AbstractExample
 
 		genome.getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
 		genome.getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);
-
-		var step:GTweenStep = GTween.create("A4").propF("anchorY",-50,.25).delay(0).propF("anchorY",0,.25).delay(.2);
-		step.getSequence().bind(textureElement, true);
-		step = GTween.create("B4").delay(.1).propF("anchorY",-50,.25).delay(0).propF("anchorY",0,.25).delay(.1);
-		step.getSequence().bind(textureElement, true);
-		step = GTween.create("C4").delay(.2).propF("anchorY",-50,.25).delay(0).propF("anchorY",0,.25);
-		step.getSequence().bind(textureElement, true);
-		/*
-		var xml:Xml = GXmlPrototypeParser.toXml(step.getSequence().getPrototype());
-		trace(xml);
-		var seq:GTweenStep = GTween.createFromPrototype(GXmlPrototypeParser.fromXml(xml));
-		trace(seq.getSequence());
-		trace(GXmlPrototypeParser.toXml(seq.getSequence().getPrototype()));
-		/**/
     }
 
 	private function mouseClick_handler(p_input:GMouseInput):Void {

@@ -10,7 +10,6 @@
 -D advanced-telemetry
 
 # Genome2D flags
--D genome_stage3donly
 #-D genome_debug
 #-D genome_debug_autodump
 #-D genome_no_profiles
