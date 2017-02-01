@@ -174,7 +174,7 @@ class AbstractExample
 		text.text = "PRESS MOUSE OR ANY KEY FOR NEXT EXAMPLE";
 		/**/
 		titleText = GNode.createWithComponent(GText);
-		titleText.renderer.textureFont = GFontManager.getFont("assets/font.fnt");
+		titleText.renderer.textureFont = cast GFontManager.getFont("assets/font.fnt");
 		titleText.node.setPosition(5, 450);
 		titleText.node.color = 0xFFFF00;
 		titleText.width = 790;
@@ -183,7 +183,7 @@ class AbstractExample
 		titleText.text = "ABSTRACT";
 		
 		detailText = GNode.createWithComponent(GText);
-		detailText.renderer.textureFont = GFontManager.getFont("assets/font.fnt");
+		detailText.renderer.textureFont = cast GFontManager.getFont("assets/font.fnt");
 		detailText.renderer.fontScale = .5;
 		detailText.node.setPosition(5, 480);
 		detailText.width = 790;
