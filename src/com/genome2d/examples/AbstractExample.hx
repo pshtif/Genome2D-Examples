@@ -74,7 +74,7 @@ class AbstractExample
 		genome.onInitialized.addOnce(genomeInitialized_handler);
 
 		var config:GContextConfig = new GContextConfig();
-		//config.profile = "baseline";
+		config.profile = "baseline";
 		config.useRightClick = true;
 		genome.init(config);
     }
