@@ -9,7 +9,6 @@
 package com.genome2d.examples;
 
 import com.genome2d.assets.GAsset;
-import com.genome2d.assets.GAssetManager;
 import com.genome2d.assets.GStaticAssetManager;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.text.GText;

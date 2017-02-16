@@ -8,7 +8,6 @@
  */
 package com.genome2d.examples;
 
-import com.genome2d.tween.GTween;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.examples.AbstractExample;
@@ -18,7 +17,7 @@ import com.genome2d.textures.GTextureManager;
 class SpriteExample extends AbstractExample
 {
     static public function main() {
-        var inst = new SpriteExample();
+        new SpriteExample();
     }
 
     /**
