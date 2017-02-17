@@ -92,7 +92,7 @@ class PhysicsExample extends AbstractExample
 			sprite = createSprite(Math.random()*500+100, Math.random()*300+50, "assets/atlas.png_"+Std.int(Math.random()*9));
 		}
 		
-		genome.onUpdate.add(update_handler);
+		getGenome().onUpdate.add(update_handler);
     }
 	
 	#if nape

@@ -38,11 +38,6 @@ import motion.Actuate;
 
 class UIExample extends AbstractExample
 {
-
-    static public function main() {
-        var inst = new UIExample();
-    }
-
 	private	var skinPrototype:String = '<skinSheet>
 											<textureSkin id="textureSkin" texture="@assets/button.png" sliceLeft="10" sliceTop="10" sliceRight="35" sliceBottom="35"/>
 											<fontSkin id="fontSkin" font="@assets/font.fnt" color="0x0" autoSize="true"/>
@@ -94,8 +89,8 @@ class UIExample extends AbstractExample
 		textureElement.getChildByName("C4",true).onRightMouseClick.add(mouseClick_handler);
 		gui.root.addChild(textureElement);
 
-		genome.getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
-		genome.getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);
+		getGenome().getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
+		getGenome().getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);
     }
 
 	private function mouseClick_handler(p_input:GMouseInput):Void {
@@ -103,7 +98,7 @@ class UIExample extends AbstractExample
 	}
 
 	private function resize_handler(event:Event):Void {
-		genome.getContext().resize(new GRectangle(0,0,genome.getContext().getNativeStage().stageWidth, genome.getContext().getNativeStage().stageHeight));
+		getGenome().getContext().resize(new GRectangle(0,0,getGenome().getContext().getNativeStage().stageWidth, getGenome().getContext().getNativeStage().stageHeight));
 	}
 	
 	override public function dispose():Void {

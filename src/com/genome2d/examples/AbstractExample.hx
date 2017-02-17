@@ -8,8 +8,11 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.textures.GTextureManager;
+import com.genome2d.project.GProjectConfig;
+import com.genome2d.project.GProject;
 import com.genome2d.assets.GAsset;
-import com.genome2d.assets.GStaticAssetManager;
+import com.genome2d.assets.GAssetManager;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.text.GText;
 import com.genome2d.context.GContextConfig;
@@ -19,31 +22,22 @@ import com.genome2d.node.GNode;
 import com.genome2d.text.GFontManager;
 import com.genome2d.utils.GHAlignType;
 
-class AbstractExample
+class AbstractExample extends GProject
 {
-    /**
-        Genome2D singleton instance
-     **/
-    private var genome:Genome2D;
-	
+	private var initType:Int = 0;
 	private var container:GNode;
 	private var containerCamera:GCameraController;
-	
 	private var info:GNode;
-	
 	private var titleText:GText;
+	private var detailText:GText;
 	
 	public var title(default, set):String;
-	
 	private function set_title(p_value:String):String {
 		if (titleText != null) titleText.text = p_value;
 		return title = p_value;
 	}
-	
-	private var detailText:GText;
-	
+
 	public var detail(default, set):String;
-	
 	private function set_detail(p_value:String):String {
 		if (detailText != null) {
 			detailText.text = p_value;
@@ -53,117 +47,88 @@ class AbstractExample
 	}
 
     public function new(?p_init:Int = 0) {
-		genome = Genome2D.getInstance();
-		
-		switch (p_init) {
-			case 0:
-				initGenome();
-			case 1:
-				loadAssets();
-			case 2:
-				init();
+		initType = p_init;
+		var config:GProjectConfig = new GProjectConfig();
+		config.initGenome = initType == 0;
+		super(config);
+    }
+
+	override private function init():Void {
+		MGDebug.INFO(initType);
+
+		if (initType != 2) {
+			g2d_assetManager = new GAssetManager();
+			g2d_assetManager.addFromUrl("assets/spine/spineboy/spineboy-old.atlas");
+			g2d_assetManager.addFromUrl("assets/spine/spineboy/spineboy-old.json");
+			g2d_assetManager.addFromUrl("assets/spine/spineboy/spineboy-old.png", "spineboy");
+
+			g2d_assetManager.addFromUrl("assets/logo_white.png");
+			g2d_assetManager.addFromUrl("assets/atlas.png");
+			g2d_assetManager.addFromUrl("assets/atlas.xml");
+			g2d_assetManager.addFromUrl("assets/texture.png");
+			g2d_assetManager.addFromUrl("assets/font.png");
+			g2d_assetManager.addFromUrl("assets/font.fnt");
+			g2d_assetManager.addFromUrl("assets/button.png");
+			g2d_assetManager.addFromUrl("assets/white.png");
+			g2d_assetManager.addFromUrl("assets/water.png");
+			g2d_assetManager.addFromUrl("assets/script.hxs");
+			g2d_assetManager.loadQueue(assetsLoaded_handler, assetsFailed_handler);
+		} else {
+			initWrapper();
 		}
-    }
-
-    /**
-        Initialize Genome2D
-     **/
-    private function initGenome():Void {
-		genome.onFailed.addOnce(genomeFailed_handler);
-		genome.onInitialized.addOnce(genomeInitialized_handler);
-
-		var config:GContextConfig = new GContextConfig();
-		config.profile = "baseline";
-		config.useRightClick = true;
-		genome.init(config);
-    }
-
-	/**
-        Genome2D failed handler
-     **/
-    private function genomeFailed_handler(p_msg:String):Void {
-        trace("Genome2D initialization failed", p_msg);
-    }
-	
-    /**
-        Genome2D initialized handler
-     **/
-    private function genomeInitialized_handler():Void {
-		MGDebug.INFO();
-        loadAssets();
-    }
-	
-	/**	
-	 * 	Asset loading
-	 */
-	private function loadAssets():Void {		
-		MGDebug.INFO();
-		//Spine
-		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.atlas");
-		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.json");
-		GStaticAssetManager.addFromUrl("assets/spine/spineboy/spineboy-old.png", "spineboy");
-		
-		
-		GStaticAssetManager.addFromUrl("assets/logo_white.png");
-		GStaticAssetManager.addFromUrl("assets/atlas.png");
-        GStaticAssetManager.addFromUrl("assets/atlas.xml");
-		GStaticAssetManager.addFromUrl("assets/texture.png");
-		GStaticAssetManager.addFromUrl("assets/font.png");
-        GStaticAssetManager.addFromUrl("assets/font.fnt");
-		GStaticAssetManager.addFromUrl("assets/button.png");
-		GStaticAssetManager.addFromUrl("assets/white.png");
-		GStaticAssetManager.addFromUrl("assets/water.png");
-		GStaticAssetManager.addFromUrl("assets/script.hxs");
-        GStaticAssetManager.loadQueue(assetsLoaded_handler, assetsFailed_handler);
 	}
-	
+
 	/**
 	 * 	Asset loading failed
 	 */
 	private function assetsFailed_handler(p_asset:GAsset):Void {
 		MGDebug.ERROR(p_asset.id);
 	}
-	
+
 	/**
 	 * 	Asset loading completed
 	 */
 	private function assetsLoaded_handler():Void {
 		MGDebug.INFO();
+
+		g2d_assetManager.generate();
 		
-		GStaticAssetManager.generate();
-		
-		init();
+		initWrapper();
 	}
 	
-	private function init():Void {
-		
+	private function initWrapper():Void {
+		MGDebug.INFO();
+
+		var root:GNode = getGenome().root;
+
 		container = new GNode();
 		container.cameraGroup = 1;
-		genome.root.addChild(container);
+		root.addChild(container);
 		
 		info = new GNode();
 		info.cameraGroup = 128;
-		genome.root.addChild(info);
+		root.addChild(info);
 		
 		containerCamera = GNode.createWithComponent(GCameraController);
 		containerCamera.node.setPosition(400, 300);
 		containerCamera.contextCamera.group = 1;
-		genome.root.addChild(containerCamera.node);
+		root.addChild(containerCamera.node);
 		
 		var infoCamera:GCameraController = GNode.createWithComponent(GCameraController);
 		infoCamera.node.setPosition(400, 300);
 		infoCamera.contextCamera.group = 128;
-		genome.root.addChild(infoCamera.node);
+		root.addChild(infoCamera.node);
 		
-		//initInfo();
-		
+		initInfo();
+
 		initExample();
 	}
 
 	private function initInfo():Void {
-		/*
+		MGDebug.INFO();
+
 		var text:GText = GNode.createWithComponent(GText);
-		text.renderer.textureFont = GFontManager.getFont("assets/font");
+		text.renderer.textureFont = cast GFontManager.getFont("assets/font");
 		text.renderer.fontScale = .5;
 		text.node.color = 0xBBBBBB;
 		text.width = 400;
@@ -191,12 +156,14 @@ class AbstractExample
 		info.addChild(detailText.node);
 		detailText.text = "ABSTRACT";
 	}
-	
+
 	public function initExample():Void {
-		
+
 	}
 	
 	public function dispose():Void {
-		genome.root.disposeChildren();
+		MGDebug.INFO();
+
+		getGenome().root.disposeChildren();
 	}
 }

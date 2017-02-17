@@ -16,10 +16,6 @@ import com.genome2d.textures.GTextureManager;
 
 class SpriteExample extends AbstractExample
 {
-    static public function main() {
-        new SpriteExample();
-    }
-
     /**
         Initialize Example code
      **/

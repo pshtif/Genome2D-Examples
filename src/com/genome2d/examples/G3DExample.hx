@@ -31,7 +31,7 @@ class G3DExample extends AbstractExample
     override public function initExample():Void {
 		title = "G3D EXAMPLE";
 		detail = "Example showcasing 3D rendering capabilities inside Genome2D using custom overridable and extendable renderer.";
-		
+
 		scene = G3DFactory.createBox(100, 100, 100, GTextureManager.getTexture("assets/texture.png"));
 		scene.invalidate();
 		
@@ -39,7 +39,7 @@ class G3DExample extends AbstractExample
 		cameraMatrix.appendRotation(120, GVector3D.X_AXIS);
 		cameraMatrix.appendTranslation(400, 300, 500);
 
-		genome.onPostRender.add(postRender_handler);
+		getGenome().onPostRender.add(postRender_handler);
 	}
 
 	private var rotation:Float = 0;
@@ -53,16 +53,13 @@ class G3DExample extends AbstractExample
 		scene.ambientColor = new GFloat4(0.25, 0.25, 0.25, 0);
 		scene.lightDirection = new GFloat4(1, 1, -1);
 		
-		scene.render(cameraMatrix, 1);
-		var reflection:GMatrix3D = cameraMatrix.clone();
-		reflection.prependScale(1, 1, -1);
-		scene.render(reflection, 2);
+		scene.render(cameraMatrix, 0);
 	}
 	
 	override public function dispose():Void {
 		super.dispose();
 		
-		genome.onPostRender.remove(postRender_handler);
+		getGenome().onPostRender.remove(postRender_handler);
 		
 		scene.dispose();
 	}

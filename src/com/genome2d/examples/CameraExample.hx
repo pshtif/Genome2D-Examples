@@ -8,6 +8,7 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.deprecated.components.renderable.particles.GSimpleParticleSystemD;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.GSprite;
@@ -37,14 +38,33 @@ class CameraExample extends AbstractExample
 		camera1.node.setPosition(400, 300);
 		camera1.setView(0, 0, .5, 1);
 		camera1.contextCamera.group = 3;
-		genome.root.addChild(camera1.node);
+		getGenome().root.addChild(camera1.node);
 		
 		var camera2:GCameraController = GNode.createWithComponent(GCameraController);
 		camera2.node.setPosition(400, 300);
 		camera2.setView(0.5, 0, .5, 1);
 		camera2.zoom = 4;
 		camera2.contextCamera.group = 3;
-		genome.root.addChild(camera2.node);
+		getGenome().root.addChild(camera2.node);
+
+		// Create a node with simple particle system component
+		var particleSystem:GSimpleParticleSystemD = GNode.createWithComponent(GSimpleParticleSystemD);
+		particleSystem.texture = GTextureManager.getTexture("assets/atlas.png_particle");
+		particleSystem.emission = 128;
+		particleSystem.emissionTime = 1;
+		particleSystem.emit = true;
+		particleSystem.energy = 5;
+		particleSystem.dispersionAngleVariance = Math.PI*2;
+		particleSystem.initialVelocity = 20;
+		particleSystem.initialVelocityVariance = 40;
+		particleSystem.initialAngleVariance = 5;
+		particleSystem.endAlpha = 0;
+		particleSystem.initialScale = 2;
+		particleSystem.endScale = .2;
+		particleSystem.useWorldSpace = true;
+		particleSystem.node.setPosition(400, 300);
+		particleSystem.node.cameraGroup = 2;
+		container.addChild(particleSystem.node);
 
 		var emitter:GParticleEmitter = new GParticleEmitter();
 		emitter.texture = GTextureManager.getTexture("assets/atlas.png_particle");
@@ -55,7 +75,7 @@ class CameraExample extends AbstractExample
 		
 		// Create a node with simple particle system component
         var particleSystem:GParticleSystemComponent = GNode.createWithComponent(GParticleSystemComponent);
-		particleSystem.addEmitter(emitter);
+		particleSystem.particleSystem.addEmitter(emitter);
 		particleSystem.node.setPosition(400, 300);
 		particleSystem.node.cameraGroup = 2;
 		container.addChild(particleSystem.node);

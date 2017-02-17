@@ -28,12 +28,12 @@ class SpineExample extends AbstractExample
     override public function initExample():Void {		
 		title = "SPINE EXAMPLE";
 		detail = "Spine component enables you to render skeletal animations from Spine software.";
-		
+
 		var spine:GSpine = GNode.createWithComponent(GSpine);
 		spine.setup(GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.atlas").text, GTextureManager.getTexture("spineboy"));
         spine.addSkeleton("default", GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.json").text);
 		spine.setActiveSkeleton("default", "walk");
 		spine.node.setPosition(400, 400);
-		genome.root.addChild(spine.node);
+		getGenome().root.addChild(spine.node);
     }
 }

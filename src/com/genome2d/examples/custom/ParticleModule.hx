@@ -1,5 +1,5 @@
 package com.genome2d.examples.custom;
-import tween.Delta;
+
 import flash.geom.Point;
 import flash.display.BitmapData;
 import com.genome2d.geom.GCurve;
@@ -42,8 +42,8 @@ class ParticleModule extends GParticleEmitterModule
 	public function new() {
 		super();
 
-		spawnModule = true;
-		updateModule = true;
+		spawnParticleModule = true;
+		updateParticleModule = true;
 	}
 
 	public function getParticleCount():Int {
@@ -59,7 +59,7 @@ class ParticleModule extends GParticleEmitterModule
 		return count;
 	}
 	
-	override public function spawn(p_emitter:GParticleEmitter, p_particle:GParticle):Void {
+	override public function spawnParticle(p_emitter:GParticleEmitter, p_particle:GParticle):Void {
 		/*
 		var color:UInt = g2d_bitmapData.getPixel32(Std.int(g2d_offset*gridSize)%g2d_bitmapData.width,Std.int(Std.int((g2d_offset*gridSize)/g2d_bitmapData.width)*gridSize));
 		var alpha:Float = (color >> 24 & 0xFF) / 0xFF;
@@ -83,7 +83,7 @@ class ParticleModule extends GParticleEmitterModule
 	}
 
 	private var g2d_life:Float = 2000;
-	override public function update(p_emitter:GParticleEmitter, p_particle:GParticle, p_deltaTime:Float):Void {
+	override public function updateParticle(p_emitter:GParticleEmitter, p_particle:GParticle, p_deltaTime:Float):Void {
 		if (!p_particle.fixed) {
 			p_particle.x += p_particle.velocityX * p_deltaTime/1000;
 			p_particle.y += p_particle.velocityY * p_deltaTime/1000;

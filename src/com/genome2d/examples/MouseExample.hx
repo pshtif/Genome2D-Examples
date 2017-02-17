@@ -25,18 +25,19 @@ class MouseExample extends AbstractExample
         Initialize Example code
      **/
     override public function initExample():Void {
+        MGDebug.INFO();
 		title = "MOUSE EXAMPLE";
 		detail = "Example showcasing mouse interaction with Genome2D elements.";
-		
+
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture("assets/atlas.png_1");
         sprite.node.setPosition(400, 300);
         sprite.node.mouseEnabled = true;
-        sprite.node.onMouseClick.add(mouseClickHandler);
-        sprite.node.onMouseOver.add(mouseOverHandler);
-        sprite.node.onMouseOut.add(mouseOutHandler);
-        sprite.node.onMouseDown.add(mouseDownHandler);
-        sprite.node.onMouseUp.add(mouseUpHandler);
+        sprite.node.onMouseClick.add(mouseClick_handler);
+        sprite.node.onMouseOver.add(mouseOver_handler);
+        sprite.node.onMouseOut.add(mouseOut_handler);
+        sprite.node.onMouseDown.add(mouseDown_handler);
+        sprite.node.onMouseUp.add(mouseUp_handler);
 
         container.addChild(sprite.node);
     }
@@ -44,14 +45,14 @@ class MouseExample extends AbstractExample
     /**
         Mouse click handler
      **/
-    private function mouseClickHandler(signal:GMouseInput):Void {
+    private function mouseClick_handler(signal:GMouseInput):Void {
 		MGDebug.INFO();
     }
 
     /**
         Mouse over handler
      **/
-    private function mouseOverHandler(signal:GMouseInput):Void {
+    private function mouseOver_handler(signal:GMouseInput):Void {
 		var node:GNode = cast signal.target;
 		node.setScale(2, 2);
 		node.rotation = Math.PI / 4;
@@ -62,7 +63,7 @@ class MouseExample extends AbstractExample
     /**
         Mouse out handler
      **/
-    private function mouseOutHandler(signal:GMouseInput):Void {
+    private function mouseOut_handler(signal:GMouseInput):Void {
 		var node:GNode = cast signal.target;
 		node.setScale(1, 1);
 		node.rotation = 0;
@@ -73,14 +74,14 @@ class MouseExample extends AbstractExample
     /**
         Mouse down handler
      **/
-    private function mouseDownHandler(signal:GMouseInput):Void {
+    private function mouseDown_handler(signal:GMouseInput):Void {
 		MGDebug.INFO();
     }
 
     /**
         Mouse up handler
      **/
-    private function mouseUpHandler(signal:GMouseInput):Void {
+    private function mouseUp_handler(signal:GMouseInput):Void {
         MGDebug.INFO();
     }
 }
