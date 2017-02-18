@@ -44,11 +44,9 @@ class ExampleWrapper extends GProject
 	}
 	
 	private function nextExample():Void {
-		trace(GTextureManager.getTexture("assets/atlas.png_1"));
 		example.dispose();
 		exampleIndex = (exampleIndex + 1) % exampleClasses.length;
 		example = Type.createInstance(exampleClasses[exampleIndex], [2]);
-		trace(GTextureManager.getTexture("assets/atlas.png_1"));
 	}
 	
 	private function key_handler(p_input:GKeyboardInput):Void {
