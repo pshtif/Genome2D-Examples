@@ -1,9 +1,6 @@
 # Include sources
 -cp Genome2D-ContextHTML/src
 
-# Genome2D flags
--D genome_webglonly
-
 # JavaScript flags
 -debug
 -js ./Genome2D-Examples/bin/Example.js

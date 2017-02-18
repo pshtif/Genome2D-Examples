@@ -1,19 +1,14 @@
 package com.genome2d.examples;
-import com.genome2d.textures.GTextureManager;
-import com.genome2d.project.GProjectConfig;
-import com.genome2d.project.GProject;
-import com.genome2d.Genome2D;
-import com.genome2d.context.GContextConfig;
+
 import com.genome2d.examples.AbstractExample;
 import com.genome2d.examples.SpriteExample;
 import com.genome2d.input.GKeyboardInput;
 import com.genome2d.input.GKeyboardInputType;
 import com.genome2d.input.GMouseInput;
 import com.genome2d.input.GMouseInputType;
+import com.genome2d.project.GProject;
+import com.genome2d.project.GProjectConfig;
 
-/**
- * @author Peter @sHTiF Stefcek
- */
 class ExampleWrapper extends GProject
 {
 	static public function main() {
@@ -32,14 +27,14 @@ class ExampleWrapper extends GProject
 		exampleClasses.push(TextureTextExample);
 		exampleClasses.push(SimpleParticlesExample);
 		//exampleClasses.push(ParticlesExample);
-		exampleClasses.push(CameraExample);
 		exampleClasses.push(UIExample);
+		exampleClasses.push(CameraExample);
 		exampleClasses.push(SpineExample);
 		exampleClasses.push(PhysicsExample);
 		
 		example = Type.createInstance(exampleClasses[0], [1]);
 
-		getGenome().onKeyboardInput.add(key_handler);
+		//getGenome().onKeyboardInput.add(key_handler);
 		getGenome().getContext().onMouseInput.add(mouse_handler);
 	}
 	

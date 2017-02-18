@@ -25,7 +25,6 @@ class MouseExample extends AbstractExample
         Initialize Example code
      **/
     override public function initExample():Void {
-        MGDebug.INFO();
 		title = "MOUSE EXAMPLE";
 		detail = "Example showcasing mouse interaction with Genome2D elements.";
 

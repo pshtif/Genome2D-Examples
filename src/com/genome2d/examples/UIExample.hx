@@ -8,31 +8,15 @@
  */
 package com.genome2d.examples;
 
-import com.genome2d.tween.GTween;
-import com.genome2d.tween.GTweenStep;
-import com.genome2d.ui.skin.GUISkinSheet;
-import flash.display.BitmapData;
-import com.genome2d.textures.GTexture;
-import com.genome2d.input.GMouseInput;
-import com.genome2d.examples.custom.CustomComponent;
-import com.genome2d.utils.GHAlignType;
-import com.genome2d.ui.skin.GUISkin;
-import com.genome2d.geom.GRectangle;
-import flash.display.StageScaleMode;
-import flash.events.Event;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.ui.GUI;
-import com.genome2d.macros.MGDebug;
+import com.genome2d.geom.GRectangle;
+import com.genome2d.input.GMouseInput;
 import com.genome2d.node.GNode;
-import com.genome2d.proto.GPrototypeFactory;
 import com.genome2d.proto.parsers.GXmlPrototypeParser;
-import com.genome2d.text.GFontManager;
-import com.genome2d.textures.GTextureManager;
 import com.genome2d.ui.element.GUIElement;
-import com.genome2d.ui.layout.GUIHorizontalLayout;
-import com.genome2d.ui.skin.GUIFontSkin;
+import com.genome2d.ui.skin.GUISkin;
 import com.genome2d.ui.skin.GUISkinManager;
-import com.genome2d.ui.skin.GUITextureSkin;
 import motion.Actuate;
 
 
@@ -75,7 +59,7 @@ class UIExample extends AbstractExample
      **/
     override public function initExample():Void {
 		title = "UI EXAMPLE";
-		detail = "\nExample showcasing UI\n\n elements, layouts and skinning.\n";
+		detail = "Example showcasing UI elements, layouts and skinning.\n";
 
 		GXmlPrototypeParser.createPrototypeFromXmlString(skinPrototype);
 
@@ -88,17 +72,10 @@ class UIExample extends AbstractExample
 		textureElement.getChildByName("C4",true).onMouseClick.add(mouseClick_handler);
 		textureElement.getChildByName("C4",true).onRightMouseClick.add(mouseClick_handler);
 		gui.root.addChild(textureElement);
-
-		getGenome().getContext().getNativeStage().scaleMode = StageScaleMode.NO_SCALE;
-		getGenome().getContext().getNativeStage().addEventListener(Event.RESIZE, resize_handler);
     }
 
 	private function mouseClick_handler(p_input:GMouseInput):Void {
 		trace(p_input.dispatcher);
-	}
-
-	private function resize_handler(event:Event):Void {
-		getGenome().getContext().resize(new GRectangle(0,0,getGenome().getContext().getNativeStage().stageWidth, getGenome().getContext().getNativeStage().stageHeight));
 	}
 	
 	override public function dispose():Void {
