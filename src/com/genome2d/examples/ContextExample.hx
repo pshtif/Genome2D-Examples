@@ -8,6 +8,8 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.geom.GMatrix;
+import com.genome2d.context.GBlendMode;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.examples.AbstractExample;
@@ -28,22 +30,21 @@ class ContextExample extends AbstractExample
 		title = "CONTEXT EXAMPLE";
 		detail = "Genome2D offers low level access to direct context draw calls without the usage of the high level node/component framework.";
 		
-        genome.onPostRender.add(postRender_handler);
+        getGenome().onPostRender.add(postRender_handler);
     }
 
     private function postRender_handler():Void {
-		var texture:GTexture = GTextureManager.getTexture("assets/texture");
-		
-		genome.getContext().draw(texture, 100, 100);
+		var texture:GTexture = GTextureManager.getTexture("assets/texture.png");
+
+		getGenome().getContext().draw(texture, GBlendMode.NORMAL, 100, 100);
+
+		var matrix:GMatrix = new GMatrix();
+		matrix.translate(100,250);
+		getGenome().getContext().drawMatrix(texture, GBlendMode.NORMAL, matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
 		
 		var polyVerticles = [0, 21.33333333333337, 59.40000000000009, 37.83333333333337, 34.40000000000009, 68.83333333333337];
 		var polyUvcs = [0, 0.3333333333333333, 0.3177083333333333, 0.3333333333333333, 0.3177083333333333, 0.6666666666666666];
 		
-		genome.getContext().drawPoly(texture, polyVerticles, polyUvcs, 300, 100);
-		
-		var polyVerticles = [0, 21.33333333333337, 34.40000000000009, 68.83333333333337, -25, 52.33333333333337];
-		var polyUvcs = [0, 0.3333333333333333, 0.3177083333333333, 0.6666666666666666, 0, 0.6666666666666666];
-		
-		genome.getContext().drawPoly(texture, polyVerticles, polyUvcs, 300, 100);
+		getGenome().getContext().drawPoly(texture, GBlendMode.NORMAL, polyVerticles, polyUvcs, 300, 100);
 	}
 }
