@@ -36,14 +36,14 @@ class ContextExample extends AbstractExample
     private function postRender_handler():Void {
 		var texture:GTexture = GTextureManager.getTexture("assets/texture.png");
 
-		getGenome().getContext().draw(texture, GBlendMode.NORMAL, 100, 100);
+		//getGenome().getContext().draw(texture, GBlendMode.NORMAL, 100, 100);
 
 		var matrix:GMatrix = new GMatrix();
 		matrix.translate(100,250);
-		getGenome().getContext().drawMatrix(texture, GBlendMode.NORMAL, matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
+		//getGenome().getContext().drawMatrix(texture, GBlendMode.NORMAL, matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
 		
-		var polyVerticles = [0, 21.33333333333337, 59.40000000000009, 37.83333333333337, 34.40000000000009, 68.83333333333337];
-		var polyUvcs = [0, 0.3333333333333333, 0.3177083333333333, 0.3333333333333333, 0.3177083333333333, 0.6666666666666666];
+		var polyVerticles = [0, 0, 50, 0, 0, 50.0];
+		var polyUvcs = [0, 0, 1, 0, 0, 1.0];
 		
 		getGenome().getContext().drawPoly(texture, GBlendMode.NORMAL, polyVerticles, polyUvcs, 300, 100);
 	}
