@@ -22,14 +22,18 @@ import motion.Actuate;
 
 class UIExample extends AbstractExample
 {
+	static public function main() {
+		var inst = new UIExample();
+	}
+
 	private	var skinPrototype:String = '<skinSheet>
 											<textureSkin id="textureSkin" texture="@assets/button.png" sliceLeft="10" sliceTop="10" sliceRight="35" sliceBottom="35"/>
-											<fontSkin id="fontSkin" font="@assets/font.fnt" color="0x0" autoSize="true"/>
+											<fontSkin id="fontSkin" font="@assets/font.fnt" color="0xFFFFFF" autoSize="true"/>
 										</skinSheet>';
 
-	private var elementPrototype:String = '<element name="A1" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
+	private var elementPrototype:String = '<element name="A1" batchPriority="@assets/font.png" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
 										<element name="A2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="100" preferredWidth="200">
-											<element skin="@fontSkin" model="TITLE" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
+											<element skin="@fontSkin" model="TITLE" anchorY="-20" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
 										</element>
 										<element name="B2" skin="@textureSkin" color="0xBBBBBB" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="180" preferredWidth="512" preferredHeight="150">
 											<element name="A3" skin="@fontSkin" model="LAYOUT" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="5"/>
