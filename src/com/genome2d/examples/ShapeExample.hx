@@ -8,6 +8,8 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.textures.GTextureManager;
+import com.genome2d.components.renderable.GShape;
 import com.genome2d.examples.custom.GEMoveGizmo;
 import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
@@ -26,11 +28,12 @@ class ShapeExample extends AbstractExample
         Initialize Example code
      **/
     override public function initExample():Void {		
-		title = "SPRITE EXAMPLE";
+		title = "SHAPE EXAMPLE";
 		detail = "Sprite component is the most basic renderable component to render static and animated sprites.";
 
-        var gizmo:GEMoveGizmo = GNode.createWithComponent(GEMoveGizmo);
-        gizmo.node.setPosition(400,300);
-        genome.root.addChild(gizmo.node);
+        var shape:GShape = GNode.createWithComponent(GShape);
+        shape.setup([0,0, 50, 0, 0, 50, 0, 50, 50, 0, 50, 50],[0,0,1,0,0,1,0,1,1,0,1,1]);
+        shape.texture = GTextureManager.getTexture("assets/texture.png");
+        getGenome().root.addChild(shape.node);
     }
 }

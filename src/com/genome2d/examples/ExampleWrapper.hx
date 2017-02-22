@@ -21,6 +21,7 @@ class ExampleWrapper extends GProject
 	
 	override private function init():Void {
 		exampleClasses = new Array<Class<AbstractExample>>();
+		exampleClasses.push(ShapeExample);
 		exampleClasses.push(SpineExample);
 		exampleClasses.push(G3DExample);
 		exampleClasses.push(SpriteExample);
