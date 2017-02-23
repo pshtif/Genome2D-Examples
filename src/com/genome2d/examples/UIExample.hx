@@ -8,6 +8,7 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.textures.GTextureManager;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.ui.GUI;
 import com.genome2d.geom.GRectangle;
@@ -31,7 +32,7 @@ class UIExample extends AbstractExample
 											<fontSkin id="fontSkin" font="@assets/font.fnt" color="0xFFFFFF" autoSize="true"/>
 										</skinSheet>';
 
-	private var elementPrototype:String = '<element name="A1" batchPriority="@assets/font.png" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
+	private var elementPrototype:String = '<element name="A1" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
 										<element name="A2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="100" preferredWidth="200">
 											<element skin="@fontSkin" model="TITLE" anchorY="-20" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
 										</element>
@@ -76,6 +77,8 @@ class UIExample extends AbstractExample
 		textureElement.getChildByName("C4",true).onMouseClick.add(mouseClick_handler);
 		textureElement.getChildByName("C4",true).onRightMouseClick.add(mouseClick_handler);
 		gui.root.addChild(textureElement);
+		//gui.root.flushBatch = true;
+		gui.root.batchPriority = [GTextureManager.getTexture("assets/font.png")];
     }
 
 	private function mouseClick_handler(p_input:GMouseInput):Void {
