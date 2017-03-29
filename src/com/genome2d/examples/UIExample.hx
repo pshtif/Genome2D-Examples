@@ -8,6 +8,10 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.input.GKeyboardInputType;
+import com.genome2d.input.GKeyboardInput;
+import com.genome2d.debug.GDebug;
+import com.genome2d.context.stats.GStats;
 import com.genome2d.textures.GTextureManager;
 import com.genome2d.components.GCameraController;
 import com.genome2d.components.renderable.ui.GUI;
@@ -34,7 +38,7 @@ class UIExample extends AbstractExample
 
 	private var elementPrototype:String = '<element name="A1" anchorLeft="0" anchorRight="1" anchorTop="0" anchorBottom="1">
 										<element name="A2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="100" preferredWidth="200">
-											<element skin="@fontSkin" model="TITLE" anchorY="-20" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
+											<element skin="@fontSkin" model="TITLE" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
 										</element>
 										<element name="B2" skin="@textureSkin" color="0xBBBBBB" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="180" preferredWidth="512" preferredHeight="150">
 											<element name="A3" skin="@fontSkin" model="LAYOUT" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="5"/>
@@ -51,7 +55,7 @@ class UIExample extends AbstractExample
 												</element>
 											</element>
 										</element>
-										<element name="C2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="420" preferredWidth="300">
+										<element name="C2" skin="@textureSkin" anchorAlign="TOP_CENTER" pivotAlign="TOP_CENTER" anchorY="360" preferredWidth="300">
 											<element name="C3" skin="@fontSkin" model="SETTINGS" anchorAlign="MIDDLE_CENTER" pivotAlign="MIDDLE_CENTER"/>
 										</element>
 									</element>';
@@ -63,6 +67,8 @@ class UIExample extends AbstractExample
         Initialize Example code
      **/
     override public function initExample():Void {
+		GStats.visible = true;
+
 		title = "UI EXAMPLE";
 		detail = "Example showcasing UI elements, layouts and skinning.\n";
 
@@ -79,7 +85,22 @@ class UIExample extends AbstractExample
 		gui.root.addChild(textureElement);
 		//gui.root.flushBatch = true;
 		gui.root.batchPriority = [GTextureManager.getTexture("assets/font.png")];
+
+		Genome2D.getInstance().onKeyboardInput.add(keyboardInput_handler);
     }
+
+	private function keyboardInput_handler(p_input:GKeyboardInput):Void {
+		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
+			switch (p_input.keyCode) {
+				case 219:
+					GDebug.debugDrawCall--;
+					if (GDebug.debugDrawCall < 0) GDebug.debugDrawCall = 0;
+				case 221:
+					GDebug.debugDrawCall++;
+
+			}
+		}
+	}
 
 	private function mouseClick_handler(p_input:GMouseInput):Void {
 		trace(p_input.dispatcher);

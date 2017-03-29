@@ -25,7 +25,7 @@ Genome2D-Examples/build_flash.hxml
 #-main com.genome2d.examples.MouseExample
 #-main com.genome2d.examples.SimpleParticlesExample
 #-main com.genome2d.examples.TextureTextExample
-#-main com.genome2d.examples.UIExample
+-main com.genome2d.examples.UIExample
 #-main com.genome2d.examples.G3DExample
 #-main com.genome2d.examples.CameraExample
 #-main com.genome2d.examples.ParticlesExample
@@ -38,4 +38,4 @@ Genome2D-Examples/build_flash.hxml
 #WIP
 #-main com.genome2d.examples.ContextExample
 
--main com.genome2d.examples.ExampleWrapper
+#-main com.genome2d.examples.ExampleWrapper
