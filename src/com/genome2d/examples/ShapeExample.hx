@@ -34,6 +34,7 @@ class ShapeExample extends AbstractExample
         var shape:GShape = GNode.createWithComponent(GShape);
         shape.setup([0,0, 50, 0, 0, 50, 0, 50, 50, 0, 50, 50],[0,0,1,0,0,1,0,1,1,0,1,1]);
         shape.texture = GTextureManager.getTexture("assets/texture.png");
+        shape.node.setPosition(400,300);
         getGenome().root.addChild(shape.node);
     }
 }
