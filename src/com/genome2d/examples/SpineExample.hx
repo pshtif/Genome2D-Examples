@@ -11,7 +11,7 @@ package com.genome2d.examples;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.assets.GStaticAssetManager;
 import com.genome2d.components.renderable.GSprite;
-import com.genome2d.components.renderable.GSpine;
+import com.genome2d.components.renderable.GSpineComponent;
 import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
@@ -29,7 +29,7 @@ class SpineExample extends AbstractExample
 		title = "SPINE EXAMPLE";
 		detail = "Spine component enables you to render skeletal animations from Spine software.";
 
-		var spine:GSpine = GNode.createWithComponent(GSpine);
+		var spine:GSpineComponent = GNode.createWithComponent(GSpineComponent);
 		spine.setup(GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.atlas").text, GTextureManager.getTexture("spineboy"));
         spine.addSkeleton("default", GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.json").text);
 		spine.setActiveSkeleton("default", "walk");
