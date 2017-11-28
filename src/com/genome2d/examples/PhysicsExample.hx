@@ -94,7 +94,7 @@ class PhysicsExample extends AbstractExample
 		
 		getGenome().onUpdate.add(update_handler);
     }
-	
+
 	#if nape
 	private function update_handler(p_deltaTime:Float):Void {
 		if (p_deltaTime > 0) space.step(p_deltaTime / 1000);
@@ -125,6 +125,9 @@ class PhysicsExample extends AbstractExample
 			node.rotation = body.getAngle();
 		}
 	}
+	#else
+	private function update_handler(p_deltaTime:Float):Void {
+	}
 	#end
 
     /**
@@ -142,6 +145,7 @@ class PhysicsExample extends AbstractExample
 		body.shapes.add(new Polygon(Polygon.box(32, 32)));
 		body.position.setxy(p_x, p_y);
 		body.space = space;
+		sprite.node.userData = body;
 		#elseif box2d
 		var bodyDef:B2BodyDef = new B2BodyDef();
 		bodyDef.position.set(p_x/physScale, p_y/physScale);
@@ -158,9 +162,8 @@ class PhysicsExample extends AbstractExample
 
 		var body:B2Body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef);
-		#end
-		
 		sprite.node.userData = body;
+		#end
 		
 		objects.push(sprite.node);
 

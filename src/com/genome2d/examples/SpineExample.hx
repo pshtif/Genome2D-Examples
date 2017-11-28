@@ -31,8 +31,9 @@ class SpineExample extends AbstractExample
 
 		var spine:GSpineComponent = GNode.createWithComponent(GSpineComponent);
 		spine.setup(GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.atlas").text, GTextureManager.getTexture("spineboy"));
-        spine.addSkeleton("default", GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.json").text);
-		spine.setActiveSkeleton("default", "walk");
+        spine.getSpine().addSkeleton("default", GStaticAssetManager.getTextAssetById("assets/spine/spineboy/spineboy-old.json").text);
+		spine.getSpine().setActiveSkeleton("default");
+		spine.getSpine().setAnimation(0, "walk", true);
 		spine.node.setPosition(400, 400);
 		getGenome().root.addChild(spine.node);
     }

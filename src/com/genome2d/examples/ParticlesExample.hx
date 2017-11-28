@@ -47,9 +47,9 @@ class ParticlesExample extends AbstractExample
 		emitter.duration = 1;
 		emitter.loop = true;
 		emitter.enableSph = true;
-		module = new ParticleModule();
-		module.texture = GTextureManager.getTexture("assets/atlas.png_0");
-		emitter.addModule(module);
+		//module = new ParticleModule();
+		//module.texture = GTextureManager.getTexture("assets/atlas.png_0");
+		//emitter.addModule(module);
 		emitter.addModule(new GSPHVelocityModule());
 
 		/*

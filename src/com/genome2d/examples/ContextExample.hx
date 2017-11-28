@@ -45,7 +45,7 @@ class ContextExample extends AbstractExample
 
 		getGenome().getContext().setRenderTarget(null);
 
-		getGenome().onPreRender.adremove(preRender_handler);
+		getGenome().onPreRender.remove(preRender_handler);
 	}
 
 	// Post render is called after Genome2D nodegraph has been rendered and before stats render and present is called

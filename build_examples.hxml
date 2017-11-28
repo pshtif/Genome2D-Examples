@@ -10,18 +10,20 @@
 
 # Include libraries
 -lib hscript
--lib nape
--lib actuate
+#-lib nape
 #-lib box2d
 
 # Examples JavaScript Target
-#Genome2D-Examples/build_js.hxml
+Genome2D-Examples/build_js.hxml
 
 # Examples Flash Target
-Genome2D-Examples/build_flash.hxml
+#Genome2D-Examples/build_flash.hxml
+
+# Without main class
+#com.genome2d.examples.SimpleParticlesExample
 
 # Main class
-#-main com.genome2d.examples.SpriteExample
+-main com.genome2d.examples.SpriteExample
 #-main com.genome2d.examples.MouseExample
 #-main com.genome2d.examples.SimpleParticlesExample
 #-main com.genome2d.examples.TextureTextExample
@@ -33,7 +35,7 @@ Genome2D-Examples/build_flash.hxml
 #-main com.genome2d.examples.PhysicsExample
 #-main com.genome2d.examples.ShapeExample
 #-main com.genome2d.examples.ScriptExample
--main com.genome2d.examples.UIRenderTargetExample
+#-main com.genome2d.examples.UIRenderTargetExample
 
 
 #WIP

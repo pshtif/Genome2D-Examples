@@ -27,8 +27,6 @@ import com.genome2d.tween.GTweenSequence;
 import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.skin.GUISkin;
 import com.genome2d.ui.skin.GUISkinManager;
-import motion.Actuate;
-
 
 class UIRenderTargetExample extends AbstractExample
 {

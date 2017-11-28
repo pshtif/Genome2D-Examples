@@ -16,6 +16,10 @@ import com.genome2d.textures.GTextureManager;
 
 class SpriteExample extends AbstractExample
 {
+    static public function main() {
+        var inst = new SpriteExample();
+    }
+
     /**
         Initialize Example code
      **/
@@ -91,7 +95,8 @@ class SpriteExample extends AbstractExample
      **/
     private function createAnimatedSprite(p_x:Int, p_y:Int):GSprite {
 		// To animate a sprite we need a frame animation instance with defined texture frames
-		var animation:GFrameAnimation = new GFrameAnimation(GTextureManager.getTextures(["assets/atlas.png_1", "assets/atlas.png_2", "assets/atlas.png_3", "assets/atlas.png_4", "assets/atlas.png_5", "assets/atlas.png_6", "assets/atlas.png_7"]));
+		var animation:GFrameAnimation = new GFrameAnimation();
+        animation.frameTextures = GTextureManager.getTextures(["assets/atlas.png_1", "assets/atlas.png_2", "assets/atlas.png_3", "assets/atlas.png_4", "assets/atlas.png_5", "assets/atlas.png_6", "assets/atlas.png_7"]);
 		animation.frameRate = 10;
 		
         var sprite:GSprite = GNode.createWithComponent(GSprite);

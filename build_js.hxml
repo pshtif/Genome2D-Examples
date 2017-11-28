@@ -1,6 +1,10 @@
 # Include sources
 -cp Genome2D-ContextHTML/src
 
+-D webglonly
+
 # JavaScript flags
 -debug
+-dce no
+--macro include('com')
 -js ./Genome2D-Examples/bin/Example.js

@@ -113,7 +113,7 @@ class AbstractExample extends GProject
 		infoCamera.contextCamera.group = 128;
 		root.addChild(infoCamera.node);
 
-		initInfo();
+		//initInfo();
 
 		initExample();
 	}

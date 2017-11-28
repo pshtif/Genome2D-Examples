@@ -49,6 +49,7 @@ class G3DExample extends AbstractExample
 		
 		scene.getSceneMatrix().identity();
 		scene.getSceneMatrix().appendRotation(rotation, GVector3D.Z_AXIS);
+		scene.tintColor = new GFloat4(1,1,1,.01);
 		
 		scene.render(cameraMatrix, 0);
 	}

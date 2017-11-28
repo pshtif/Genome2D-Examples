@@ -8,6 +8,8 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.context.GBlendMode;
+import com.genome2d.components.renderable.GSprite;
 import com.genome2d.assets.GAssetManager;
 import com.genome2d.deprecated.components.renderable.particles.GSimpleParticleSystemD;
 import com.genome2d.input.GMouseInput;
@@ -15,13 +17,14 @@ import com.genome2d.input.GMouseInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
+@:expose
 class SimpleParticlesExample extends AbstractExample
 {
-
+/*
     static public function main() {
         var inst = new SimpleParticlesExample();
     }
-	
+/**/
 	private var particleSystem:GSimpleParticleSystemD;
 
     /**
@@ -38,15 +41,28 @@ class SimpleParticlesExample extends AbstractExample
 		particleSystem.emissionTime = 1;
         particleSystem.emit = true;
         particleSystem.energy = 5;
+        particleSystem.initialColor = 0xff8800;
+        particleSystem.blendMode = GBlendMode.ADD;
 		particleSystem.dispersionAngleVariance = Math.PI*2;
         particleSystem.initialVelocity = 20;
         particleSystem.initialVelocityVariance = 40;
         particleSystem.initialAngleVariance = 5;
+        particleSystem.initialScaleVariance = 10;
         particleSystem.endAlpha = 0;
-        particleSystem.initialScale = 2;
-        particleSystem.endScale = .2;
+        particleSystem.endColor = 0x550000;
+        particleSystem.initialScale = 5;
+        particleSystem.endScale = 3;
+        particleSystem.endScaleVariance = 3;
 		particleSystem.useWorldSpace = true;
-		particleSystem.node.setPosition(400, 300);
+		particleSystem.node.setPosition(200, 100);
 		container.addChild(particleSystem.node);
+
+        var sprite:GSprite = GNode.createWithComponent(GSprite);
+        sprite.texture = GTextureManager.getTexture("assets/logo_white.png");
+        sprite.node.blue = 0;
+        sprite.node.green = 0;
+        sprite.node.red = 0;
+        sprite.node.setPosition(200,100);
+        container.addChild(sprite.node);
     }
 }

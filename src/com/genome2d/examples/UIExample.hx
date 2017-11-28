@@ -22,7 +22,6 @@ import com.genome2d.proto.parsers.GXmlPrototypeParser;
 import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.skin.GUISkin;
 import com.genome2d.ui.skin.GUISkinManager;
-import motion.Actuate;
 
 
 class UIExample extends AbstractExample
