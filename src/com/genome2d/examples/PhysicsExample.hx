@@ -46,6 +46,7 @@ class PhysicsExample extends AbstractExample
 	#elseif box2d
 	private var world:B2World;
 	private var floor:B2Body;
+	private var walls:B2Body;
 	private var physScale:Float = 30;
 	#end
 	

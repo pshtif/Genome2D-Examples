@@ -49,7 +49,9 @@ class AbstractExample extends GProject
 
     public function new(?p_init:Int = 0) {
 		initType = p_init;
+		var contextConfig:GContextConfig = new GContextConfig(null);
 		var config:GProjectConfig = new GProjectConfig();
+		config.contextConfig = contextConfig;
 		config.initGenome = initType == 0;
 		super(config);
     }

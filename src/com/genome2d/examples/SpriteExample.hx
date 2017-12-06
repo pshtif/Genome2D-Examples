@@ -8,6 +8,10 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.debug.GDebug;
+import com.genome2d.input.GMouseInput;
+import com.genome2d.tween.GTween;
+import com.genome2d.tween.GTweenStep;
 import com.genome2d.animation.GFrameAnimation;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.examples.AbstractExample;
@@ -75,6 +79,16 @@ class SpriteExample extends AbstractExample
 
 		// Create an animated sprite with tint
         sprite = createAnimatedSprite(700, 300);
+        sprite.node.onMouseClick.add(mouseclick_handler);
+        sprite.node.mouseEnabled = true;
+
+        new GTweenTest();
+    }
+
+    private function mouseclick_handler(p_input:GMouseInput):Void {
+        GDebug.info('click');
+        GTween.abortAllTimelines();
+        new GTweenTest();
     }
 
     /**
@@ -105,5 +119,34 @@ class SpriteExample extends AbstractExample
         container.addChild(sprite.node);
 
         return sprite;
+    }
+}
+
+class GTweenTest {
+
+    public var x:Float = 0;
+    public var y:Float= 0;
+
+    public function new() {
+
+        trace("GTween Test start");
+
+        for (i in 0...1) {
+            tween(i);
+        }
+    }
+
+    private function tween(delay:Float):Void {
+
+        trace("Tween start " + delay);
+
+        var step:GTweenStep = GTween.create(this, true).delay(delay);
+        step = step.propF("x", 10, 1, true).onComplete(onComplete, [delay]);
+
+    }
+
+    private function onComplete(id:Float):Void {
+
+        trace("Tween on complete " + id);
     }
 }

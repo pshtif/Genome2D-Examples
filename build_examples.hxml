@@ -10,7 +10,7 @@
 
 # Include libraries
 -lib hscript
-#-lib nape
+-lib nape
 #-lib box2d
 
 # Examples JavaScript Target
@@ -23,7 +23,7 @@ Genome2D-Examples/build_js.hxml
 #com.genome2d.examples.SimpleParticlesExample
 
 # Main class
--main com.genome2d.examples.SpriteExample
+#-main com.genome2d.examples.SpriteExample
 #-main com.genome2d.examples.MouseExample
 #-main com.genome2d.examples.SimpleParticlesExample
 #-main com.genome2d.examples.TextureTextExample
@@ -32,7 +32,7 @@ Genome2D-Examples/build_js.hxml
 #-main com.genome2d.examples.CameraExample
 #-main com.genome2d.examples.ParticlesExample
 #-main com.genome2d.examples.SpineExample
-#-main com.genome2d.examples.PhysicsExample
+-main com.genome2d.examples.PhysicsExample
 #-main com.genome2d.examples.ShapeExample
 #-main com.genome2d.examples.ScriptExample
 #-main com.genome2d.examples.UIRenderTargetExample
