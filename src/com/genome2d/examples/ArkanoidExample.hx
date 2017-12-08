@@ -8,6 +8,9 @@
  */
 package com.genome2d.examples;
 
+import com.genome2d.input.GMouseInputType;
+import com.genome2d.input.GMouseInput;
+import spinehaxe.Polygon;
 import com.genome2d.context.GBlendMode;
 import com.genome2d.components.renderable.GSprite;
 import com.genome2d.examples.AbstractExample;
@@ -19,6 +22,7 @@ import nape.phys.Body;
 import nape.phys.BodyType;
 import nape.shape.Circle;
 import nape.shape.Polygon;
+import nape.phys.Material;
 import nape.space.Space;
 import nape.util.BitmapDebug;
 import nape.util.Debug;
@@ -34,6 +38,7 @@ class ArkanoidExample extends AbstractExample
 	
 	private var objects:Array<GNode>;
 	private var accumulatedTime:Float = 0;
+	private var player:GNode;
 	
     /**
         Initialize Example code
@@ -47,23 +52,40 @@ class ArkanoidExample extends AbstractExample
 		space.worldLinearDrag = 0;
 		
 		walls = new Body(BodyType.STATIC);
-		walls.shapes.add(new Polygon(Polygon.rect(0, 600, 800, 1)));
-		walls.shapes.add(new Polygon(Polygon.rect(0, 0, 800, 1)));
-		walls.shapes.add(new Polygon(Polygon.rect(0, 0, 1, 600)));
-		walls.shapes.add(new Polygon(Polygon.rect(800, 0, 1, 600)));
+		var poly:Polygon = new Polygon(Polygon.rect(0, 600, 800, 1));
+		poly.material = new Material(1,0,0);
+		walls.shapes.add(poly);
+		poly = new Polygon(Polygon.rect(0, 0, 800, 1));
+		poly.material = new Material(1,0,0);
+		walls.shapes.add(poly);
+		poly = new Polygon(Polygon.rect(0, 0, 1, 600));
+		poly.material = new Material(1,0,0);
+		walls.shapes.add(poly);
+		poly = new Polygon(Polygon.rect(800, 0, 1, 600));
+		poly.material = new Material(1,0,0);
+		walls.shapes.add(poly);
 		walls.space = space;
 		
 		objects = new Array<GNode>();
 		/**/
         var sprite:GSprite;
 		
-		for (i in 0...1) {
+		for (i in 0...5) {
 			// Create a sprite
 			sprite = createSprite(Math.random()*500+100, Math.random()*300+50, "assets/ball.png");
 		}
+
+		createPlayer();
 		
 		getGenome().onUpdate.add(update_handler);
+		getGenome().onMouseInput.add(mouseInput_handler);
     }
+
+	private function mouseInput_handler(p_input:GMouseInput):Void {
+		if (p_input.type == GMouseInputType.MOUSE_MOVE) {
+			cast (player.userData, Body).position.x = p_input.contextX;
+		}
+	}
 
 	private function update_handler(p_deltaTime:Float):Void {
 		if (p_deltaTime > 0) space.step(p_deltaTime / 1000);
@@ -78,6 +100,9 @@ class ArkanoidExample extends AbstractExample
 			node.setPosition(body.position.x, body.position.y);
 			node.rotation = body.rotation;
 		}
+
+		var playerBody:Body = cast player.userData;
+		player.setPosition(playerBody.position.x, playerBody.position.y);
 	}
 
     /**
@@ -93,16 +118,36 @@ class ArkanoidExample extends AbstractExample
 		var body:Body = new Body(BodyType.DYNAMIC);
 		body.allowRotation = false;
 		//body.shapes.add(new Polygon(Polygon.box(32, 32)));
-		body.shapes.add(new Circle(9));
+		var circle:Circle = new Circle(9);
+		circle.material = new Material(1,0,0);
+		body.shapes.add(circle);
 		body.position.setxy(p_x, p_y);
 		body.space = space;
-		body.applyImpulse(Vec2.get(100,100), body.position);
+		body.applyImpulse(Vec2.get(100*Math.random(),100*Math.random()), body.position);
 		sprite.node.userData = body;
 		
 		objects.push(sprite.node);
 
         return sprite;
     }
+
+	private function createPlayer():Void {
+		// Create a node with sprite component
+		var sprite:GSprite = GNode.createWithComponent(GSprite);
+		sprite.texture = GTextureManager.getTexture("assets/atlas.png_0");
+		sprite.node.setPosition(400, 550);
+		sprite.blendMode = GBlendMode.ADD;
+		player = sprite.node;
+		container.addChild(player);
+		var body:Body = new Body(BodyType.KINEMATIC);
+		body.allowRotation = false;
+		var poly:Polygon = new Polygon(Polygon.box(32, 32));
+		poly.material = new Material(1,0,0);
+		body.shapes.add(poly);
+		body.position.setxy(400, 550);
+		body.space = space;
+		player.userData = body;
+	}
 	
 	override public function dispose():Void {
 		for (node in objects) {
