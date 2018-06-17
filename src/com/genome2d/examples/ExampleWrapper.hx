@@ -12,7 +12,7 @@ import com.genome2d.project.GProjectConfig;
 class ExampleWrapper extends GProject
 {
 	static public function main() {
-        var inst = new ExampleWrapper(new GProjectConfig());
+        var inst = new ExampleWrapper(new GProjectConfig(null));
     }
 	
 	private var example:AbstractExample;
