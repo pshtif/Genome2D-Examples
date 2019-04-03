@@ -7,7 +7,7 @@
  *	License:: ./doc/LICENSE.md (https://github.com/pshtif/Genome2D/blob/master/LICENSE.md)
  */
 package com.genome2d.examples;
-
+#if nape
 import com.genome2d.input.GMouseInputType;
 import com.genome2d.input.GMouseInput;
 import spinehaxe.Polygon;
@@ -161,3 +161,4 @@ class ArkanoidExample extends AbstractExample
 		super.dispose();
 	}
 }
+#end
