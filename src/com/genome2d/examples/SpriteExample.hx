@@ -17,12 +17,17 @@ import com.genome2d.components.renderable.GSprite;
 import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
+import com.genome2d.textures.GTexture;
 
+#if cs @:nativeGen #end
 class SpriteExample extends AbstractExample
 {
+    #if !cs
     static public function main() {
         var inst = new SpriteExample();
     }
+    #end
+    private var _test:GNode;
 
     /**
         Initialize Example code
@@ -83,6 +88,10 @@ class SpriteExample extends AbstractExample
         sprite.node.mouseEnabled = true;
 
         new GTweenTest();
+    }
+
+    private function update_handler(p_delta:Float):Void {
+        _test.rotation += 0.01;
     }
 
     private function mouseclick_handler(p_input:GMouseInput):Void {

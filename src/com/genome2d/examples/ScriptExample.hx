@@ -17,12 +17,15 @@ import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
+#if cs @:nativeGen #end
 class ScriptExample extends AbstractExample
 {
+    #if !cs
     static public function main() {
         var inst = new ScriptExample();
     }
-
+    #end
+    
     /**
         Initialize Example code
      **/

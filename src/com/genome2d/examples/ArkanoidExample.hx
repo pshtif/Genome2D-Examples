@@ -27,12 +27,14 @@ import nape.space.Space;
 import nape.util.BitmapDebug;
 import nape.util.Debug;
 
+#if cs @:nativeGen #end
 class ArkanoidExample extends AbstractExample
 {
+	#if !cs
     static public function main() {
         var inst = new ArkanoidExample();
     }
-
+	#end
 	private var space:Space;
 	private var walls:Body;
 	

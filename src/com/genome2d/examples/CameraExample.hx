@@ -20,12 +20,15 @@ import com.genome2d.node.GNode;
 import com.genome2d.particles.GParticleEmitter;
 import com.genome2d.textures.GTextureManager;
 
+#if cs @:nativeGen #end
 class CameraExample extends AbstractExample
 {
+
+	#if cs
     static public function main() {
         var inst = new CameraExample();
     }
-
+	#end
     /**
         Initialize Example code
      **/

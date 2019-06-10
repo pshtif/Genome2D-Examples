@@ -19,11 +19,14 @@ import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
+#if cs @:nativeGen #end
 class SliceSpriteExample extends AbstractExample
 {
+    #if !cs
     static public function main() {
         var inst = new SliceSpriteExample();
     }
+    #end
 
     /**
         Initialize Example code

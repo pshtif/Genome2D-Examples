@@ -14,12 +14,14 @@ import com.genome2d.textures.GTextureManager;
 /**
  * @author Peter @sHTiF Stefcek
  */
+#if cs @:nativeGen #end
 class G3DExample extends AbstractExample
 {
+	#if !cs
 	static public function main() {
         var inst = new G3DExample();
     }
-	
+	#end
 	private var scene:G3DScene;
 	private var cameraMatrix:GMatrix3D;
 
@@ -49,7 +51,7 @@ class G3DExample extends AbstractExample
 		
 		scene.getSceneMatrix().identity();
 		scene.getSceneMatrix().appendRotation(rotation, GVector3D.Z_AXIS);
-		scene.tintColor = new GFloat4(1,1,1,.01);
+		scene.tintColor = new GFloat4(1,1,1,1);
 		
 		scene.render(cameraMatrix, 0);
 	}

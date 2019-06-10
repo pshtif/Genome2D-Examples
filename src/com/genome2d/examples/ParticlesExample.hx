@@ -20,17 +20,18 @@ import com.genome2d.node.GNode;
 import com.genome2d.particles.GParticleEmitter;
 import com.genome2d.textures.GTextureManager;
 
-
+#if cs @:nativeGen #end
 class ParticlesExample extends AbstractExample
 {
 
 	private var emitter:GParticleEmitter;
 	private var module:ParticleModule;
 
+	#if !cs
     static public function main() {
         var inst = new ParticlesExample();
     }
-
+	#end
     /**
         Initialize Example code
      **/

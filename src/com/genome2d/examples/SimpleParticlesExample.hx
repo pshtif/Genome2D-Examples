@@ -17,15 +17,16 @@ import com.genome2d.input.GMouseInputType;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
-@:expose
+#if cs @:nativeGen #end
 class SimpleParticlesExample extends AbstractExample
 {
-/*
+    #if !cs
     static public function main() {
         var inst = new SimpleParticlesExample();
     }
-/**/
-	private var particleSystem:GSimpleParticleSystemD;
+    #end
+
+	private var _particleSystem:GSimpleParticleSystemD;
 
     /**
         Initialize Example code
@@ -35,27 +36,27 @@ class SimpleParticlesExample extends AbstractExample
 		detail = "Simple particle systems offer the most common functionality used for particle systems to achieve best performance.";
 		
 		// Create a node with simple particle system component
-        particleSystem = GNode.createWithComponent(GSimpleParticleSystemD);
-        particleSystem.texture = GTextureManager.getTexture("assets/atlas.png_particle");
-        particleSystem.emission = 128;
-		particleSystem.emissionTime = 1;
-        particleSystem.emit = true;
-        particleSystem.energy = 5;
-        particleSystem.initialColor = 0xff8800;
-        particleSystem.blendMode = GBlendMode.ADD;
-		particleSystem.dispersionAngleVariance = Math.PI*2;
-        particleSystem.initialVelocity = 20;
-        particleSystem.initialVelocityVariance = 40;
-        particleSystem.initialAngleVariance = 5;
-        particleSystem.initialScaleVariance = 10;
-        particleSystem.endAlpha = 0;
-        particleSystem.endColor = 0x550000;
-        particleSystem.initialScale = 5;
-        particleSystem.endScale = 3;
-        particleSystem.endScaleVariance = 3;
-		particleSystem.useWorldSpace = true;
-		particleSystem.node.setPosition(200, 100);
-		container.addChild(particleSystem.node);
+        _particleSystem = GNode.createWithComponent(GSimpleParticleSystemD);
+        _particleSystem.texture = GTextureManager.getTexture("assets/atlas.png_particle");
+        _particleSystem.emission = 128;
+		_particleSystem.emissionTime = 1;
+        _particleSystem.emit = true;
+        _particleSystem.energy = 5;
+        _particleSystem.initialColor = 0xff8800;
+        _particleSystem.blendMode = GBlendMode.ADD;
+		_particleSystem.dispersionAngleVariance = Math.PI*2;
+        _particleSystem.initialVelocity = 20;
+        _particleSystem.initialVelocityVariance = 40;
+        _particleSystem.initialAngleVariance = 5;
+        _particleSystem.initialScaleVariance = 10;
+        _particleSystem.endAlpha = 0;
+        _particleSystem.endColor = 0x550000;
+        _particleSystem.initialScale = 5;
+        _particleSystem.endScale = 3;
+        _particleSystem.endScaleVariance = 3;
+		_particleSystem.useWorldSpace = true;
+		_particleSystem.node.setPosition(200, 100);
+		container.addChild(_particleSystem.node);
 
         var sprite:GSprite = GNode.createWithComponent(GSprite);
         sprite.texture = GTextureManager.getTexture("assets/logo_white.png");

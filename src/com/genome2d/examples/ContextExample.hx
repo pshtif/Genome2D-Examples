@@ -13,12 +13,14 @@ import com.genome2d.examples.AbstractExample;
 import com.genome2d.textures.GTexture;
 import com.genome2d.textures.GTextureManager;
 
+#if cs @:nativeGen #end
 class ContextExample extends AbstractExample
 {
+	#if !cs
     static public function main() {
         var inst = new ContextExample();
     }
-
+	#end
     /**
         Initialize Example code
      **/
@@ -40,7 +42,7 @@ class ContextExample extends AbstractExample
 		getGenome().getContext().setRenderTarget(rt);
 
 		for (i in 0...100) {
-			getGenome().getContext().draw(texture, GBlendMode.NORMAL, Math.random()*800-32, Math.random()*600-32);
+			getGenome().getContext().draw(texture, GBlendMode.NORMAL, Math.random()*800-32, Math.random()*600-32, 1, 1, 0, 1, 1, 1, 1, null);
 		}
 
 		getGenome().getContext().setRenderTarget(null);
@@ -52,7 +54,7 @@ class ContextExample extends AbstractExample
     private function postRender_handler():Void {
 		var texture:GTexture = GTextureManager.getTexture("rt");
 
-		getGenome().getContext().draw(texture, GBlendMode.NORMAL, 400, 300);
+		getGenome().getContext().draw(texture, GBlendMode.NORMAL, 400, 300, 1, 1, 0, 1, 1, 1, 1, null);
 		getGenome().autoUpdateAndRender = false;
 	}
 }

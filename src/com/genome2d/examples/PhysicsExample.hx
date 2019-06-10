@@ -34,11 +34,14 @@ import box2D.dynamics.B2Fixture;
 import box2D.dynamics.B2FixtureDef;
 #end
 
+#if cs @:nativeGen #end
 class PhysicsExample extends AbstractExample
 {
+	#if !cs
     static public function main() {
         var inst = new PhysicsExample();
     }
+	#end
 	
 	#if nape
 	private var space:Space;

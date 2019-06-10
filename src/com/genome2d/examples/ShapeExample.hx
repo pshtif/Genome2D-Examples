@@ -14,11 +14,14 @@ import com.genome2d.examples.custom.GEMoveGizmo;
 import com.genome2d.examples.AbstractExample;
 import com.genome2d.node.GNode;
 
+#if cs @:nativeGen #end
 class ShapeExample extends AbstractExample
 {
+    #if !cs
     static public function main() {
         var inst = new ShapeExample();
     }
+    #end
 
     private var length:Int = 50;
     private var width:Int = 2;

@@ -9,12 +9,14 @@ import com.genome2d.input.GMouseInputType;
 import com.genome2d.project.GProject;
 import com.genome2d.project.GProjectConfig;
 
+#if cs @:nativeGen #end
 class ExampleWrapper extends GProject
 {
+	#if !cs
 	static public function main() {
         var inst = new ExampleWrapper(new GProjectConfig(null));
     }
-	
+	#end
 	private var example:AbstractExample;
 	private var exampleClasses:Array<Class<AbstractExample>>;
 	private var exampleIndex:Int = 0;

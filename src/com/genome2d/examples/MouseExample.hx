@@ -14,13 +14,14 @@ import com.genome2d.macros.MGDebug;
 import com.genome2d.node.GNode;
 import com.genome2d.textures.GTextureManager;
 
+#if cs @:nativeGen #end
 class MouseExample extends AbstractExample
 {
-
+    #if !cs
     static public function main() {
         var inst = new MouseExample();
     }
-
+    #end
     /**
         Initialize Example code
      **/

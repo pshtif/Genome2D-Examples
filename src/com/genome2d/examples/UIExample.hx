@@ -23,12 +23,14 @@ import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.skin.GUISkin;
 import com.genome2d.ui.skin.GUISkinManager;
 
-
+#if cs @:nativeGen #end
 class UIExample extends AbstractExample
 {
-	static public function main() {
-		var inst = new UIExample();
-	}
+		#if !cs
+		static public function main() {
+				var inst = new UIExample();
+		}
+		#end
 
 	private	var skinPrototype:String = '<skinSheet>
 											<textureSkin id="textureSkin" texture="@assets/button.png" sliceLeft="10" sliceTop="10" sliceRight="35" sliceBottom="35"/>
@@ -59,8 +61,7 @@ class UIExample extends AbstractExample
 										</element>
 									</element>';
 
-	private var camera:GCameraController;
-	private var gui:GUI;
+		private var _gui:GUI;
 
     /**
         Initialize Example code
@@ -73,17 +74,17 @@ class UIExample extends AbstractExample
 
 		GXmlPrototypeParser.createPrototypeFromXmlString(skinPrototype);
 
-		gui = GNode.createWithComponent(GUI);
-		gui.node.mouseEnabled = true;
-		gui.setBounds(new GRectangle(0,0,800,600));
-		container.addChild(gui.node);
+		_gui = GNode.createWithComponent(GUI);
+		_gui.node.mouseEnabled = true;
+		_gui.setBounds(new GRectangle(0,0,800,600));
+		container.addChild(_gui.node);
 
 		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(elementPrototype);
 		textureElement.getChildByName("C4",true).onMouseClick.add(mouseClick_handler);
 		textureElement.getChildByName("C4",true).onRightMouseClick.add(mouseClick_handler);
-		gui.root.addChild(textureElement);
-		//gui.root.flushBatch = true;
-		gui.root.batchPriority = [GTextureManager.getTexture("assets/font.png")];
+		_gui.root.addChild(textureElement);
+		//_gui.root.flushBatch = true;
+		_gui.root.batchPriority = [GTextureManager.getTexture("assets/font.png")];
 
 		Genome2D.getInstance().onKeyboardInput.add(keyboardInput_handler);
     }

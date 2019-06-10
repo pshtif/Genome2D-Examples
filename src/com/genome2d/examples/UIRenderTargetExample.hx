@@ -28,11 +28,14 @@ import com.genome2d.ui.element.GUIElement;
 import com.genome2d.ui.skin.GUISkin;
 import com.genome2d.ui.skin.GUISkinManager;
 
+#if cs @:nativeGen #end
 class UIRenderTargetExample extends AbstractExample
 {
-	static public function main() {
-		var inst = new UIRenderTargetExample();
-	}
+		#if !cs
+		static public function main() {
+				var inst = new UIRenderTargetExample();
+		}
+		#end
 
 	private	var skinPrototype:String = '<skinSheet>
 											<textureSkin id="textureSkin2" texture="@assets/atlas.png_1" sliceLeft="4" sliceTop="4" sliceRight="12" sliceBottom="12"/>
@@ -67,10 +70,10 @@ class UIRenderTargetExample extends AbstractExample
 										</element>
 									</element>';
 
-	private var camera:GCameraController;
-	private var renderTarget:GTexture;
-	private var gui:GUI;
-	private var sequence:GTweenSequence;
+	private var _camera:GCameraController;
+	private var _renderTarget:GTexture;
+	private var _gui:GUI;
+	private var _sequence:GTweenSequence;
 
     /**
         Initialize Example code
@@ -83,26 +86,26 @@ class UIRenderTargetExample extends AbstractExample
 
 		GXmlPrototypeParser.createPrototypeFromXmlString(skinPrototype);
 
-		gui = GNode.createWithComponent(GUI);
-		gui.node.cameraGroup = 4;
-		gui.node.mouseEnabled = true;
-		gui.setBounds(new GRectangle(0,0,800,600));
-		getGenome().root.addChild(gui.node);
+		_gui = GNode.createWithComponent(GUI);
+		_gui.node.cameraGroup = 4;
+		_gui.node.mouseEnabled = true;
+		_gui.setBounds(new GRectangle(0,0,800,600));
+		getGenome().root.addChild(_gui.node);
 
 		var textureElement:GUIElement = cast GXmlPrototypeParser.createPrototypeFromXmlString(elementPrototype);
 		textureElement.setController(this);
-		gui.root.addChild(textureElement);
+		_gui.root.addChild(textureElement);
 
-		renderTarget = GTextureManager.createRenderTexture("renderTarget", 800, 600, 1);
+		_renderTarget = GTextureManager.createRenderTexture("renderTarget", 800, 600, 1);
 
-		camera = GNode.createWithComponent(GCameraController);
-		camera.node.setPosition(400,300);
-		camera.renderTarget = renderTarget;
-		camera.contextCamera.group = 4;
-		getGenome().root.addChild(camera.node);
+		_camera = GNode.createWithComponent(GCameraController);
+		_camera.node.setPosition(400,300);
+		_camera.renderTarget = _renderTarget;
+		_camera.contextCamera.group = 4;
+		getGenome().root.addChild(_camera.node);
 
 		var sprite:GSprite = GNode.createWithComponent(GSprite);
-		sprite.texture = renderTarget;
+		sprite.texture = _renderTarget;
 		sprite.node.setPosition(400,300);
 		container.addChild(sprite.node);
 
@@ -110,7 +113,7 @@ class UIRenderTargetExample extends AbstractExample
 
 
 		GTween.create(sprite.node).propF("y",800,0,false).id("start").extend().propF("y",300,.3,false).propF("scaleX",.25,.2,false).propF("scaleY",.25,.2,false).ease(GBack.easeIn, true).extend().propF("scaleX",1,.2,false).propF("scaleY",1,.2,false).ease(GBack.easeOut, true).delay(2).propF("y",800,.2,false).propF("scaleX",.25,.2,false).propF("scaleY",.25,.2,false).goto("start",100000);
-    }
+	}
 
 	private function keyboardInput_handler(p_input:GKeyboardInput):Void {
 		if (p_input.type == GKeyboardInputType.KEY_DOWN) {
@@ -126,9 +129,8 @@ class UIRenderTargetExample extends AbstractExample
 	}
 
 	public function test(p_input:GMouseInput):Void {
-		trace(p_input.dispatcher);
-		sequence.reset();
-		sequence.run();
+		_sequence.reset();
+		_sequence.run();
 	}
 	
 	override public function dispose():Void {

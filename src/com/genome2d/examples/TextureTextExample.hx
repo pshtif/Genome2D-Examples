@@ -22,18 +22,20 @@ import com.genome2d.textures.GTextureManager;
 import com.genome2d.utils.GHAlignType;
 import com.genome2d.utils.GVAlignType;
 
-
+#if cs @:nativeGen #end
 class TextureTextExample extends AbstractExample
 {
     /**
         Initialize Example code
      **/
+    #if !cs
     override public function initExample():Void {
 		title = "TEXTURE TEXT EXAMPLE";
 		detail = "The most common way to render text in GPU renderers is to use textured text composed of sprites.";
 		
 		createText(250, 150, "HELLO WORLD.", GVAlignType.TOP, GHAlignType.LEFT);
     }
+    #end
 	
     private function createText(p_x:Float, p_y:Float, p_text:String, p_vAlign:GVAlignType, p_hAlign:GHAlignType, p_tracking:Int = 0, p_lineSpace:Int = 0):GText {
         var text:GText = cast GNode.createWithComponent(GText);
